@@ -1,0 +1,30 @@
+{
+  "name": "@amsterdam/ee-ads-rhf-app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@amsterdam/design-system-assets": "^1.0.0",
+    "@amsterdam/design-system-css": "^1.0.1",
+    "@amsterdam/design-system-react": "^1.1.0",
+    "@amsterdam/design-system-react-icons": "^1.0.0",
+    "@amsterdam/design-system-tokens": "^1.0.1",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-hook-form": "^7.62.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "@vitejs/plugin-react-swc": "^4.0.1",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "vite": "^7.1.3"
+  }
+}
