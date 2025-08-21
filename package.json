@@ -5,7 +5,7 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "concurrently \"npm run dev -w @amsterdam/ee-ads-rhf-app\" \"npm run dev -w @amsterdam/ee-ads-rhf-lib\"",
+    "dev": "concurrently \"npm run dev -w @amsterdam/ee-ads-rhf-dev\" \"npm run dev -w @amsterdam/ee-ads-rhf-lib\"",
     "build": "npm run build -w @amsterdam/ee-ads-rhf-lib"
   },
   "devDependencies": {
