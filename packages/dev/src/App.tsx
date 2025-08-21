@@ -8,7 +8,7 @@ import {
   CheckboxControl,
   DateControl,
   TimeControl,
-} from '@amsterdam/ee-ads-rhf-lib';
+} from '../../ee-ads-rhf/dist';
 import { FormProvider, useForm } from 'react-hook-form';
 import {
   Grid,
