@@ -11,7 +11,7 @@ This repository aims to provide:
 
 A monorepo application with a prototype wrapping [Amsterdam Design System](https://designsystem.amsterdam/) form components with [React Hook Form](https://react-hook-form.com). This Node.js applications contains two workspaces:
 
-## Workspaces
+### Workspaces
 
 - `packages/dev` - A development environment for testing the library
 - `packages/ee-ads-forms` - A library wrapping Amsterdam Design System form components with [React Hook Form](https://react-hook-form.com)

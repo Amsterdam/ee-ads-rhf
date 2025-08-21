@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "tsc --watch",
     "build": "tsc",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@amsterdam/design-system-assets": "^1.0.0",
@@ -16,6 +18,11 @@
     "@amsterdam/design-system-tokens": "^1.0.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-hook-form": "^7.62.0"
+    "react-hook-form": "^7.62.0",
+    "vitest": "^3.2.4"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.8.0",
+    "jsdom": "^26.1.0"
   }
 }
