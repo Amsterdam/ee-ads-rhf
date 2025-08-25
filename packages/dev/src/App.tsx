@@ -27,13 +27,14 @@ interface AppFormData {
   terms: boolean;
 }
 
+// TODO make className prop work on *Control components
+// TODO ...attributes prop for Control components?
 // TODO file input (+ file list?)
 // TODO password input
 // TODO radio
 // TODO select
 // TODO react-select
 // TODO switch
-// TODO ...attributes prop for Control components?
 function App() {
   const methods = useForm<AppFormData>({
     // Uncomment for validation onChange
@@ -79,6 +80,7 @@ function App() {
             label="Do you accept the terms?"
             name="terms"
             description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            className="ams-mb-m"
           />
           <DateControl<{ startDate: string }>
             label="Start date"

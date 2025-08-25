@@ -10,96 +10,97 @@ import {
 import FormControl from '../FormControl/FormControl';
 import { FormControlBase } from '../types';
 import clsx from 'clsx';
-import { forwardRef, ForwardRefExoticComponent, Ref } from 'react';
+import { forwardRef } from 'react';
 
 // Merge design-system and react-hook-form types
+// export type TextAreaControlProps<
+//   TFieldValues extends FieldValues = FieldValues,
+// > = TextAreaProps & FormControlBase<TFieldValues>;
+
+type ContainerProps = React.ComponentPropsWithoutRef<'div'>;
+
 export type TextAreaControlProps<
   TFieldValues extends FieldValues = FieldValues,
-> = TextAreaProps & FormControlBase<TFieldValues>;
+> = ContainerProps &
+  FormControlBase<TFieldValues> & {
+    textareaProps?: TextAreaProps;
+  };
 
-interface TextAreaControlComponent extends ForwardRefExoticComponent<any> {
-  <TFieldValues extends FieldValues = FieldValues>(
-    props: TextAreaControlProps<TFieldValues> & {
-      ref?: React.Ref<HTMLTextAreaElement>;
+const TextAreaControl = forwardRef<HTMLDivElement, TextAreaControlProps>(
+  (
+    {
+      name,
+      label,
+      description,
+      registerOptions,
+      id,
+      testId,
+      cols, // TODO fix merging design-system types?
+      ...attributes
     },
-  ): React.ReactElement | null;
-}
+    ref,
+  ) => {
+    const identifier = testId || id || name;
+    const descriptionId = `${identifier}-description`;
+    const errorId = `${identifier}-error`;
 
-const TextAreaControl = forwardRef(function TextAreaControl<
-  TFieldValues extends FieldValues = FieldValues,
->(
-  {
-    name,
-    label,
-    description,
-    registerOptions,
-    id,
-    testId,
-    cols,
-    ...attributes
-  }: TextAreaControlProps<TFieldValues>,
-  ref: React.Ref<HTMLTextAreaElement>,
-) {
-  const identifier = testId || id || name;
-  const descriptionId = `${identifier}-description`;
-  const errorId = `${identifier}-error`;
+    const required = registerOptions?.required;
+    const optional = !required;
 
-  const required = registerOptions?.required;
-  const optional = !required;
+    return (
+      <FormControl>
+        {({ register, formState }) => {
+          const errorMessage = formState.errors[name]?.message?.toString();
+          const hasError = !!errorMessage;
 
-  return (
-    <FormControl>
-      {({ register, formState }) => {
-        const errorMessage = formState.errors[name]?.message?.toString();
-        const hasError = !!errorMessage;
-
-        return (
-          <Field
-            data-testid={`${identifier}-textarea-input-wrapper`}
-            invalid={hasError}
-          >
-            {label && (
-              <Label
-                htmlFor={identifier}
-                data-testid={`${identifier}-label`}
-                optional={optional}
-              >
-                {label}
-              </Label>
-            )}
-
-            {description && (
-              <Paragraph
-                size="small"
-                id={descriptionId}
-                data-testid={descriptionId}
-              >
-                {description}
-              </Paragraph>
-            )}
-            {hasError && (
-              <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
-            )}
-
-            <TextArea
-              {...register(name, registerOptions as RegisterOptions)}
-              {...attributes}
-              aria-describedby={clsx(
-                { [descriptionId]: !!descriptionId },
-                { [errorId]: hasError },
-              )}
-              id={identifier}
-              data-testid={identifier}
-              cols={cols}
+          return (
+            <Field
+              data-testid={`${identifier}-textarea-input-wrapper`}
               invalid={hasError}
               ref={ref}
-            />
-          </Field>
-        );
-      }}
-    </FormControl>
-  );
-}) as TextAreaControlComponent;
+              {...attributes}
+            >
+              {label && (
+                <Label
+                  htmlFor={identifier}
+                  data-testid={`${identifier}-label`}
+                  optional={optional}
+                >
+                  {label}
+                </Label>
+              )}
+
+              {description && (
+                <Paragraph
+                  size="small"
+                  id={descriptionId}
+                  data-testid={descriptionId}
+                >
+                  {description}
+                </Paragraph>
+              )}
+              {hasError && (
+                <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
+              )}
+
+              <TextArea
+                {...register(name, registerOptions as RegisterOptions)}
+                aria-describedby={clsx(
+                  { [descriptionId]: !!descriptionId },
+                  { [errorId]: hasError },
+                )}
+                id={identifier}
+                data-testid={identifier}
+                cols={cols}
+                invalid={hasError}
+              />
+            </Field>
+          );
+        }}
+      </FormControl>
+    );
+  },
+);
 
 TextAreaControl.displayName = 'TextAreaControl';
 
