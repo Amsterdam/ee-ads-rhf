@@ -27,7 +27,7 @@ describe('TextInputControl', () => {
           label="Full Name"
           testId="name"
         />
-      </Wrapper>
+      </Wrapper>,
     );
 
     const input = screen.getByLabelText(/Full Name/i);
@@ -42,7 +42,7 @@ describe('TextInputControl', () => {
           label="Full Name"
           testId="name"
         />
-      </Wrapper>
+      </Wrapper>,
     );
 
     const input = screen.getByLabelText(/Full Name/i) as HTMLInputElement;
@@ -60,7 +60,7 @@ describe('TextInputControl', () => {
           label="Full Name"
           testId="name"
         />
-      </Wrapper>
+      </Wrapper>,
     );
 
     const input = screen.getByLabelText(/Full Name/i) as HTMLInputElement;
@@ -76,11 +76,11 @@ describe('TextInputControl', () => {
           description="Please enter your full legal name."
           testId="name"
         />
-      </Wrapper>
+      </Wrapper>,
     );
 
     expect(
-      screen.getByText(/please enter your full legal name/i)
+      screen.getByText(/please enter your full legal name/i),
     ).toBeInTheDocument();
   });
 
@@ -93,7 +93,7 @@ describe('TextInputControl', () => {
           description="Used for formal identification."
           testId="name"
         />
-      </Wrapper>
+      </Wrapper>,
     );
 
     const input = screen.getByLabelText(/Full Name/i);
@@ -101,7 +101,7 @@ describe('TextInputControl', () => {
     expect(describedBy).toMatch(/name-description/);
 
     expect(screen.getByTestId('name-description')).toHaveTextContent(
-      /used for formal identification/i
+      /used for formal identification/i,
     );
   });
 

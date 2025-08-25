@@ -38,7 +38,6 @@ const CheckboxControl = <T extends FieldValues>({
 
         return (
           <Field
-            className="ams-mb-m"
             data-testid={`${identifier}-checkbox-wrapper`}
             invalid={hasError}
           >
@@ -59,7 +58,7 @@ const CheckboxControl = <T extends FieldValues>({
             <Checkbox
               aria-describedby={clsx(
                 { [descriptionId]: !!descriptionId },
-                { [errorId]: hasError }
+                { [errorId]: hasError },
               )}
               {...register(name, registerOptions as RegisterOptions)}
               data-testid={identifier}

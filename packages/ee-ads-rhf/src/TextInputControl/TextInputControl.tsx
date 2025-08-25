@@ -39,7 +39,6 @@ const TextInputControl = <T extends FieldValues>({
 
         return (
           <Field
-            className="ams-mb-m"
             invalid={hasError}
             data-testid={`${identifier}-text-input-wrapper`}
           >

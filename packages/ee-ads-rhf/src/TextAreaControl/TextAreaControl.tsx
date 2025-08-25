@@ -10,22 +10,36 @@ import {
 import FormControl from '../FormControl/FormControl';
 import { FormControlBase } from '../types';
 import clsx from 'clsx';
+import { forwardRef, ForwardRefExoticComponent, Ref } from 'react';
 
 // Merge design-system and react-hook-form types
 export type TextAreaControlProps<
   TFieldValues extends FieldValues = FieldValues,
 > = TextAreaProps & FormControlBase<TFieldValues>;
 
-const TextAreaControl = <T extends FieldValues>({
-  name,
-  label,
-  description,
-  registerOptions,
-  id,
-  testId,
-  cols,
-  ...attributes
-}: TextAreaControlProps<T>) => {
+interface TextAreaControlComponent extends ForwardRefExoticComponent<any> {
+  <TFieldValues extends FieldValues = FieldValues>(
+    props: TextAreaControlProps<TFieldValues> & {
+      ref?: React.Ref<HTMLTextAreaElement>;
+    },
+  ): React.ReactElement | null;
+}
+
+const TextAreaControl = forwardRef(function TextAreaControl<
+  TFieldValues extends FieldValues = FieldValues,
+>(
+  {
+    name,
+    label,
+    description,
+    registerOptions,
+    id,
+    testId,
+    cols,
+    ...attributes
+  }: TextAreaControlProps<TFieldValues>,
+  ref: React.Ref<HTMLTextAreaElement>,
+) {
   const identifier = testId || id || name;
   const descriptionId = `${identifier}-description`;
   const errorId = `${identifier}-error`;
@@ -72,18 +86,21 @@ const TextAreaControl = <T extends FieldValues>({
               {...attributes}
               aria-describedby={clsx(
                 { [descriptionId]: !!descriptionId },
-                { [errorId]: hasError }
+                { [errorId]: hasError },
               )}
               id={identifier}
               data-testid={identifier}
               cols={cols}
               invalid={hasError}
+              ref={ref}
             />
           </Field>
         );
       }}
     </FormControl>
   );
-};
+}) as TextAreaControlComponent;
+
+TextAreaControl.displayName = 'TextAreaControl';
 
 export default TextAreaControl;
