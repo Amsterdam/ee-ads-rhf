@@ -1,4 +1,11 @@
 import {
+  ComponentPropsWithoutRef,
+  forwardRef,
+  ForwardRefExoticComponent,
+  ReactElement,
+  Ref,
+} from 'react';
+import {
   ErrorMessage,
   Field,
   Label,
@@ -6,24 +13,48 @@ import {
   TextInput,
   type TextInputProps,
 } from '@amsterdam/design-system-react';
-import type { FieldValues, RegisterOptions } from 'react-hook-form';
+import {
+  useFormContext,
+  type FieldValues,
+  type RegisterOptions,
+} from 'react-hook-form';
 import clsx from 'clsx';
 import FormControl from '../FormControl/FormControl';
 import { FormControlBase } from '../types';
 
 // Merge design-system and react-hook-form types
 export type TextInputControlProps<TFieldValues extends FieldValues> =
-  TextInputProps & FormControlBase<TFieldValues>;
+  TextInputProps &
+    FormControlBase<TFieldValues> & {
+      wrapperProps?: ComponentPropsWithoutRef<'div'>;
+    };
 
-const TextInputControl = <T extends FieldValues>({
-  name,
-  label,
-  description,
-  registerOptions,
-  id,
-  testId,
-  ...attributes
-}: TextInputControlProps<T>) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+interface TextInputControlComponent extends ForwardRefExoticComponent<any> {
+  <TFieldValues extends FieldValues = FieldValues>(
+    props: TextInputControlProps<TFieldValues> & {
+      ref?: Ref<HTMLInputElement>;
+    },
+  ): ReactElement | null;
+}
+
+const TextInputControl = forwardRef(function TextInputControl<
+  TFieldValues extends FieldValues = FieldValues,
+>(
+  {
+    name,
+    label,
+    description,
+    registerOptions,
+    id,
+    testId,
+    wrapperProps,
+    ...attributes
+  }: TextInputControlProps<TFieldValues>,
+  ref: Ref<HTMLInputElement>,
+) {
+  const { getValues } = useFormContext();
+
   const identifier = testId || id || name;
   const descriptionId = `${identifier}-description`;
   const errorId = `${identifier}-error`;
@@ -41,6 +72,7 @@ const TextInputControl = <T extends FieldValues>({
           <Field
             invalid={hasError}
             data-testid={`${identifier}-text-input-wrapper`}
+            {...wrapperProps}
           >
             {label && (
               <Label
@@ -63,25 +95,27 @@ const TextInputControl = <T extends FieldValues>({
             {hasError && (
               <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
             )}
+
+            {/* TODO spread values last or first - and can `register` interfere with the invalid/disabled props? */}
             <TextInput
-              {...register(name, registerOptions as RegisterOptions)}
-              {...attributes}
+              defaultValue={getValues(name)}
+              id={identifier}
+              invalid={hasError}
               aria-describedby={clsx(
                 { [descriptionId]: !!descriptionId },
                 { [errorId]: hasError },
               )}
-              id={identifier}
-              invalid={hasError}
-              // Avoid the `required` prop when using ReactHookForm otherwise
-              // the user is presented :invalid form fields on load before
-              // touching the fields and gets inconsistent validation UX
-              // required={!!required}
+              {...register(name, registerOptions as RegisterOptions)}
+              {...attributes}
+              ref={ref}
             />
           </Field>
         );
       }}
     </FormControl>
   );
-};
+}) as TextInputControlComponent;
+
+TextInputControl.displayName = 'TextInputControl';
 
 export default TextInputControl;

@@ -27,7 +27,7 @@ describe('DateControl', () => {
           label="Date of Birth"
           testId="birthDate"
         />
-      </Wrapper>
+      </Wrapper>,
     );
 
     const input = screen.getByTestId('birthDate') as HTMLInputElement;
@@ -43,7 +43,7 @@ describe('DateControl', () => {
           label="Date of Birth"
           testId="birthDate"
         />
-      </Wrapper>
+      </Wrapper>,
     );
 
     const input = screen.getByTestId('birthDate') as HTMLInputElement;
@@ -61,7 +61,7 @@ describe('DateControl', () => {
           label="Date of Birth"
           testId="birthDate"
         />
-      </Wrapper>
+      </Wrapper>,
     );
 
     const input = screen.getByTestId('birthDate') as HTMLInputElement;
@@ -77,11 +77,11 @@ describe('DateControl', () => {
           description="Please enter your birth date."
           testId="birthDate"
         />
-      </Wrapper>
+      </Wrapper>,
     );
 
     expect(
-      screen.getByText(/please enter your birth date/i)
+      screen.getByText(/please enter your birth date/i),
     ).toBeInTheDocument();
   });
 
@@ -94,7 +94,7 @@ describe('DateControl', () => {
           description="We need this to verify your age."
           testId="birthDate"
         />
-      </Wrapper>
+      </Wrapper>,
     );
 
     const input = screen.getByTestId('birthDate');
@@ -102,7 +102,7 @@ describe('DateControl', () => {
     expect(describedBy).toMatch(/birthDate-description/);
 
     expect(screen.getByTestId('birthDate-description')).toHaveTextContent(
-      /verify your age/i
+      /verify your age/i,
     );
   });
 
