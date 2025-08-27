@@ -1,7 +1,5 @@
-// import { useState } from 'react';
-// import reactLogo from './assets/react.svg';
-// import viteLogo from '/vite.svg';
-// import './App.css'
+import { useCallback } from 'react';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import {
   TextInputControl,
   // ControlledTextInputControl,
@@ -9,8 +7,7 @@ import {
   CheckboxControl,
   DateControl,
   TimeControl,
-} from '../../ee-ads-rhf/dist';
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+} from '@amsterdam/ee-ads-rhf-lib';
 import {
   Grid,
   Breadcrumb,
@@ -18,7 +15,6 @@ import {
   Button,
   Row,
 } from '@amsterdam/design-system-react';
-import { useCallback } from 'react';
 
 interface AppFormData {
   name: string;
@@ -106,16 +102,12 @@ function App() {
                 registerOptions={{
                   required: 'This field is required.',
                 }}
-                // min={nowDate}
               />
               <TimeControl<{ startTime: string }>
                 label="Start time"
                 name="startTime"
                 testId="create-start-time"
                 registerOptions={{ required: 'This field is required.' }}
-                wrapperProps={{
-                  className: 'ams-mb-m',
-                }}
               />
             </Row>
 
