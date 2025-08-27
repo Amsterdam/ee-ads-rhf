@@ -13,7 +13,11 @@ import {
   TextInput,
   type TextInputProps,
 } from '@amsterdam/design-system-react';
-import { useFormContext, type FieldValues, type RegisterOptions } from 'react-hook-form';
+import {
+  useFormContext,
+  type FieldValues,
+  type RegisterOptions,
+} from 'react-hook-form';
 import clsx from 'clsx';
 import FormControl from '../FormControl/FormControl';
 import { FormControlBase } from '../types';
