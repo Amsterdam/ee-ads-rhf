@@ -20,9 +20,9 @@ import { FormControlBase } from '../types';
 // Merge design-system and react-hook-form types
 export type CheckboxControlProps<TFieldValues extends FieldValues> =
   CheckboxProps &
-    FormControlBase<TFieldValues> &
-    // This component is wrapped in a `<Field>` component, which returns a `div`
-    ComponentPropsWithoutRef<'div'>;
+    FormControlBase<TFieldValues> & {
+      wrapperProps?: ComponentPropsWithoutRef<'div'>;
+    };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 interface CheckboxControlComponent extends ForwardRefExoticComponent<any> {
@@ -46,6 +46,7 @@ const CheckboxControl = forwardRef(function CheckboxControl<
     testId,
     indeterminate,
     icon,
+    wrapperProps,
     ...attributes
   }: CheckboxControlProps<TFieldValues>,
   ref: Ref<HTMLInputElement>,
@@ -64,6 +65,7 @@ const CheckboxControl = forwardRef(function CheckboxControl<
           <Field
             data-testid={`${identifier}-checkbox-wrapper`}
             invalid={hasError}
+            {...wrapperProps}
           >
             {description && (
               <Paragraph

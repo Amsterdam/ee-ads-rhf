@@ -9,7 +9,7 @@ import {
   DateControl,
   TimeControl,
 } from '../../ee-ads-rhf/dist';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import {
   Grid,
   Breadcrumb,
@@ -17,6 +17,7 @@ import {
   Button,
   Row,
 } from '@amsterdam/design-system-react';
+import { useCallback } from 'react';
 
 interface AppFormData {
   name: string;
@@ -49,6 +50,17 @@ function App() {
     },
   });
 
+  const onValidSubmit: SubmitHandler<AppFormData> = useCallback(
+    async (data: AppFormData) => {
+      try {
+        console.log('Submit form!', data);
+      } catch (error) {
+        console.log('form error!', error);
+      }
+    },
+    [],
+  );
+
   return (
     <Grid paddingBottom="x-large" paddingTop="large">
       <Grid.Cell
@@ -62,48 +74,64 @@ function App() {
           Contact
         </Heading>
 
+        {/* Use noValidate so browser validation doesn't block JS */}
         <FormProvider {...methods}>
-          <TextInputControl<{ email: string }>
-            label="E-mailadres"
-            name="email"
-            type="email"
-            testId="booking-create-email"
-            registerOptions={{ required: 'This field is required.' }}
-          />
-          <TextAreaControl<{ comments: string }>
-            label="Additional comments"
-            name="comments"
-            testId="booking-create-comments"
-            className="ams-mb-m"
-          />
-          <CheckboxControl<{ terms: boolean }>
-            label="Do you accept the terms?"
-            name="terms"
-            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-            className="ams-mb-m"
-          />
-          <DateControl<{ startDate: string }>
-            label="Start date"
-            name="startDate"
-            testId="booking-create-start-date"
-            registerOptions={{
-              required: 'This field is required.',
-            }}
-            // min={nowDate}
-          />
-          <TimeControl<{ startTime: string }>
-            label="Start time"
-            name="startTime"
-            testId="booking-create-start-time"
-            registerOptions={{ required: 'This field is required.' }}
-            className="ams-mb-m"
-          />
+          <form noValidate onSubmit={methods.handleSubmit(onValidSubmit)}>
+            <TextInputControl<{ email: string }>
+              label="E-mailadres"
+              name="email"
+              type="email"
+              registerOptions={{ required: 'This field is required.' }}
+              testId="booking-create-email"
+              wrapperProps={{
+                className: 'ams-mb-m',
+              }}
+            />
+            <TextAreaControl<{ comments: string }>
+              label="Additional comments"
+              name="comments"
+              testId="booking-create-comments"
+              wrapperProps={{
+                className: 'ams-mb-m',
+              }}
+            />
+            <Row className="ams-mb-m">
+              <DateControl<{ startDate: string }>
+                label="Start date"
+                name="startDate"
+                testId="booking-create-start-date"
+                registerOptions={{
+                  required: 'This field is required.',
+                }}
+                // min={nowDate}
+              />
+              <TimeControl<{ startTime: string }>
+                label="Start time"
+                name="startTime"
+                testId="booking-create-start-time"
+                registerOptions={{ required: 'This field is required.' }}
+                wrapperProps={{
+                  className: 'ams-mb-m',
+                }}
+              />
+            </Row>
 
-          <Row>
-            <Button type="submit" variant="primary">
-              Submit
-            </Button>
-          </Row>
+            <CheckboxControl<{ terms: boolean }>
+              label="Do you accept the terms?"
+              name="terms"
+              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+              registerOptions={{ required: 'The terms are required.' }}
+              wrapperProps={{
+                className: 'ams-mb-m',
+              }}
+            />
+
+            <Row>
+              <Button type="submit" variant="primary">
+                Submit
+              </Button>
+            </Row>
+          </form>
         </FormProvider>
       </Grid.Cell>
     </Grid>

@@ -1,4 +1,12 @@
 import {
+  ComponentPropsWithoutRef,
+  forwardRef,
+  ForwardRefExoticComponent,
+  ReactElement,
+  Ref,
+} from 'react';
+import {
+  ErrorMessage,
   Field,
   Label,
   Paragraph,
@@ -12,17 +20,35 @@ import { FormControlBase } from '../types';
 
 // Merge design-system and react-hook-form types
 export type TimeControlProps<TFieldValues extends FieldValues> =
-  TimeInputProps & FormControlBase<TFieldValues>;
+  TimeInputProps &
+    FormControlBase<TFieldValues> & {
+      wrapperProps?: ComponentPropsWithoutRef<'div'>;
+    };
 
-const TimeControl = <T extends FieldValues>({
-  name,
-  label,
-  description,
-  registerOptions,
-  id,
-  testId,
-  ...attributes
-}: TimeControlProps<T>) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+interface TimeControlComponent extends ForwardRefExoticComponent<any> {
+  <TFieldValues extends FieldValues = FieldValues>(
+    props: TimeControlProps<TFieldValues> & {
+      ref?: Ref<HTMLInputElement>;
+    },
+  ): ReactElement | null;
+}
+
+const TimeControl = forwardRef(function TimeControl<
+  TFieldValues extends FieldValues = FieldValues,
+>(
+  {
+    name,
+    label,
+    description,
+    registerOptions,
+    id,
+    testId,
+    wrapperProps,
+    ...attributes
+  }: TimeControlProps<TFieldValues>,
+  ref: Ref<HTMLInputElement>,
+) {
   const identifier = testId || id || name;
   const descriptionId = `${identifier}-description`;
   const errorId = `${identifier}-error`;
@@ -33,10 +59,15 @@ const TimeControl = <T extends FieldValues>({
   return (
     <FormControl>
       {({ register, formState }) => {
+        const errorMessage = formState.errors[name]?.message?.toString();
         const hasError = !!formState.errors[name];
 
         return (
-          <Field data-testid={`${identifier}-text-input-wrapper`}>
+          <Field
+            invalid={hasError}
+            data-testid={`${identifier}-text-input-wrapper`}
+            {...wrapperProps}
+          >
             {label && (
               <Label
                 htmlFor={identifier}
@@ -55,15 +86,21 @@ const TimeControl = <T extends FieldValues>({
                 {description}
               </Paragraph>
             )}
+            {hasError && (
+              <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
+            )}
+
+            {/* TODO spread values last or first - and can `register` interfere with the invalid/disabled props? */}
             <TimeInput
               aria-describedby={clsx(
                 { [descriptionId]: !!descriptionId },
-                { [errorId]: hasError }
+                { [errorId]: hasError },
               )}
               {...register(name, registerOptions as RegisterOptions)}
               id={identifier}
               data-testid={identifier}
               invalid={hasError}
+              ref={ref}
               {...attributes}
             />
           </Field>
@@ -71,6 +108,6 @@ const TimeControl = <T extends FieldValues>({
       }}
     </FormControl>
   );
-};
+}) as TimeControlComponent;
 
 export default TimeControl;

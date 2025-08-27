@@ -1,4 +1,11 @@
 import {
+  ComponentPropsWithoutRef,
+  forwardRef,
+  ForwardRefExoticComponent,
+  ReactElement,
+  Ref,
+} from 'react';
+import {
   ErrorMessage,
   Field,
   Label,
@@ -10,20 +17,13 @@ import type { FieldValues, RegisterOptions } from 'react-hook-form';
 import clsx from 'clsx';
 import FormControl from '../FormControl/FormControl';
 import { FormControlBase } from '../types';
-import {
-  ComponentPropsWithoutRef,
-  forwardRef,
-  ForwardRefExoticComponent,
-  ReactElement,
-  Ref,
-} from 'react';
 
 // Merge design-system and react-hook-form types
 export type TextInputControlProps<TFieldValues extends FieldValues> =
   TextInputProps &
-    FormControlBase<TFieldValues> &
-    // This component is wrapped in a `<Field>` component, which returns a `div`
-    ComponentPropsWithoutRef<'div'>;
+    FormControlBase<TFieldValues> & {
+      wrapperProps?: ComponentPropsWithoutRef<'div'>;
+    };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 interface TextInputControlComponent extends ForwardRefExoticComponent<any> {
@@ -44,6 +44,7 @@ const TextInputControl = forwardRef(function TextInputControl<
     registerOptions,
     id,
     testId,
+    wrapperProps,
     ...attributes
   }: TextInputControlProps<TFieldValues>,
   ref: Ref<HTMLInputElement>,
@@ -65,6 +66,7 @@ const TextInputControl = forwardRef(function TextInputControl<
           <Field
             invalid={hasError}
             data-testid={`${identifier}-text-input-wrapper`}
+            {...wrapperProps}
           >
             {label && (
               <Label
@@ -87,6 +89,8 @@ const TextInputControl = forwardRef(function TextInputControl<
             {hasError && (
               <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
             )}
+
+            {/* TODO spread values last or first - and can `register` interfere with the invalid/disabled props? */}
             <TextInput
               {...register(name, registerOptions as RegisterOptions)}
               {...attributes}

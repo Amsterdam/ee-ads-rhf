@@ -1,35 +1,38 @@
 import {
-  Field,
-  Label,
-  Paragraph,
-  DateInput,
-  type DateInputProps,
-} from '@amsterdam/design-system-react';
-import type { FieldValues, RegisterOptions } from 'react-hook-form';
-import clsx from 'clsx';
-import FormControl from '../FormControl/FormControl';
-import { FormControlBase } from '../types';
-import {
   ComponentPropsWithoutRef,
   forwardRef,
   ForwardRefExoticComponent,
   ReactElement,
   Ref,
 } from 'react';
+import {
+  Field,
+  Label,
+  Paragraph,
+  DateInput,
+  type DateInputProps,
+  ErrorMessage,
+} from '@amsterdam/design-system-react';
+import type { FieldValues, RegisterOptions } from 'react-hook-form';
+import clsx from 'clsx';
+import FormControl from '../FormControl/FormControl';
+import { FormControlBase } from '../types';
 
 // Merge design-system and react-hook-form types
 export type DateControlProps<TFieldValues extends FieldValues> =
   DateInputProps &
     FormControlBase<TFieldValues> &
     // This component is wrapped in a `<Field>` component, which returns a `div`
-    ComponentPropsWithoutRef<'div'>;
+    ComponentPropsWithoutRef<'div'> & {
+      wrapperProps?: ComponentPropsWithoutRef<'div'>;
+    };
 
 // This interface allows us to use a generic type argum/ent in parent components to specify the shape of the form value
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 interface DateControlComponent extends ForwardRefExoticComponent<any> {
   <TFieldValues extends FieldValues = FieldValues>(
     props: DateControlProps<TFieldValues> & {
-      ref?: Ref<HTMLDivElement>;
+      ref?: Ref<HTMLInputElement>;
     },
   ): ReactElement | null;
 }
@@ -44,9 +47,10 @@ const DateControl = forwardRef(function DateControl<
     registerOptions,
     id,
     testId,
+    wrapperProps,
     ...attributes
   }: DateControlProps<TFieldValues>,
-  ref: Ref<HTMLDivElement>,
+  ref: Ref<HTMLInputElement>,
 ) {
   const identifier = testId || id || name;
   const descriptionId = `${identifier}-description`;
@@ -58,10 +62,15 @@ const DateControl = forwardRef(function DateControl<
   return (
     <FormControl>
       {({ register, formState }) => {
+        const errorMessage = formState.errors[name]?.message?.toString();
         const hasError = !!formState.errors[name];
 
         return (
-          <Field data-testid={`${identifier}-text-input-wrapper`} ref={ref}>
+          <Field
+            invalid={hasError}
+            data-testid={`${identifier}-text-input-wrapper`}
+            {...wrapperProps}
+          >
             {label && (
               <Label
                 htmlFor={identifier}
@@ -80,6 +89,11 @@ const DateControl = forwardRef(function DateControl<
                 {description}
               </Paragraph>
             )}
+            {hasError && (
+              <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
+            )}
+
+            {/* TODO spread values last or first - and can `register` interfere with the invalid/disabled props? */}
             <DateInput
               aria-describedby={clsx(
                 { [descriptionId]: !!descriptionId },
@@ -90,6 +104,7 @@ const DateControl = forwardRef(function DateControl<
               id={identifier}
               data-testid={identifier}
               invalid={hasError}
+              ref={ref}
             />
           </Field>
         );

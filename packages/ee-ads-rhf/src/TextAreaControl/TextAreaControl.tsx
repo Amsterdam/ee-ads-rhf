@@ -14,16 +14,16 @@ import {
   TextArea,
   TextAreaProps,
 } from '@amsterdam/design-system-react';
+import clsx from 'clsx';
 import FormControl from '../FormControl/FormControl';
 import { FormControlBase } from '../types';
-import clsx from 'clsx';
 
 export type TextAreaControlProps<
   TFieldValues extends FieldValues = FieldValues,
 > = TextAreaProps &
-  FormControlBase<TFieldValues> &
-  // This component is wrapped in a `<Field>` component, which returns a `div`
-  ComponentPropsWithoutRef<'div'>;
+  FormControlBase<TFieldValues> & {
+    wrapperProps?: ComponentPropsWithoutRef<'div'>;
+  };
 
 // This interface allows us to use a generic type argum/ent in parent components to specify the shape of the form value
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -46,6 +46,7 @@ const TextAreaControl = forwardRef(function TextAreaControl<
     id,
     testId,
     cols,
+    wrapperProps,
     ...attributes
   }: TextAreaControlProps<TFieldValues>,
   ref: Ref<HTMLTextAreaElement>,
@@ -58,7 +59,7 @@ const TextAreaControl = forwardRef(function TextAreaControl<
   const optional = !required;
 
   return (
-    <FormControl {...attributes}>
+    <FormControl>
       {({ register, formState }) => {
         const errorMessage = formState.errors[name]?.message?.toString();
         const hasError = !!errorMessage;
@@ -67,7 +68,7 @@ const TextAreaControl = forwardRef(function TextAreaControl<
           <Field
             invalid={hasError}
             data-testid={`${identifier}-textarea-input-wrapper`}
-            {...attributes}
+            {...wrapperProps}
           >
             {label && (
               <Label
@@ -92,8 +93,10 @@ const TextAreaControl = forwardRef(function TextAreaControl<
               <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
             )}
 
+            {/* TODO spread values last or first - and can `register` interfere with the invalid/disabled props? */}
             <TextArea
               {...register(name, registerOptions as RegisterOptions)}
+              {...attributes}
               aria-describedby={clsx(
                 { [descriptionId]: !!descriptionId },
                 { [errorId]: hasError },
