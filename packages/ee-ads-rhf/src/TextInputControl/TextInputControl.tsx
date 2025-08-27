@@ -29,7 +29,7 @@ export type TextInputControlProps<TFieldValues extends FieldValues> =
 interface TextInputControlComponent extends ForwardRefExoticComponent<any> {
   <TFieldValues extends FieldValues = FieldValues>(
     props: TextInputControlProps<TFieldValues> & {
-      ref?: Ref<HTMLDivElement>;
+      ref?: Ref<HTMLInputElement>;
     },
   ): ReactElement | null;
 }
@@ -46,7 +46,7 @@ const TextInputControl = forwardRef(function TextInputControl<
     testId,
     ...attributes
   }: TextInputControlProps<TFieldValues>,
-  ref: Ref<HTMLDivElement>,
+  ref: Ref<HTMLInputElement>,
 ) {
   const identifier = testId || id || name;
   const descriptionId = `${identifier}-description`;
@@ -64,7 +64,6 @@ const TextInputControl = forwardRef(function TextInputControl<
         return (
           <Field
             invalid={hasError}
-            ref={ref}
             data-testid={`${identifier}-text-input-wrapper`}
           >
             {label && (
@@ -97,10 +96,7 @@ const TextInputControl = forwardRef(function TextInputControl<
               )}
               id={identifier}
               invalid={hasError}
-              // Avoid the `required` prop when using ReactHookForm otherwise
-              // the user is presented :invalid form fields on load before
-              // touching the fields and gets inconsistent validation UX
-              // required={!!required}
+              ref={ref}
             />
           </Field>
         );

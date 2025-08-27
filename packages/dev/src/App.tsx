@@ -63,7 +63,7 @@ function App() {
         </Heading>
 
         <FormProvider {...methods}>
-          <TextInputControl
+          <TextInputControl<{ email: string }>
             label="E-mailadres"
             name="email"
             type="email"

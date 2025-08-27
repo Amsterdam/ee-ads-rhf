@@ -28,7 +28,7 @@ export type CheckboxControlProps<TFieldValues extends FieldValues> =
 interface CheckboxControlComponent extends ForwardRefExoticComponent<any> {
   <TFieldValues extends FieldValues = FieldValues>(
     props: CheckboxControlProps<TFieldValues> & {
-      ref?: Ref<HTMLDivElement>;
+      ref?: Ref<HTMLInputElement>;
     },
   ): ReactElement | null;
 }
@@ -48,7 +48,7 @@ const CheckboxControl = forwardRef(function CheckboxControl<
     icon,
     ...attributes
   }: CheckboxControlProps<TFieldValues>,
-  ref: Ref<HTMLDivElement>,
+  ref: Ref<HTMLInputElement>,
 ) {
   const identifier = testId || id || name;
   const descriptionId = `${identifier}-description`;
@@ -64,7 +64,6 @@ const CheckboxControl = forwardRef(function CheckboxControl<
           <Field
             data-testid={`${identifier}-checkbox-wrapper`}
             invalid={hasError}
-            ref={ref}
           >
             {description && (
               <Paragraph
@@ -80,19 +79,21 @@ const CheckboxControl = forwardRef(function CheckboxControl<
               <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
             )}
 
+            {/* TODO spread values last or first - and can `register` interfere with the invalid/disabled props? */}
             <Checkbox
               aria-describedby={clsx(
                 { [descriptionId]: !!descriptionId },
                 { [errorId]: hasError },
               )}
               {...register(name, registerOptions as RegisterOptions)}
+              {...attributes}
               data-testid={identifier}
               id={identifier}
               invalid={hasError}
               disabled={disabled}
               indeterminate={indeterminate}
               icon={icon}
-              {...attributes}
+              ref={ref}
             >
               {label && label}
             </Checkbox>

@@ -30,7 +30,7 @@ export type TextAreaControlProps<
 interface TextAreaControlComponent extends ForwardRefExoticComponent<any> {
   <TFieldValues extends FieldValues = FieldValues>(
     props: TextAreaControlProps<TFieldValues> & {
-      ref?: Ref<HTMLDivElement>;
+      ref?: Ref<HTMLTextAreaElement>;
     },
   ): ReactElement | null;
 }
@@ -48,7 +48,7 @@ const TextAreaControl = forwardRef(function TextAreaControl<
     cols,
     ...attributes
   }: TextAreaControlProps<TFieldValues>,
-  ref: Ref<HTMLDivElement>,
+  ref: Ref<HTMLTextAreaElement>,
 ) {
   const identifier = testId || id || name;
   const descriptionId = `${identifier}-description`;
@@ -66,7 +66,6 @@ const TextAreaControl = forwardRef(function TextAreaControl<
         return (
           <Field
             invalid={hasError}
-            ref={ref}
             data-testid={`${identifier}-textarea-input-wrapper`}
             {...attributes}
           >
@@ -103,6 +102,7 @@ const TextAreaControl = forwardRef(function TextAreaControl<
               data-testid={identifier}
               cols={cols}
               invalid={hasError}
+              ref={ref}
             />
           </Field>
         );

@@ -9,20 +9,45 @@ import type { FieldValues, RegisterOptions } from 'react-hook-form';
 import clsx from 'clsx';
 import FormControl from '../FormControl/FormControl';
 import { FormControlBase } from '../types';
+import {
+  ComponentPropsWithoutRef,
+  forwardRef,
+  ForwardRefExoticComponent,
+  ReactElement,
+  Ref,
+} from 'react';
 
 // Merge design-system and react-hook-form types
 export type DateControlProps<TFieldValues extends FieldValues> =
-  DateInputProps & FormControlBase<TFieldValues>;
+  DateInputProps &
+    FormControlBase<TFieldValues> &
+    // This component is wrapped in a `<Field>` component, which returns a `div`
+    ComponentPropsWithoutRef<'div'>;
 
-const DateControl = <T extends FieldValues>({
-  name,
-  label,
-  description,
-  registerOptions,
-  id,
-  testId,
-  ...attributes
-}: DateControlProps<T>) => {
+// This interface allows us to use a generic type argum/ent in parent components to specify the shape of the form value
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+interface DateControlComponent extends ForwardRefExoticComponent<any> {
+  <TFieldValues extends FieldValues = FieldValues>(
+    props: DateControlProps<TFieldValues> & {
+      ref?: Ref<HTMLDivElement>;
+    },
+  ): ReactElement | null;
+}
+
+const DateControl = forwardRef(function DateControl<
+  TFieldValues extends FieldValues = FieldValues,
+>(
+  {
+    name,
+    label,
+    description,
+    registerOptions,
+    id,
+    testId,
+    ...attributes
+  }: DateControlProps<TFieldValues>,
+  ref: Ref<HTMLDivElement>,
+) {
   const identifier = testId || id || name;
   const descriptionId = `${identifier}-description`;
   const errorId = `${identifier}-error`;
@@ -36,7 +61,7 @@ const DateControl = <T extends FieldValues>({
         const hasError = !!formState.errors[name];
 
         return (
-          <Field data-testid={`${identifier}-text-input-wrapper`}>
+          <Field data-testid={`${identifier}-text-input-wrapper`} ref={ref}>
             {label && (
               <Label
                 htmlFor={identifier}
@@ -58,7 +83,7 @@ const DateControl = <T extends FieldValues>({
             <DateInput
               aria-describedby={clsx(
                 { [descriptionId]: !!descriptionId },
-                { [errorId]: hasError }
+                { [errorId]: hasError },
               )}
               {...attributes}
               {...register(name, registerOptions as RegisterOptions)}
@@ -71,6 +96,6 @@ const DateControl = <T extends FieldValues>({
       }}
     </FormControl>
   );
-};
+}) as DateControlComponent;
 
 export default DateControl;
