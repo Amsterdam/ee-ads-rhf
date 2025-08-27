@@ -5,7 +5,7 @@ import {
   ReactElement,
   Ref,
 } from 'react';
-import type { FieldValues, RegisterOptions } from 'react-hook-form';
+import { useFormContext, type FieldValues, type RegisterOptions } from 'react-hook-form';
 import {
   Field,
   Checkbox,
@@ -51,6 +51,8 @@ const CheckboxControl = forwardRef(function CheckboxControl<
   }: CheckboxControlProps<TFieldValues>,
   ref: Ref<HTMLInputElement>,
 ) {
+  const { getValues } = useFormContext();
+
   const identifier = testId || id || name;
   const descriptionId = `${identifier}-description`;
   const errorId = `${identifier}-error`;
@@ -83,6 +85,12 @@ const CheckboxControl = forwardRef(function CheckboxControl<
 
             {/* TODO spread values last or first - and can `register` interfere with the invalid/disabled props? */}
             <Checkbox
+              defaultChecked={!!getValues(name)}
+              id={identifier}
+              invalid={hasError}
+              disabled={disabled}
+              indeterminate={indeterminate}
+              icon={icon}
               aria-describedby={clsx(
                 { [descriptionId]: !!descriptionId },
                 { [errorId]: hasError },
@@ -90,11 +98,6 @@ const CheckboxControl = forwardRef(function CheckboxControl<
               {...register(name, registerOptions as RegisterOptions)}
               {...attributes}
               data-testid={identifier}
-              id={identifier}
-              invalid={hasError}
-              disabled={disabled}
-              indeterminate={indeterminate}
-              icon={icon}
               ref={ref}
             >
               {label && label}

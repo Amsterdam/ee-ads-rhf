@@ -28,14 +28,6 @@ interface AppFormData {
   terms: boolean;
 }
 
-// TODO make className prop work on *Control components
-// TODO ...attributes prop for Control components?
-// TODO file input (+ file list?)
-// TODO password input
-// TODO radio
-// TODO select
-// TODO react-select
-// TODO switch
 function App() {
   const methods = useForm<AppFormData>({
     // Uncomment for validation onChange
@@ -82,7 +74,7 @@ function App() {
               name="email"
               type="email"
               registerOptions={{ required: 'This field is required.' }}
-              testId="booking-create-email"
+              testId="create-email"
               wrapperProps={{
                 className: 'ams-mb-m',
               }}
@@ -90,7 +82,7 @@ function App() {
             <TextAreaControl<{ comments: string }>
               label="Additional comments"
               name="comments"
-              testId="booking-create-comments"
+              testId="create-comments"
               wrapperProps={{
                 className: 'ams-mb-m',
               }}
@@ -99,7 +91,7 @@ function App() {
               <DateControl<{ startDate: string }>
                 label="Start date"
                 name="startDate"
-                testId="booking-create-start-date"
+                testId="create-start-date"
                 registerOptions={{
                   required: 'This field is required.',
                 }}
@@ -108,7 +100,7 @@ function App() {
               <TimeControl<{ startTime: string }>
                 label="Start time"
                 name="startTime"
-                testId="booking-create-start-time"
+                testId="create-start-time"
                 registerOptions={{ required: 'This field is required.' }}
                 wrapperProps={{
                   className: 'ams-mb-m',

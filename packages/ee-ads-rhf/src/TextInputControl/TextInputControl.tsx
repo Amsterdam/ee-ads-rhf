@@ -13,7 +13,7 @@ import {
   TextInput,
   type TextInputProps,
 } from '@amsterdam/design-system-react';
-import type { FieldValues, RegisterOptions } from 'react-hook-form';
+import { useFormContext, type FieldValues, type RegisterOptions } from 'react-hook-form';
 import clsx from 'clsx';
 import FormControl from '../FormControl/FormControl';
 import { FormControlBase } from '../types';
@@ -49,6 +49,8 @@ const TextInputControl = forwardRef(function TextInputControl<
   }: TextInputControlProps<TFieldValues>,
   ref: Ref<HTMLInputElement>,
 ) {
+  const { getValues } = useFormContext();
+
   const identifier = testId || id || name;
   const descriptionId = `${identifier}-description`;
   const errorId = `${identifier}-error`;
@@ -92,14 +94,15 @@ const TextInputControl = forwardRef(function TextInputControl<
 
             {/* TODO spread values last or first - and can `register` interfere with the invalid/disabled props? */}
             <TextInput
-              {...register(name, registerOptions as RegisterOptions)}
-              {...attributes}
+              defaultValue={getValues(name)}
+              id={identifier}
+              invalid={hasError}
               aria-describedby={clsx(
                 { [descriptionId]: !!descriptionId },
                 { [errorId]: hasError },
               )}
-              id={identifier}
-              invalid={hasError}
+              {...register(name, registerOptions as RegisterOptions)}
+              {...attributes}
               ref={ref}
             />
           </Field>

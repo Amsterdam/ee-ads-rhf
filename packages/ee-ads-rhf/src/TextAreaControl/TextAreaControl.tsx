@@ -5,7 +5,7 @@ import {
   ReactElement,
   Ref,
 } from 'react';
-import { FieldValues, RegisterOptions } from 'react-hook-form';
+import { FieldValues, RegisterOptions, useFormContext } from 'react-hook-form';
 import {
   ErrorMessage,
   Field,
@@ -51,6 +51,8 @@ const TextAreaControl = forwardRef(function TextAreaControl<
   }: TextAreaControlProps<TFieldValues>,
   ref: Ref<HTMLTextAreaElement>,
 ) {
+  const { getValues } = useFormContext();
+
   const identifier = testId || id || name;
   const descriptionId = `${identifier}-description`;
   const errorId = `${identifier}-error`;
@@ -95,16 +97,17 @@ const TextAreaControl = forwardRef(function TextAreaControl<
 
             {/* TODO spread values last or first - and can `register` interfere with the invalid/disabled props? */}
             <TextArea
-              {...register(name, registerOptions as RegisterOptions)}
-              {...attributes}
-              aria-describedby={clsx(
-                { [descriptionId]: !!descriptionId },
-                { [errorId]: hasError },
-              )}
+              defaultValue={getValues(name)}
               id={identifier}
               data-testid={identifier}
               cols={cols}
               invalid={hasError}
+              aria-describedby={clsx(
+                { [descriptionId]: !!descriptionId },
+                { [errorId]: hasError },
+              )}
+              {...register(name, registerOptions as RegisterOptions)}
+              {...attributes}
               ref={ref}
             />
           </Field>
