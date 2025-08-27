@@ -4,6 +4,7 @@
 // import './App.css'
 import {
   TextInputControl,
+  // ControlledTextInputControl,
   TextAreaControl,
   CheckboxControl,
   DateControl,
@@ -33,7 +34,6 @@ function App() {
     // Uncomment for validation onChange
     // mode: 'onChange',
     defaultValues: {
-      name: '',
       email: '',
       comment: '',
       startDate: '',
@@ -79,6 +79,17 @@ function App() {
                 className: 'ams-mb-m',
               }}
             />
+            {/* This component is an example of a RHF 'controlled' component using the TextInputControl */}
+            {/* <ControlledTextInputControl<{ email: string }>
+              label="E-mailadres"
+              name="email"
+              type="email"
+              registerOptions={{ required: 'This field is required.' }}
+              testId="create-email"
+              wrapperProps={{
+                className: 'ams-mb-m',
+              }}
+            /> */}
             <TextAreaControl<{ comments: string }>
               label="Additional comments"
               name="comments"
