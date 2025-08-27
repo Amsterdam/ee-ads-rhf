@@ -10,20 +10,44 @@ import type { FieldValues, RegisterOptions } from 'react-hook-form';
 import clsx from 'clsx';
 import FormControl from '../FormControl/FormControl';
 import { FormControlBase } from '../types';
+import {
+  ComponentPropsWithoutRef,
+  forwardRef,
+  ForwardRefExoticComponent,
+  ReactElement,
+  Ref,
+} from 'react';
 
 // Merge design-system and react-hook-form types
 export type TextInputControlProps<TFieldValues extends FieldValues> =
-  TextInputProps & FormControlBase<TFieldValues>;
+  TextInputProps &
+    FormControlBase<TFieldValues> &
+    // This component is wrapped in a `<Field>` component, which returns a `div`
+    ComponentPropsWithoutRef<'div'>;
 
-const TextInputControl = <T extends FieldValues>({
-  name,
-  label,
-  description,
-  registerOptions,
-  id,
-  testId,
-  ...attributes
-}: TextInputControlProps<T>) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+interface TextInputControlComponent extends ForwardRefExoticComponent<any> {
+  <TFieldValues extends FieldValues = FieldValues>(
+    props: TextInputControlProps<TFieldValues> & {
+      ref?: Ref<HTMLDivElement>;
+    },
+  ): ReactElement | null;
+}
+
+const TextInputControl = forwardRef(function TextInputControl<
+  TFieldValues extends FieldValues = FieldValues,
+>(
+  {
+    name,
+    label,
+    description,
+    registerOptions,
+    id,
+    testId,
+    ...attributes
+  }: TextInputControlProps<TFieldValues>,
+  ref: Ref<HTMLDivElement>,
+) {
   const identifier = testId || id || name;
   const descriptionId = `${identifier}-description`;
   const errorId = `${identifier}-error`;
@@ -40,6 +64,7 @@ const TextInputControl = <T extends FieldValues>({
         return (
           <Field
             invalid={hasError}
+            ref={ref}
             data-testid={`${identifier}-text-input-wrapper`}
           >
             {label && (
@@ -82,6 +107,8 @@ const TextInputControl = <T extends FieldValues>({
       }}
     </FormControl>
   );
-};
+}) as TextInputControlComponent;
+
+TextInputControl.displayName = 'TextInputControl';
 
 export default TextInputControl;

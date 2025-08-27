@@ -1,3 +1,10 @@
+import {
+  ComponentPropsWithoutRef,
+  forwardRef,
+  ForwardRefExoticComponent,
+  ReactElement,
+  Ref,
+} from 'react';
 import type { FieldValues, RegisterOptions } from 'react-hook-form';
 import {
   Field,
@@ -12,23 +19,37 @@ import { FormControlBase } from '../types';
 
 // Merge design-system and react-hook-form types
 export type CheckboxControlProps<TFieldValues extends FieldValues> =
-  CheckboxProps & FormControlBase<TFieldValues>;
+  CheckboxProps &
+    FormControlBase<TFieldValues> &
+    // This component is wrapped in a `<Field>` component, which returns a `div`
+    ComponentPropsWithoutRef<'div'>;
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+interface CheckboxControlComponent extends ForwardRefExoticComponent<any> {
+  <TFieldValues extends FieldValues = FieldValues>(
+    props: CheckboxControlProps<TFieldValues> & {
+      ref?: Ref<HTMLDivElement>;
+    },
+  ): ReactElement | null;
+}
 
-
-
-const CheckboxControl = <T extends FieldValues>({
-  name,
-  label,
-  description,
-  registerOptions,
-  id,
-  disabled,
-  testId,
-  indeterminate,
-  icon,
-  ...attributes
-}: CheckboxControlProps<T>) => {
+const CheckboxControl = forwardRef(function CheckboxControl<
+  TFieldValues extends FieldValues = FieldValues,
+>(
+  {
+    name,
+    label,
+    description,
+    registerOptions,
+    id,
+    disabled,
+    testId,
+    indeterminate,
+    icon,
+    ...attributes
+  }: CheckboxControlProps<TFieldValues>,
+  ref: Ref<HTMLDivElement>,
+) {
   const identifier = testId || id || name;
   const descriptionId = `${identifier}-description`;
   const errorId = `${identifier}-error`;
@@ -43,6 +64,7 @@ const CheckboxControl = <T extends FieldValues>({
           <Field
             data-testid={`${identifier}-checkbox-wrapper`}
             invalid={hasError}
+            ref={ref}
           >
             {description && (
               <Paragraph
@@ -79,6 +101,8 @@ const CheckboxControl = <T extends FieldValues>({
       }}
     </FormControl>
   );
-};
+}) as CheckboxControlComponent;
+
+CheckboxControl.displayName = 'CheckboxControl';
 
 export default CheckboxControl;
