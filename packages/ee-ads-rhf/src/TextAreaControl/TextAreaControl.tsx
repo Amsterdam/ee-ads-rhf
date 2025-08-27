@@ -5,7 +5,12 @@ import {
   ReactElement,
   Ref,
 } from 'react';
-import { FieldValues, RegisterOptions, useFormContext } from 'react-hook-form';
+import {
+  Controller,
+  FieldValues,
+  RegisterOptions,
+  useFormContext,
+} from 'react-hook-form';
 import {
   ErrorMessage,
   Field,
@@ -15,7 +20,6 @@ import {
   TextAreaProps,
 } from '@amsterdam/design-system-react';
 import clsx from 'clsx';
-import FormControl from '../FormControl/FormControl';
 import { FormControlBase } from '../types';
 
 export type TextAreaControlProps<
@@ -51,7 +55,7 @@ const TextAreaControl = forwardRef(function TextAreaControl<
   }: TextAreaControlProps<TFieldValues>,
   ref: Ref<HTMLTextAreaElement>,
 ) {
-  const { getValues } = useFormContext();
+  const { control } = useFormContext();
 
   const identifier = testId || id || name;
   const descriptionId = `${identifier}-description`;
@@ -61,10 +65,13 @@ const TextAreaControl = forwardRef(function TextAreaControl<
   const optional = !required;
 
   return (
-    <FormControl>
-      {({ register, formState }) => {
-        const errorMessage = formState.errors[name]?.message?.toString();
-        const hasError = !!errorMessage;
+    <Controller
+      name={name}
+      control={control}
+      rules={registerOptions as RegisterOptions}
+      render={({ field, fieldState }) => {
+        const errorMessage = fieldState.error?.message;
+        const hasError = !!fieldState.error;
 
         return (
           <Field
@@ -95,25 +102,24 @@ const TextAreaControl = forwardRef(function TextAreaControl<
               <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
             )}
 
-            {/* TODO spread values last or first - and can `register` interfere with the invalid/disabled props? */}
             <TextArea
-              defaultValue={getValues(name)}
               id={identifier}
-              data-testid={identifier}
               cols={cols}
               invalid={hasError}
               aria-describedby={clsx(
                 { [descriptionId]: !!descriptionId },
                 { [errorId]: hasError },
               )}
-              {...register(name, registerOptions as RegisterOptions)}
+              // Controlled props from RHF
+              {...field}
               {...attributes}
+              data-testid={identifier}
               ref={ref}
             />
           </Field>
         );
       }}
-    </FormControl>
+    />
   );
 }) as TextAreaControlComponent;
 

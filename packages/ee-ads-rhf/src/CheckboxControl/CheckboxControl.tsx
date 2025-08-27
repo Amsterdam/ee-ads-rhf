@@ -5,7 +5,12 @@ import {
   ReactElement,
   Ref,
 } from 'react';
-import { useFormContext, type FieldValues, type RegisterOptions } from 'react-hook-form';
+import {
+  Controller,
+  useFormContext,
+  type FieldValues,
+  type RegisterOptions,
+} from 'react-hook-form';
 import {
   Field,
   Checkbox,
@@ -14,7 +19,6 @@ import {
   ErrorMessage,
 } from '@amsterdam/design-system-react';
 import clsx from 'clsx';
-import FormControl from '../FormControl/FormControl';
 import { FormControlBase } from '../types';
 
 // Merge design-system and react-hook-form types
@@ -51,17 +55,20 @@ const CheckboxControl = forwardRef(function CheckboxControl<
   }: CheckboxControlProps<TFieldValues>,
   ref: Ref<HTMLInputElement>,
 ) {
-  const { getValues } = useFormContext();
+  const { control } = useFormContext();
 
   const identifier = testId || id || name;
   const descriptionId = `${identifier}-description`;
   const errorId = `${identifier}-error`;
 
   return (
-    <FormControl>
-      {({ register, formState }) => {
-        const errorMessage = formState.errors[name]?.message?.toString();
-        const hasError = !!errorMessage;
+    <Controller
+      name={name}
+      control={control}
+      rules={registerOptions as RegisterOptions}
+      render={({ field, fieldState }) => {
+        const errorMessage = fieldState.error?.message;
+        const hasError = !!fieldState.error;
 
         return (
           <Field
@@ -83,9 +90,7 @@ const CheckboxControl = forwardRef(function CheckboxControl<
               <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
             )}
 
-            {/* TODO spread values last or first - and can `register` interfere with the invalid/disabled props? */}
             <Checkbox
-              defaultChecked={!!getValues(name)}
               id={identifier}
               invalid={hasError}
               disabled={disabled}
@@ -95,7 +100,8 @@ const CheckboxControl = forwardRef(function CheckboxControl<
                 { [descriptionId]: !!descriptionId },
                 { [errorId]: hasError },
               )}
-              {...register(name, registerOptions as RegisterOptions)}
+              // Controlled props from RHF
+              {...field}
               {...attributes}
               data-testid={identifier}
               ref={ref}
@@ -105,7 +111,7 @@ const CheckboxControl = forwardRef(function CheckboxControl<
           </Field>
         );
       }}
-    </FormControl>
+    />
   );
 }) as CheckboxControlComponent;
 

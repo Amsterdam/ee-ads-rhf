@@ -14,23 +14,23 @@ import {
   type TextInputProps,
 } from '@amsterdam/design-system-react';
 import {
+  Controller,
   useFormContext,
   type FieldValues,
   type RegisterOptions,
 } from 'react-hook-form';
 import clsx from 'clsx';
-import FormControl from '../FormControl/FormControl';
 import { FormControlBase } from '../types';
 
-// Merge design-system and react-hook-form types
 export type TextInputControlProps<TFieldValues extends FieldValues> =
   TextInputProps &
     FormControlBase<TFieldValues> & {
       wrapperProps?: ComponentPropsWithoutRef<'div'>;
     };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-interface TextInputControlComponent extends ForwardRefExoticComponent<any> {
+interface TextInputControlComponent
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  extends ForwardRefExoticComponent<any> {
   <TFieldValues extends FieldValues = FieldValues>(
     props: TextInputControlProps<TFieldValues> & {
       ref?: Ref<HTMLInputElement>;
@@ -53,7 +53,7 @@ const TextInputControl = forwardRef(function TextInputControl<
   }: TextInputControlProps<TFieldValues>,
   ref: Ref<HTMLInputElement>,
 ) {
-  const { getValues } = useFormContext();
+  const { control } = useFormContext();
 
   const identifier = testId || id || name;
   const descriptionId = `${identifier}-description`;
@@ -63,9 +63,12 @@ const TextInputControl = forwardRef(function TextInputControl<
   const optional = !required;
 
   return (
-    <FormControl>
-      {({ register, formState }) => {
-        const errorMessage = formState.errors[name]?.message?.toString();
+    <Controller
+      name={name}
+      control={control}
+      rules={registerOptions as RegisterOptions}
+      render={({ field, fieldState }) => {
+        const errorMessage = fieldState.error?.message;
         const hasError = !!errorMessage;
 
         return (
@@ -96,23 +99,23 @@ const TextInputControl = forwardRef(function TextInputControl<
               <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
             )}
 
-            {/* TODO spread values last or first - and can `register` interfere with the invalid/disabled props? */}
             <TextInput
-              defaultValue={getValues(name)}
               id={identifier}
+              data-testid={identifier}
               invalid={hasError}
               aria-describedby={clsx(
                 { [descriptionId]: !!descriptionId },
                 { [errorId]: hasError },
               )}
-              {...register(name, registerOptions as RegisterOptions)}
+              // Controlled props from RHF
+              {...field}
               {...attributes}
               ref={ref}
             />
           </Field>
         );
       }}
-    </FormControl>
+    />
   );
 }) as TextInputControlComponent;
 

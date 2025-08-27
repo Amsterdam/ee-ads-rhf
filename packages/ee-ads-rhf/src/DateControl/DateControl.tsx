@@ -13,9 +13,13 @@ import {
   type DateInputProps,
   ErrorMessage,
 } from '@amsterdam/design-system-react';
-import { useFormContext, type FieldValues, type RegisterOptions } from 'react-hook-form';
+import {
+  Controller,
+  useFormContext,
+  type FieldValues,
+  type RegisterOptions,
+} from 'react-hook-form';
 import clsx from 'clsx';
-import FormControl from '../FormControl/FormControl';
 import { FormControlBase } from '../types';
 
 // Merge design-system and react-hook-form types
@@ -52,7 +56,7 @@ const DateControl = forwardRef(function DateControl<
   }: DateControlProps<TFieldValues>,
   ref: Ref<HTMLInputElement>,
 ) {
-  const { getValues } = useFormContext();
+  const { control } = useFormContext();
 
   const identifier = testId || id || name;
   const descriptionId = `${identifier}-description`;
@@ -62,10 +66,13 @@ const DateControl = forwardRef(function DateControl<
   const optional = !required;
 
   return (
-    <FormControl>
-      {({ register, formState }) => {
-        const errorMessage = formState.errors[name]?.message?.toString();
-        const hasError = !!formState.errors[name];
+    <Controller
+      name={name}
+      control={control}
+      rules={registerOptions as RegisterOptions}
+      render={({ field, fieldState }) => {
+        const errorMessage = fieldState.error?.message;
+        const hasError = !!fieldState.error;
 
         return (
           <Field
@@ -97,22 +104,22 @@ const DateControl = forwardRef(function DateControl<
 
             {/* TODO spread values last or first - and can `register` interfere with the invalid/disabled props? */}
             <DateInput
-              defaultValue={getValues(name)}
               id={identifier}
               invalid={hasError}
               aria-describedby={clsx(
                 { [descriptionId]: !!descriptionId },
                 { [errorId]: hasError },
               )}
+              // Controlled props from RHF
+              {...field}
               {...attributes}
-              {...register(name, registerOptions as RegisterOptions)}
               data-testid={identifier}
               ref={ref}
             />
           </Field>
         );
       }}
-    </FormControl>
+    />
   );
 }) as DateControlComponent;
 
