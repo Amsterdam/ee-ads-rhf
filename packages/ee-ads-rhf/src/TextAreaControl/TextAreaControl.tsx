@@ -49,7 +49,8 @@ const TextAreaControl = forwardRef(function TextAreaControl<
     registerOptions,
     id,
     testId,
-    cols,
+    cols
+    rows,
     wrapperProps,
     ...attributes
   }: TextAreaControlProps<TFieldValues>,
@@ -105,6 +106,7 @@ const TextAreaControl = forwardRef(function TextAreaControl<
             <TextArea
               id={identifier}
               cols={cols}
+              rows={rows}
               invalid={hasError}
               aria-describedby={clsx(
                 { [descriptionId]: !!descriptionId },
