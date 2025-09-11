@@ -25,17 +25,24 @@ interface AppFormData {
 }
 
 function App() {
-  const methods = useForm<AppFormData>({
-    // Uncomment for validation onChange
-    // mode: 'onChange',
-    defaultValues: {
-      email: '',
-      comment: '',
-      startDate: '',
-      startTime: '',
-      terms: false,
-    },
-  });
+  const defaultValues = {
+    email: '',
+    comment: '',
+    startDate: '',
+    startTime: '',
+    terms: false,
+  };
+  // const methods = useForm<AppFormData>({
+  //   // Uncomment for validation onChange
+  //   // mode: 'onChange',
+  //   defaultValues: {
+  //     email: '',
+  //     comment: '',
+  //     startDate: '',
+  //     startTime: '',
+  //     terms: false,
+  //   },
+  // });
 
   const onValidSubmit: SubmitHandler<AppFormData> = useCallback(
     async (data: AppFormData) => {
@@ -62,59 +69,58 @@ function App() {
         </Heading>
 
         {/* Use noValidate so browser validation doesn't block JS */}
-        <FormProvider {...methods}>
-          <form noValidate onSubmit={methods.handleSubmit(onValidSubmit)}>
-            <TextInputControl<{ email: string }>
-              label="E-mailadres"
-              name="email"
-              type="email"
+        {/* TODO what if user passes single onSubmit method vs onValidSubmit etc... */}
+        <FormProvider onSubmit={onValidSubmit} defaultValues={defaultValues}>
+          <TextInputControl<{ email: string }>
+            label="E-mailadres"
+            name="email"
+            type="email"
+            registerOptions={{ required: 'This field is required.' }}
+            testId="create-email"
+            wrapperProps={{
+              className: 'ams-mb-m',
+            }}
+          />
+          <TextAreaControl<{ comments: string }>
+            label="Additional comments"
+            name="comments"
+            testId="create-comments"
+            wrapperProps={{
+              className: 'ams-mb-m',
+            }}
+          />
+          <Row className="ams-mb-m">
+            <DateControl<{ startDate: string }>
+              label="Start date"
+              name="startDate"
+              testId="create-start-date"
+              registerOptions={{
+                required: 'This field is required.',
+              }}
+            />
+            <TimeControl<{ startTime: string }>
+              label="Start time"
+              name="startTime"
+              testId="create-start-time"
               registerOptions={{ required: 'This field is required.' }}
-              testId="create-email"
-              wrapperProps={{
-                className: 'ams-mb-m',
-              }}
             />
-            <TextAreaControl<{ comments: string }>
-              label="Additional comments"
-              name="comments"
-              testId="create-comments"
-              wrapperProps={{
-                className: 'ams-mb-m',
-              }}
-            />
-            <Row className="ams-mb-m">
-              <DateControl<{ startDate: string }>
-                label="Start date"
-                name="startDate"
-                testId="create-start-date"
-                registerOptions={{
-                  required: 'This field is required.',
-                }}
-              />
-              <TimeControl<{ startTime: string }>
-                label="Start time"
-                name="startTime"
-                testId="create-start-time"
-                registerOptions={{ required: 'This field is required.' }}
-              />
-            </Row>
+          </Row>
 
-            <CheckboxControl<{ terms: boolean }>
-              label="Do you accept the terms?"
-              name="terms"
-              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-              registerOptions={{ required: 'The terms are required.' }}
-              wrapperProps={{
-                className: 'ams-mb-m',
-              }}
-            />
+          <CheckboxControl<{ terms: boolean }>
+            label="Do you accept the terms?"
+            name="terms"
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            registerOptions={{ required: 'The terms are required.' }}
+            wrapperProps={{
+              className: 'ams-mb-m',
+            }}
+          />
 
-            <Row>
-              <Button type="submit" variant="primary">
-                Submit
-              </Button>
-            </Row>
-          </form>
+          <Row>
+            <Button type="submit" variant="primary">
+              Submit
+            </Button>
+          </Row>
         </FormProvider>
       </Grid.Cell>
     </Grid>
