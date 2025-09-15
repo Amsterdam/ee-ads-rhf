@@ -8,8 +8,8 @@ import {
 } from 'react-hook-form';
 
 interface FormProviderProps<TFieldValues extends FieldValues> extends PropsWithChildren {
-  mode: 'onChange' | 'onSubmit' | 'onBlur' | 'onTouched' | 'all' | undefined;
-  noValidate: boolean;
+  mode?: 'onChange' | 'onSubmit' | 'onBlur' | 'onTouched' | 'all' | undefined;
+  noValidate?: boolean;
   onSubmit: SubmitHandler<TFieldValues>;
   defaultValues: UseFormProps<TFieldValues>['defaultValues'];
 }
@@ -28,6 +28,7 @@ const FormProvider = <TFieldValues extends FieldValues>({
 
   return (
     <RHFFormProvider {...methods}>
+      {/* Enable noValidate to prevent browser validation blocking JS */}
       <form noValidate={noValidate} onSubmit={methods.handleSubmit(onSubmit)}>
         {children}
       </form>

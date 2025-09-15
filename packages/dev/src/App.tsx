@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import {
+  FormProvider,
   TextInputControl,
   TextAreaControl,
   CheckboxControl,
@@ -32,28 +32,14 @@ function App() {
     startTime: '',
     terms: false,
   };
-  // const methods = useForm<AppFormData>({
-  //   // Uncomment for validation onChange
-  //   // mode: 'onChange',
-  //   defaultValues: {
-  //     email: '',
-  //     comment: '',
-  //     startDate: '',
-  //     startTime: '',
-  //     terms: false,
-  //   },
-  // });
 
-  const onValidSubmit: SubmitHandler<AppFormData> = useCallback(
-    async (data: AppFormData) => {
-      try {
-        console.log('Submit form!', data);
-      } catch (error) {
-        console.log('form error!', error);
-      }
-    },
-    [],
-  );
+  const onSubmit = useCallback(async (data: AppFormData) => {
+    try {
+      console.log('Submit form!', data);
+    } catch (error) {
+      console.log('form error!', error);
+    }
+  }, []);
 
   return (
     <Grid paddingBottom="x-large" paddingTop="large">
@@ -68,9 +54,7 @@ function App() {
           Contact
         </Heading>
 
-        {/* Use noValidate so browser validation doesn't block JS */}
-        {/* TODO what if user passes single onSubmit method vs onValidSubmit etc... */}
-        <FormProvider onSubmit={onValidSubmit} defaultValues={defaultValues}>
+        <FormProvider onSubmit={onSubmit} defaultValues={defaultValues}>
           <TextInputControl<{ email: string }>
             label="E-mailadres"
             name="email"
