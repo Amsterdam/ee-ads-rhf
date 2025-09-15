@@ -27,7 +27,7 @@ describe('CheckboxControl', () => {
           label="is the meeting remote?"
           testId="remote"
         />
-      </Wrapper>
+      </Wrapper>,
     );
 
     const checkbox = screen.getByTestId('remote') as HTMLInputElement;
@@ -44,7 +44,7 @@ describe('CheckboxControl', () => {
           label="is the meeting remote?"
           testId="remote"
         />
-      </Wrapper>
+      </Wrapper>,
     );
 
     const checkbox = screen.getByTestId('remote') as HTMLInputElement;
@@ -65,7 +65,7 @@ describe('CheckboxControl', () => {
           label="is the meeting remote?"
           testId="remote"
         />
-      </Wrapper>
+      </Wrapper>,
     );
 
     const checkbox = screen.getByTestId('remote') as HTMLInputElement;
@@ -81,13 +81,13 @@ describe('CheckboxControl', () => {
           description="For remote meetings a video call invite will be sent in advance"
           testId="remote"
         />
-      </Wrapper>
+      </Wrapper>,
     );
 
     expect(
       screen.getByText(
-        /For remote meetings a video call invite will be sent in advance/i
-      )
+        /For remote meetings a video call invite will be sent in advance/i,
+      ),
     ).toBeInTheDocument();
   });
 
@@ -100,14 +100,14 @@ describe('CheckboxControl', () => {
           description="For remote meetings a video call invite will be sent in advance"
           testId="remote"
         />
-      </Wrapper>
+      </Wrapper>,
     );
 
     const checkbox = screen.getByTestId('remote');
     const describedBy = checkbox.getAttribute('aria-describedby');
     expect(describedBy).toMatch(/remote-description/);
     expect(screen.getByTestId('remote-description')).toHaveTextContent(
-      /For remote meetings a video call invite will be sent in advance/
+      /For remote meetings a video call invite will be sent in advance/,
     );
   });
 
@@ -144,8 +144,8 @@ describe('CheckboxControl', () => {
 
     expect(
       await screen.findByText(
-        /For remote meetings a video call invite will be sent in advance/i
-      )
+        /For remote meetings a video call invite will be sent in advance/i,
+      ),
     ).toBeVisible();
 
     const checkbox = screen.getByTestId('remote');

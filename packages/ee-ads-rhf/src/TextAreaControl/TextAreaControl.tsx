@@ -49,7 +49,7 @@ const TextAreaControl = forwardRef(function TextAreaControl<
     registerOptions,
     id,
     testId,
-    cols
+    cols,
     rows,
     wrapperProps,
     ...attributes
