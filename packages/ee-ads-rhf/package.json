@@ -18,11 +18,11 @@
     "@amsterdam/design-system-tokens": "^1.0.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-hook-form": "^7.62.0",
-    "vitest": "^3.2.4"
+    "react-hook-form": "^7.62.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.8.0",
-    "jsdom": "^26.1.0"
+    "jsdom": "^27.0.0",
+    "vitest": "^3.2.4"
   }
 }
