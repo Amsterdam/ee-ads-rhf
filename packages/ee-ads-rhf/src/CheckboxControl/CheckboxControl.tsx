@@ -100,6 +100,7 @@ const CheckboxControl = forwardRef(function CheckboxControl<
                 { [descriptionId]: !!descriptionId },
                 { [errorId]: hasError },
               )}
+              checked={field.value}
               // Controlled props from RHF
               {...field}
               {...attributes}
