@@ -1,9 +1,10 @@
+import { ReactElement } from 'react';
 import { FieldValues, Path, FieldPath, RegisterOptions } from 'react-hook-form';
 
 export type FormControlBase<TFieldValues extends FieldValues = FieldValues> = {
   name: Path<TFieldValues>;
   label?: string;
-  description?: string;
+  description?: string | ReactElement;
   registerOptions?: RegisterOptions<TFieldValues, FieldPath<TFieldValues>>;
   testId?: string;
   rules?: Omit<

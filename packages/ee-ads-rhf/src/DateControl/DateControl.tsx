@@ -31,7 +31,7 @@ export type DateControlProps<TFieldValues extends FieldValues> =
       wrapperProps?: ComponentPropsWithoutRef<'div'>;
     };
 
-// This interface allows us to use a generic type argum/ent in parent components to specify the shape of the form value
+// This interface allows us to use a generic type argument in parent components to specify the shape of the form value
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 interface DateControlComponent extends ForwardRefExoticComponent<any> {
   <TFieldValues extends FieldValues = FieldValues>(
@@ -89,6 +89,7 @@ const DateControl = forwardRef(function DateControl<
                 {label}
               </Label>
             )}
+            {/* TODO description as ReactNode or Text */}
             {description && (
               <Paragraph
                 size="small"
@@ -102,7 +103,6 @@ const DateControl = forwardRef(function DateControl<
               <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
             )}
 
-            {/* TODO spread values last or first - and can `register` interfere with the invalid/disabled props? */}
             <DateInput
               id={identifier}
               invalid={hasError}

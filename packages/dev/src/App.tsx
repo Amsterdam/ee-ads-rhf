@@ -6,6 +6,7 @@ import {
   CheckboxControl,
   DateControl,
   TimeControl,
+  SelectControl,
 } from '@amsterdam/ee-ads-rhf-lib';
 import {
   Grid,
@@ -31,6 +32,8 @@ function App() {
     startDate: '',
     startTime: '',
     terms: false,
+    region: 'Noord-Holland',
+    country: 'nl',
   };
 
   const onSubmit = useCallback(async (data: AppFormData) => {
@@ -98,6 +101,41 @@ function App() {
             wrapperProps={{
               className: 'ams-mb-m',
             }}
+          />
+
+          <SelectControl<{ region: string }>
+            label="Province"
+            name="region"
+            registerOptions={{}}
+            wrapperProps={{
+              className: 'ams-mb-m',
+            }}
+            options={['Flevoland', 'Noord-Holland']}
+          />
+
+          <SelectControl<{ country: string }>
+            label="Country"
+            name="country"
+            description={<em>description text here</em>}
+            registerOptions={{}}
+            wrapperProps={{
+              className: 'ams-mb-m',
+            }}
+            // TODO grouped options
+            options={[
+              {
+                label: 'Belgium',
+                value: 'be',
+              },
+              {
+                label: 'The Netherlands',
+                value: 'nl',
+              },
+              {
+                label: 'United Kingdom',
+                value: 'uk',
+              }
+            ]}
           />
 
           <Row>
