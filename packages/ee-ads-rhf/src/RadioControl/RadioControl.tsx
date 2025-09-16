@@ -23,11 +23,11 @@ import { FormControlBase } from '../types';
 export type RadioControlProps<TFieldValues extends FieldValues = FieldValues> =
   RadioProps &
     FormControlBase<TFieldValues> & {
-      title: string;
       options: { label: string; value: string }[] | string[];
       wrapperProps?: ComponentPropsWithoutRef<'fieldset'>;
     };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 interface RadioControlComponent extends ForwardRefExoticComponent<any> {
   <TFieldValues extends FieldValues = FieldValues>(
     props: RadioControlProps<TFieldValues> & {
@@ -41,7 +41,7 @@ const RadioControl = forwardRef(function RadioControl<
 >(
   {
     name,
-    title,
+    label,
     description,
     options,
     registerOptions,
@@ -81,6 +81,7 @@ const RadioControl = forwardRef(function RadioControl<
               key={`${identifier}-${index}`}
               id={identifier}
               name={field.name}
+              value={value}
               checked={field.value === value}
               onChange={() => field.onChange(value)}
               onBlur={field.onBlur}
@@ -95,7 +96,7 @@ const RadioControl = forwardRef(function RadioControl<
         return (
           <FieldSet
             aria-describedby={description ? descriptionId : undefined}
-            legend={title}
+            legend={label ?? ''}
             role="radiogroup"
             optional={optional}
             {...wrapperProps}

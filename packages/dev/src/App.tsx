@@ -37,7 +37,7 @@ function App() {
     district: 'elandsgrachtbuurt',
     region: 'Noord-Holland',
     country: 'nl',
-    gender: 'f',
+    gender: 'm',
   };
 
   const onSubmit = useCallback(async (data: AppFormData) => {
@@ -155,7 +155,7 @@ function App() {
           />
 
           <RadioControl<{ gender: string }>
-            title="Gender"
+            label="Gender"
             description="Description text goes here..."
             name="gender"
             registerOptions={{
@@ -166,12 +166,12 @@ function App() {
             }}
             options={[
               {
-                label: 'Male',
-                value: 'm',
-              },
-              {
                 label: 'Female',
                 value: 'f',
+              },
+              {
+                label: 'Male',
+                value: 'm',
               },
             ]}
           />
