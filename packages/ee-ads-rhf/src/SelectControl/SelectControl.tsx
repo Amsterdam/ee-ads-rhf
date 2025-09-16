@@ -125,7 +125,7 @@ const SelectControl = forwardRef(function SelectControl<
         const hasError = !!fieldState.error;
 
         return (
-          <Field className="ams-mb-m" invalid={hasError} {...wrapperProps}>
+          <Field invalid={hasError} {...wrapperProps}>
             <Label htmlFor={identifier}>{label}</Label>
             {!!description && (
               typeof description === 'string' ? (
