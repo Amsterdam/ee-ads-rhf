@@ -20,7 +20,7 @@ import {
   type RegisterOptions,
 } from 'react-hook-form';
 import clsx from 'clsx';
-import { FormControlBase } from '../types';
+import { FormControlBase, SelectGroup, SelectOption } from '../types';
 
 // Merge design-system and react-hook-form types
 export type SelectControlProps<TFieldValues extends FieldValues> =
@@ -28,7 +28,7 @@ export type SelectControlProps<TFieldValues extends FieldValues> =
     FormControlBase<TFieldValues> &
     // This component is wrapped in a `<Field>` component, which returns a `div`
     ComponentPropsWithoutRef<'div'> & {
-      options: { label: string; value: string; }[] | string[];
+      options: { group: string; options: { label: string; value: string }[] }[] | { label: string; value: string; }[] | string[];
       wrapperProps?: ComponentPropsWithoutRef<'div'>;
     };
 
@@ -65,15 +65,55 @@ const SelectControl = forwardRef(function SelectControl<
   const required = registerOptions?.required;
   const optional = !required;
 
-  const children = options.map((option, index) => {
-    const { value, label } = typeof option === 'string' ? { value: option, label: option } : option;
-
-    return (
-      <Select.Option value={value} key={`${identifier}-${index}`}>
-        {label}
+  function renderStringOptions(options: string[], identifier: string) {
+    return options.map((option, index) => (
+      <Select.Option value={option} key={`${identifier}-${index}`}>
+        {option}
       </Select.Option>
-    );
-  });
+    ))
+  }
+
+  function renderObjectOptions(options: SelectOption[], identifier: string) {
+    return options.map((opt, index) => (
+      <Select.Option value={opt.value} key={`${identifier}-${index}`}>
+        {opt.label}
+      </Select.Option>
+    ))
+  }
+
+  function renderGroupedOptions(groups: SelectGroup[], identifier: string) {
+    return groups.map((group, gIndex) => (
+      <Select.Group label={group.group} key={`${identifier}-g${gIndex}`}>
+        {group.options.map((opt, oIndex) => (
+          <Select.Option
+            value={opt.value}
+            key={`${identifier}-g${gIndex}-o${oIndex}`}
+          >
+            {opt.label}
+          </Select.Option>
+        ))}
+      </Select.Group>
+    ))
+  }
+
+  function renderOptions(
+    options: string[] | SelectOption[] | SelectGroup[],
+    identifier: string
+  ) {
+    if (options.length === 0) return null
+
+    if (typeof options[0] === 'string') {
+      return renderStringOptions(options as string[], identifier)
+    }
+
+    if ('group' in (options[0] as any)) {
+      return renderGroupedOptions(options as SelectGroup[], identifier)
+    }
+
+    return renderObjectOptions(options as SelectOption[], identifier)
+  }
+
+  const children = renderOptions(options, identifier)
 
   return (
     <Controller

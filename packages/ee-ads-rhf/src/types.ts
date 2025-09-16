@@ -12,3 +12,6 @@ export type FormControlBase<TFieldValues extends FieldValues = FieldValues> = {
     'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
   >;
 };
+
+export type SelectOption = { label: string; value: string };
+export type SelectGroup = { group: string; options: SelectOption[] };

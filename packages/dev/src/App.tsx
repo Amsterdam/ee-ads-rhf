@@ -15,6 +15,7 @@ import {
   Button,
   Row,
 } from '@amsterdam/design-system-react';
+import districts from './districts';
 
 interface AppFormData {
   name: string;
@@ -32,6 +33,7 @@ function App() {
     startDate: '',
     startTime: '',
     terms: false,
+    district: 'elandsgrachtbuurt',
     region: 'Noord-Holland',
     country: 'nl',
   };
@@ -103,6 +105,18 @@ function App() {
             }}
           />
 
+          {/* Select grouped option example */}
+          <SelectControl<{ district: string }>
+            label="Gebied"
+            name="district"
+            registerOptions={{}}
+            wrapperProps={{
+              className: 'ams-mb-m',
+            }}
+            options={districts}
+          />
+
+          {/* Select flat array option example */}
           <SelectControl<{ region: string }>
             label="Province"
             name="region"
@@ -113,6 +127,7 @@ function App() {
             options={['Flevoland', 'Noord-Holland']}
           />
 
+          {/* Select standard option example */}
           <SelectControl<{ country: string }>
             label="Country"
             name="country"
@@ -121,7 +136,6 @@ function App() {
             wrapperProps={{
               className: 'ams-mb-m',
             }}
-            // TODO grouped options
             options={[
               {
                 label: 'Belgium',
