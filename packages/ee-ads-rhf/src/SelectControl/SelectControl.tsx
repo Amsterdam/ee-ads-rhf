@@ -166,4 +166,6 @@ const SelectControl = forwardRef(function SelectControl<
   );
 }) as SelectControlComponent;
 
+SelectControl.displayName = 'SelectControl';
+
 export default SelectControl;

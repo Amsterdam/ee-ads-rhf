@@ -7,6 +7,7 @@ import {
   DateControl,
   TimeControl,
   SelectControl,
+  RadioControl,
 } from '@amsterdam/ee-ads-rhf-lib';
 import {
   Grid,
@@ -36,6 +37,7 @@ function App() {
     district: 'elandsgrachtbuurt',
     region: 'Noord-Holland',
     country: 'nl',
+    gender: 'f',
   };
 
   const onSubmit = useCallback(async (data: AppFormData) => {
@@ -148,7 +150,29 @@ function App() {
               {
                 label: 'United Kingdom',
                 value: 'uk',
-              }
+              },
+            ]}
+          />
+
+          <RadioControl<{ gender: string }>
+            title="Gender"
+            description="Description text goes here..."
+            name="gender"
+            registerOptions={{
+              required: 'This field is required.',
+            }}
+            wrapperProps={{
+              className: 'ams-mb-m',
+            }}
+            options={[
+              {
+                label: 'Male',
+                value: 'm',
+              },
+              {
+                label: 'Female',
+                value: 'f',
+              },
             ]}
           />
 
