@@ -50,8 +50,6 @@ const SwitchControl = forwardRef(function SwitchControl<
     id,
     disabled,
     testId,
-    indeterminate,
-    icon,
     wrapperProps,
     ...attributes
   }: SwitchControlProps<TFieldValues>,
