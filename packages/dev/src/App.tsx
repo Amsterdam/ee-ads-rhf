@@ -6,6 +6,7 @@ import {
   CheckboxControl,
   DateControl,
   TimeControl,
+  SelectControl,
 } from '@amsterdam/ee-ads-rhf-lib';
 import {
   Grid,
@@ -14,6 +15,7 @@ import {
   Button,
   Row,
 } from '@amsterdam/design-system-react';
+import districts from './districts';
 
 interface AppFormData {
   name: string;
@@ -31,6 +33,9 @@ function App() {
     startDate: '',
     startTime: '',
     terms: false,
+    district: 'elandsgrachtbuurt',
+    region: 'Noord-Holland',
+    country: 'nl',
   };
 
   const onSubmit = useCallback(async (data: AppFormData) => {
@@ -98,6 +103,53 @@ function App() {
             wrapperProps={{
               className: 'ams-mb-m',
             }}
+          />
+
+          {/* Select grouped option example */}
+          <SelectControl<{ district: string }>
+            label="Gebied"
+            name="district"
+            registerOptions={{}}
+            wrapperProps={{
+              className: 'ams-mb-m',
+            }}
+            options={districts}
+          />
+
+          {/* Select flat array option example */}
+          <SelectControl<{ region: string }>
+            label="Province"
+            name="region"
+            registerOptions={{}}
+            wrapperProps={{
+              className: 'ams-mb-m',
+            }}
+            options={['Flevoland', 'Noord-Holland']}
+          />
+
+          {/* Select standard option example */}
+          <SelectControl<{ country: string }>
+            label="Country"
+            name="country"
+            description={<em>description text here</em>}
+            registerOptions={{}}
+            wrapperProps={{
+              className: 'ams-mb-m',
+            }}
+            options={[
+              {
+                label: 'Belgium',
+                value: 'be',
+              },
+              {
+                label: 'The Netherlands',
+                value: 'nl',
+              },
+              {
+                label: 'United Kingdom',
+                value: 'uk',
+              }
+            ]}
           />
 
           <Row>
