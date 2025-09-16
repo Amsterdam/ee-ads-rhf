@@ -7,7 +7,8 @@ import {
   UseFormProps,
 } from 'react-hook-form';
 
-interface FormProviderProps<TFieldValues extends FieldValues> extends PropsWithChildren {
+interface FormProviderProps<TFieldValues extends FieldValues>
+  extends PropsWithChildren {
   mode?: 'onChange' | 'onSubmit' | 'onBlur' | 'onTouched' | 'all' | undefined;
   noValidate?: boolean;
   onSubmit: SubmitHandler<TFieldValues>;

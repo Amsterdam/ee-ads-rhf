@@ -27,7 +27,7 @@ describe('TimeControl', () => {
           label="Start time"
           testId="startTime"
         />
-      </Wrapper>
+      </Wrapper>,
     );
 
     const input = screen.getByTestId('startTime') as HTMLInputElement;
@@ -43,7 +43,7 @@ describe('TimeControl', () => {
           label="Start time"
           testId="startTime"
         />
-      </Wrapper>
+      </Wrapper>,
     );
 
     const input = screen.getByTestId('startTime') as HTMLInputElement;
@@ -61,7 +61,7 @@ describe('TimeControl', () => {
           label="Start time"
           testId="startTime"
         />
-      </Wrapper>
+      </Wrapper>,
     );
 
     const input = screen.getByTestId('startTime') as HTMLInputElement;
@@ -77,7 +77,7 @@ describe('TimeControl', () => {
           description="Please enter a start time."
           testId="startTime"
         />
-      </Wrapper>
+      </Wrapper>,
     );
 
     expect(screen.getByText(/please enter a start time/i)).toBeInTheDocument();
@@ -92,7 +92,7 @@ describe('TimeControl', () => {
           description="We need this to verify your age."
           testId="startTime"
         />
-      </Wrapper>
+      </Wrapper>,
     );
 
     const input = screen.getByTestId('startTime');
@@ -100,7 +100,7 @@ describe('TimeControl', () => {
     expect(describedBy).toMatch(/startTime-description/);
 
     expect(screen.getByTestId('startTime-description')).toHaveTextContent(
-      /verify your age/i
+      /verify your age/i,
     );
   });
 

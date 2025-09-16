@@ -24,7 +24,7 @@ describe('FormProvider', () => {
     const { container } = render(
       <FormProvider onSubmit={vi.fn()} defaultValues={{ email: '' }}>
         <input name="email" />
-      </FormProvider>
+      </FormProvider>,
     );
 
     expect(container.querySelector('form')).toHaveAttribute('novalidate');
@@ -32,9 +32,13 @@ describe('FormProvider', () => {
 
   it('respects noValidate={false}', () => {
     const { container } = render(
-      <FormProvider onSubmit={vi.fn()} defaultValues={{ email: '' }} noValidate={false}>
+      <FormProvider
+        onSubmit={vi.fn()}
+        defaultValues={{ email: '' }}
+        noValidate={false}
+      >
         <input name="email" />
-      </FormProvider>
+      </FormProvider>,
     );
 
     expect(container.querySelector('form')).not.toHaveAttribute('novalidate');
@@ -44,9 +48,12 @@ describe('FormProvider', () => {
     const onSubmitMock = vi.fn();
 
     render(
-      <FormProvider onSubmit={onSubmitMock} defaultValues={{ email: 'test@example.com' }}>
+      <FormProvider
+        onSubmit={onSubmitMock}
+        defaultValues={{ email: 'test@example.com' }}
+      >
         <button type="submit">Submit</button>
-      </FormProvider>
+      </FormProvider>,
     );
 
     fireEvent.click(screen.getByText('Submit'));
@@ -54,7 +61,7 @@ describe('FormProvider', () => {
     await waitFor(() => {
       expect(onSubmitMock).toHaveBeenCalledWith(
         { email: 'test@example.com' },
-        expect.anything()
+        expect.anything(),
       );
     });
   });
@@ -66,16 +73,18 @@ describe('FormProvider', () => {
       <FormProvider onSubmit={handleSubmit} defaultValues={{ email: '' }}>
         <EmailInput />
         <button type="submit">Submit</button>
-      </FormProvider>
+      </FormProvider>,
     );
 
-    fireEvent.change(screen.getByTestId('email-input'), { target: { value: 'test@example.com' }});
+    fireEvent.change(screen.getByTestId('email-input'), {
+      target: { value: 'test@example.com' },
+    });
     fireEvent.click(screen.getByText('Submit'));
 
     await waitFor(() => {
       expect(handleSubmit).toHaveBeenCalledWith(
         { email: 'test@example.com' },
-        expect.anything()
+        expect.anything(),
       );
     });
   });
