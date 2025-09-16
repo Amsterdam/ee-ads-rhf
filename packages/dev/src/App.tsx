@@ -8,6 +8,7 @@ import {
   TimeControl,
   SelectControl,
   RadioControl,
+  SwitchControl,
 } from '@amsterdam/ee-ads-rhf-lib';
 import {
   Grid,
@@ -38,6 +39,7 @@ function App() {
     region: 'Noord-Holland',
     country: 'nl',
     gender: 'm',
+    notification: false,
   };
 
   const onSubmit = useCallback(async (data: AppFormData) => {
@@ -174,6 +176,16 @@ function App() {
                 value: 'm',
               },
             ]}
+          />
+
+          <SwitchControl<{ notification: boolean }>
+            label="Do you want a notification?"
+            name="notification"
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            registerOptions={{ required: 'The terms are required.' }}
+            wrapperProps={{
+              className: 'ams-mb-m',
+            }}
           />
 
           <Row>

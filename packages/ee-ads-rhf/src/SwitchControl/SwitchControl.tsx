@@ -13,31 +13,33 @@ import {
 } from 'react-hook-form';
 import {
   Field,
-  Checkbox,
   Paragraph,
   type CheckboxProps,
   ErrorMessage,
+  Label,
+  Row,
+  Switch,
 } from '@amsterdam/design-system-react';
 import clsx from 'clsx';
 import { FormControlBase } from '../types';
 
 // Merge design-system and react-hook-form types
-export type CheckboxControlProps<TFieldValues extends FieldValues> =
+export type SwitchControlProps<TFieldValues extends FieldValues> =
   CheckboxProps &
     FormControlBase<TFieldValues> & {
       wrapperProps?: ComponentPropsWithoutRef<'div'>;
     };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-interface CheckboxControlComponent extends ForwardRefExoticComponent<any> {
+interface SwitchControlComponent extends ForwardRefExoticComponent<any> {
   <TFieldValues extends FieldValues = FieldValues>(
-    props: CheckboxControlProps<TFieldValues> & {
+    props: SwitchControlProps<TFieldValues> & {
       ref?: Ref<HTMLInputElement>;
     },
   ): ReactElement | null;
 }
 
-const CheckboxControl = forwardRef(function CheckboxControl<
+const SwitchControl = forwardRef(function SwitchControl<
   TFieldValues extends FieldValues = FieldValues,
 >(
   {
@@ -52,7 +54,7 @@ const CheckboxControl = forwardRef(function CheckboxControl<
     icon,
     wrapperProps,
     ...attributes
-  }: CheckboxControlProps<TFieldValues>,
+  }: SwitchControlProps<TFieldValues>,
   ref: Ref<HTMLInputElement>,
 ) {
   const { control } = useFormContext();
@@ -90,31 +92,29 @@ const CheckboxControl = forwardRef(function CheckboxControl<
               <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
             )}
 
-            <Checkbox
-              id={identifier}
-              invalid={hasError}
-              disabled={disabled}
-              indeterminate={indeterminate}
-              icon={icon}
-              aria-describedby={clsx(
-                { [descriptionId]: !!descriptionId },
-                { [errorId]: hasError },
-              )}
-              // Controlled props from RHF
-              {...field}
-              {...attributes}
-              data-testid={identifier}
-              ref={ref}
-            >
-              {label && label}
-            </Checkbox>
+            <Row>
+              <Label htmlFor={identifier}>{label}</Label>
+              <Switch
+                id={identifier}
+                disabled={disabled}
+                aria-describedby={clsx(
+                  { [descriptionId]: !!descriptionId },
+                  { [errorId]: hasError },
+                )}
+                // Controlled props from RHF
+                {...field}
+                {...attributes}
+                data-testid={identifier}
+                ref={ref}
+              />
+            </Row>
           </Field>
         );
       }}
     />
   );
-}) as CheckboxControlComponent;
+}) as SwitchControlComponent;
 
-CheckboxControl.displayName = 'CheckboxControl';
+SwitchControl.displayName = 'SwitchControl';
 
-export default CheckboxControl;
+export default SwitchControl;
