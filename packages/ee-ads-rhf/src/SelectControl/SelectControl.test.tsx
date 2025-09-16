@@ -191,7 +191,7 @@ describe('SelectControl', () => {
     );
   });
 
-  it('shows error message and updates aria-describedby', async () => {
+  it('shows error message', async () => {
     render(
       <FormProvider defaultValues={{ country: '' }} onSubmit={vi.fn()}>
         <SelectControl<FormValues>
