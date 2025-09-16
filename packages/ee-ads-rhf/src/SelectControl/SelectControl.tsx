@@ -23,15 +23,18 @@ import clsx from 'clsx';
 import { FormControlBase, SelectGroup, SelectOption } from '../types';
 
 // Merge design-system and react-hook-form types
-export type SelectControlProps<TFieldValues extends FieldValues> =
-  SelectProps &
-    FormControlBase<TFieldValues> &
-    // This component is wrapped in a `<Field>` component, which returns a `div`
-    ComponentPropsWithoutRef<'div'> & {
-      options: { group: string; options: { label: string; value: string }[] }[] | { label: string; value: string; }[] | string[];
-      wrapperProps?: ComponentPropsWithoutRef<'div'>;
-    };
+export type SelectControlProps<TFieldValues extends FieldValues> = SelectProps &
+  FormControlBase<TFieldValues> &
+  // This component is wrapped in a `<Field>` component, which returns a `div`
+  ComponentPropsWithoutRef<'div'> & {
+    options:
+      | { group: string; options: { label: string; value: string }[] }[]
+      | { label: string; value: string }[]
+      | string[];
+    wrapperProps?: ComponentPropsWithoutRef<'div'>;
+  };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 interface SelectControlComponent extends ForwardRefExoticComponent<any> {
   <TFieldValues extends FieldValues = FieldValues>(
     props: SelectControlProps<TFieldValues> & {
@@ -70,7 +73,7 @@ const SelectControl = forwardRef(function SelectControl<
       <Select.Option value={option} key={`${identifier}-${index}`}>
         {option}
       </Select.Option>
-    ))
+    ));
   }
 
   function renderObjectOptions(options: SelectOption[], identifier: string) {
@@ -78,7 +81,7 @@ const SelectControl = forwardRef(function SelectControl<
       <Select.Option value={opt.value} key={`${identifier}-${index}`}>
         {opt.label}
       </Select.Option>
-    ))
+    ));
   }
 
   function renderGroupedOptions(groups: SelectGroup[], identifier: string) {
@@ -93,27 +96,28 @@ const SelectControl = forwardRef(function SelectControl<
           </Select.Option>
         ))}
       </Select.Group>
-    ))
+    ));
   }
 
   function renderOptions(
     options: string[] | SelectOption[] | SelectGroup[],
-    identifier: string
+    identifier: string,
   ) {
-    if (options.length === 0) return null
+    if (options.length === 0) return null;
 
     if (typeof options[0] === 'string') {
-      return renderStringOptions(options as string[], identifier)
+      return renderStringOptions(options as string[], identifier);
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if ('group' in (options[0] as any)) {
-      return renderGroupedOptions(options as SelectGroup[], identifier)
+      return renderGroupedOptions(options as SelectGroup[], identifier);
     }
 
-    return renderObjectOptions(options as SelectOption[], identifier)
+    return renderObjectOptions(options as SelectOption[], identifier);
   }
 
-  const children = renderOptions(options, identifier)
+  const children = renderOptions(options, identifier);
 
   return (
     <Controller
@@ -126,22 +130,25 @@ const SelectControl = forwardRef(function SelectControl<
 
         return (
           <Field invalid={hasError} {...wrapperProps}>
-            <Label htmlFor={identifier}>{label}</Label>
-            {!!description && (
-              typeof description === 'string' ? (
-                <Paragraph id={`${identifier}-description`} size="small">
+            <Label htmlFor={identifier} optional={optional}>
+              {label}
+            </Label>
+            {!!description &&
+              (typeof description === 'string' ? (
+                <Paragraph id={descriptionId} size="small">
                   {description}
                 </Paragraph>
               ) : (
                 description
-              )
+              ))}
+            {hasError && (
+              <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
             )}
-            {hasError && <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>}
 
             <Select
               aria-describedby={clsx(
                 { [`${identifier}-description`]: description },
-                { [`${identifier}-error`]: hasError }
+                { [`${identifier}-error`]: hasError },
               )}
               id={identifier}
               invalid={hasError}

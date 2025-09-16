@@ -28,7 +28,7 @@ describe('TextAreaControl', () => {
           label="Your Message"
           testId="message"
         />
-      </Wrapper>
+      </Wrapper>,
     );
 
     // Use regex lookup as textArea label can include (whitespace and
@@ -45,22 +45,22 @@ describe('TextAreaControl', () => {
           label="Your Message"
           testId="message"
         />
-      </Wrapper>
+      </Wrapper>,
     );
 
     // Use regex lookup as textArea label can include (whitespace and
     // `(niet verplicht)`)
     const textarea = screen.getByLabelText(
-      /Your Message/i
+      /Your Message/i,
     ) as HTMLTextAreaElement;
     expect(textarea.value).toBe('');
 
     await userEvent.type(
       textarea,
-      'Lorem ipsum dolor sit amet. Qui molestiae laudantium in velit blanditiis sed sequi reprehenderit et minus unde nam fugit aperiam. Sit aliquid sapiente non odio accusamus eum modi galisum. Et voluptatem facilis eum rerum dolores aut ducimus expedita cum consectetur quidem.'
+      'Lorem ipsum dolor sit amet. Qui molestiae laudantium in velit blanditiis sed sequi reprehenderit et minus unde nam fugit aperiam. Sit aliquid sapiente non odio accusamus eum modi galisum. Et voluptatem facilis eum rerum dolores aut ducimus expedita cum consectetur quidem.',
     );
     expect(textarea.value).toBe(
-      'Lorem ipsum dolor sit amet. Qui molestiae laudantium in velit blanditiis sed sequi reprehenderit et minus unde nam fugit aperiam. Sit aliquid sapiente non odio accusamus eum modi galisum. Et voluptatem facilis eum rerum dolores aut ducimus expedita cum consectetur quidem.'
+      'Lorem ipsum dolor sit amet. Qui molestiae laudantium in velit blanditiis sed sequi reprehenderit et minus unde nam fugit aperiam. Sit aliquid sapiente non odio accusamus eum modi galisum. Et voluptatem facilis eum rerum dolores aut ducimus expedita cum consectetur quidem.',
     );
   });
 
@@ -77,16 +77,16 @@ describe('TextAreaControl', () => {
           label="Your Message"
           testId="message"
         />
-      </Wrapper>
+      </Wrapper>,
     );
 
     // Use regex lookup as textArea label can include (whitespace and
     // `(niet verplicht)`)
     const textarea = screen.getByLabelText(
-      /Your Message/i
+      /Your Message/i,
     ) as HTMLTextAreaElement;
     expect(textarea.value).toBe(
-      'A placeat harum est sint eaque et aperiam quis et voluptas deleniti id expedita modi aut magnam minima. Vel quaerat dolores ut explicabo similique aut expedita molestiae quo doloremque temporibus ut veniam quos.'
+      'A placeat harum est sint eaque et aperiam quis et voluptas deleniti id expedita modi aut magnam minima. Vel quaerat dolores ut explicabo similique aut expedita molestiae quo doloremque temporibus ut veniam quos.',
     );
   });
 
@@ -99,11 +99,11 @@ describe('TextAreaControl', () => {
           description="Please enter your full legal name."
           testId="message"
         />
-      </Wrapper>
+      </Wrapper>,
     );
 
     expect(
-      screen.getByText(/please enter your full legal name/i)
+      screen.getByText(/please enter your full legal name/i),
     ).toBeInTheDocument();
   });
 
@@ -116,7 +116,7 @@ describe('TextAreaControl', () => {
           description="Send us your ideas."
           testId="message"
         />
-      </Wrapper>
+      </Wrapper>,
     );
 
     // Use regex lookup as textArea label can include (whitespace and
@@ -126,7 +126,7 @@ describe('TextAreaControl', () => {
     expect(describedBy).toMatch(/message-description/);
 
     expect(screen.getByTestId('message-description')).toHaveTextContent(
-      /Send us your ideas/i
+      /Send us your ideas/i,
     );
   });
 
