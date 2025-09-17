@@ -1,6 +1,7 @@
 export { default as FormProvider } from './FormProvider/FormProvider';
 export { default as CheckboxControl } from './CheckboxControl/CheckboxControl';
 export { default as DateControl } from './DateControl/DateControl';
+export { default as PasswordInputControl } from './PasswordInputControl/PasswordInputControl';
 export { default as RadioControl } from './RadioControl/RadioControl';
 export { default as SelectControl } from './SelectControl/SelectControl';
 export { default as SwitchControl } from './SwitchControl/SwitchControl';
