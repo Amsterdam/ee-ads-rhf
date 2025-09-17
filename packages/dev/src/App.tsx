@@ -10,6 +10,7 @@ import {
   RadioControl,
   SwitchControl,
   PasswordInputControl,
+  FileInputControl,
 } from '@amsterdam/ee-ads-rhf-lib';
 import {
   Grid,
@@ -195,6 +196,16 @@ function App() {
             name="password"
             description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
             registerOptions={{ required: 'A password is required.' }}
+            wrapperProps={{
+              className: 'ams-mb-m',
+            }}
+          />
+
+          <FileInputControl<{ attachment: string }>
+            label="Attachment"
+            name="attachment"
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            registerOptions={{}}
             wrapperProps={{
               className: 'ams-mb-m',
             }}
