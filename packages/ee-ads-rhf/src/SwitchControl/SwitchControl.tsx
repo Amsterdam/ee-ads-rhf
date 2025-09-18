@@ -99,6 +99,7 @@ const SwitchControl = forwardRef(function SwitchControl<
                   { [descriptionId]: !!descriptionId },
                   { [errorId]: hasError },
                 )}
+                checked={!!field.value}
                 // Controlled props from RHF
                 {...field}
                 {...attributes}
