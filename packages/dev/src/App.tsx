@@ -43,6 +43,7 @@ function App() {
     gender: 'm',
     notification: false,
     password: '',
+    attachment: '',
   };
 
   const onSubmit = useCallback(async (data: AppFormData) => {
