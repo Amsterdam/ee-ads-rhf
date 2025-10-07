@@ -92,12 +92,14 @@ describe('CheckboxControl', () => {
   });
 
   it('shows description id in aria-describedby', () => {
+    const description =
+      'For remote meetings a video call invite will be sent in advance';
     render(
       <Wrapper>
         <CheckboxControl<FormValues>
           name="remote"
           label="is the meeting remote?"
-          description="For remote meetings a video call invite will be sent in advance"
+          description={description}
           testId="remote"
         />
       </Wrapper>,
@@ -106,8 +108,9 @@ describe('CheckboxControl', () => {
     const checkbox = screen.getByTestId('remote');
     const describedBy = checkbox.getAttribute('aria-describedby');
     expect(describedBy).toMatch(/remote-description/);
-    expect(screen.getByTestId('remote-description')).toHaveTextContent(
-      /For remote meetings a video call invite will be sent in advance/,
+    expect(screen.getByText(description)).toHaveAttribute(
+      'id',
+      'remote-description',
     );
   });
 
