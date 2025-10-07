@@ -76,15 +76,14 @@ const CheckboxControl = forwardRef(function CheckboxControl<
             invalid={hasError}
             {...wrapperProps}
           >
-            {description && (
-              <Paragraph
-                size="small"
-                id={descriptionId}
-                data-testid={descriptionId}
-              >
-                {description}
-              </Paragraph>
-            )}
+            {!!description &&
+              (typeof description === 'string' ? (
+                <Paragraph id={descriptionId} size="small">
+                  {description}
+                </Paragraph>
+              ) : (
+                <div id={descriptionId}>{description}</div>
+              ))}
 
             {hasError && (
               <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
@@ -100,6 +99,7 @@ const CheckboxControl = forwardRef(function CheckboxControl<
                 { [descriptionId]: !!descriptionId },
                 { [errorId]: hasError },
               )}
+              checked={!!field.value}
               // Controlled props from RHF
               {...field}
               {...attributes}
