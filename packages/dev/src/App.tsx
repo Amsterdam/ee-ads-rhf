@@ -49,6 +49,22 @@ function App() {
   const onSubmit = useCallback(async (data: AppFormData) => {
     try {
       console.log('Submit form!', data);
+
+      // If the form data includes a file field somewhere
+      // Before sending to any API you need to convert JSON to FormDdata
+      // const formData = new FormData();
+
+      // Object.entries(data).forEach(([key, value]) => {
+      //   if (value instanceof FileList) {
+      //     // Add all files (could be multiple)
+      //     Array.from(value).forEach((file) => formData.append(key, file));
+      //   } else if (typeof value === 'object' && value !== null) {
+      //     // Optional: stringify nested objects
+      //     formData.append(key, JSON.stringify(value));
+      //   } else {
+      //     formData.append(key, String(value));
+      //   }
+      // });
     } catch (error) {
       console.log('form error!', error);
     }

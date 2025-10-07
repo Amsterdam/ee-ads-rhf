@@ -102,13 +102,16 @@ const FileInputControl = forwardRef(function FileInputControl<
             <FileInput
               id={identifier}
               data-testid={identifier}
-              invalid={hasError}
               aria-describedby={clsx(
                 { [descriptionId]: !!descriptionId },
                 { [errorId]: hasError },
               )}
-              // Controlled props from RHF
-              {...field}
+              // Limited controlled props from RHF
+              onChange={(e) => {
+                const files = e.target.files;
+                field.onChange(files && files.length > 0 ? files : null);
+              }}
+              name={field.name}
               {...attributes}
               ref={ref}
             />
