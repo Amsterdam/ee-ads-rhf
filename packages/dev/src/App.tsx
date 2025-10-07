@@ -9,6 +9,7 @@ import {
   SelectControl,
   RadioControl,
   SwitchControl,
+  PasswordInputControl,
 } from '@amsterdam/ee-ads-rhf-lib';
 import {
   Grid,
@@ -40,6 +41,7 @@ function App() {
     country: 'nl',
     gender: 'm',
     notification: false,
+    password: '',
   };
 
   const onSubmit = useCallback(async (data: AppFormData) => {
@@ -183,6 +185,16 @@ function App() {
             name="notification"
             description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
             registerOptions={{ required: 'The terms are required.' }}
+            wrapperProps={{
+              className: 'ams-mb-m',
+            }}
+          />
+
+          <PasswordInputControl<{ password: string }>
+            label="Password"
+            name="password"
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            registerOptions={{ required: 'A password is required.' }}
             wrapperProps={{
               className: 'ams-mb-m',
             }}

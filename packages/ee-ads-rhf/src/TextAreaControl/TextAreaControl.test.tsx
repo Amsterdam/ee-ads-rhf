@@ -37,7 +37,7 @@ describe('TextAreaControl', () => {
     expect(textarea).toBeInTheDocument();
   });
 
-  it('handles user textarea', async () => {
+  it('handles user typing', async () => {
     render(
       <Wrapper>
         <TextAreaControl<FormValues>
@@ -90,7 +90,7 @@ describe('TextAreaControl', () => {
     );
   });
 
-  it('renders description when provided as string', () => {
+  it('renders description when provided', () => {
     render(
       <Wrapper>
         <TextAreaControl<FormValues>
