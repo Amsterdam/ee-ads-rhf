@@ -90,7 +90,7 @@ describe('TextAreaControl', () => {
     );
   });
 
-  it('renders description when provided as string', () => {
+  it('renders description when provided', () => {
     render(
       <Wrapper>
         <TextAreaControl<FormValues>

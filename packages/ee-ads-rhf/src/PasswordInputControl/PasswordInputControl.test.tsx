@@ -1,9 +1,8 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { useForm, FormProvider } from 'react-hook-form';
 import PasswordInputControl from './PasswordInputControl';
 import userEvent from '@testing-library/user-event';
-import { useEffect } from 'react';
 
 type FormValues = {
   password: string;
