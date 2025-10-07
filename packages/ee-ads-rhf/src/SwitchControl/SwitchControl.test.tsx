@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import FormProvider from '../FormProvider/FormProvider';
 import SwitchControl from './SwitchControl';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler } from 'react-hook-form';
 
 type FormValues = {
   notify: boolean;
