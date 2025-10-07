@@ -10,6 +10,7 @@ import {
   RadioControl,
   SwitchControl,
   PasswordInputControl,
+  FileInputControl,
 } from '@amsterdam/ee-ads-rhf-lib';
 import {
   Grid,
@@ -42,11 +43,28 @@ function App() {
     gender: 'm',
     notification: false,
     password: '',
+    attachment: '',
   };
 
   const onSubmit = useCallback(async (data: AppFormData) => {
     try {
       console.log('Submit form!', data);
+
+      // If the form data includes a file field somewhere
+      // Before sending to any API you need to convert JSON to FormDdata
+      // const formData = new FormData();
+
+      // Object.entries(data).forEach(([key, value]) => {
+      //   if (value instanceof FileList) {
+      //     // Add all files (could be multiple)
+      //     Array.from(value).forEach((file) => formData.append(key, file));
+      //   } else if (typeof value === 'object' && value !== null) {
+      //     // Optional: stringify nested objects
+      //     formData.append(key, JSON.stringify(value));
+      //   } else {
+      //     formData.append(key, String(value));
+      //   }
+      // });
     } catch (error) {
       console.log('form error!', error);
     }
@@ -195,6 +213,16 @@ function App() {
             name="password"
             description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
             registerOptions={{ required: 'A password is required.' }}
+            wrapperProps={{
+              className: 'ams-mb-m',
+            }}
+          />
+
+          <FileInputControl<{ attachment: string }>
+            label="Attachment"
+            name="attachment"
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            registerOptions={{}}
             wrapperProps={{
               className: 'ams-mb-m',
             }}
