@@ -108,12 +108,13 @@ describe('TextAreaControl', () => {
   });
 
   it('shows description id in aria-describedby', () => {
+    const description = 'Send us your ideas.';
     render(
       <Wrapper>
         <TextAreaControl<FormValues>
           name="message"
           label="Your Message"
-          description="Send us your ideas."
+          description={description}
           testId="message"
         />
       </Wrapper>,
@@ -124,9 +125,9 @@ describe('TextAreaControl', () => {
     const textarea = screen.getByLabelText(/Your Message/i);
     const describedBy = textarea.getAttribute('aria-describedby');
     expect(describedBy).toMatch(/message-description/);
-
-    expect(screen.getByTestId('message-description')).toHaveTextContent(
-      /Send us your ideas/i,
+    expect(screen.getByText(description)).toHaveAttribute(
+      'id',
+      'message-description',
     );
   });
 

@@ -86,15 +86,14 @@ const TextInputControl = forwardRef(function TextInputControl<
                 {label}
               </Label>
             )}
-            {description && (
-              <Paragraph
-                size="small"
-                id={descriptionId}
-                data-testid={descriptionId}
-              >
-                {description}
-              </Paragraph>
-            )}
+            {!!description &&
+              (typeof description === 'string' ? (
+                <Paragraph id={descriptionId} size="small">
+                  {description}
+                </Paragraph>
+              ) : (
+                <div id={descriptionId}>{description}</div>
+              ))}
             {hasError && (
               <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
             )}

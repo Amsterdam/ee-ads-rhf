@@ -86,12 +86,13 @@ describe('DateControl', () => {
   });
 
   it('shows description id in aria-describedby', () => {
+    const description = 'We need this to verify your age.';
     render(
       <Wrapper>
         <DateControl<FormValues>
           name="birthDate"
           label="Date of Birth"
-          description="We need this to verify your age."
+          description={description}
           testId="birthDate"
         />
       </Wrapper>,
@@ -100,9 +101,9 @@ describe('DateControl', () => {
     const input = screen.getByTestId('birthDate');
     const describedBy = input.getAttribute('aria-describedby');
     expect(describedBy).toMatch(/birthDate-description/);
-
-    expect(screen.getByTestId('birthDate-description')).toHaveTextContent(
-      /verify your age/i,
+    expect(screen.getByText(description)).toHaveAttribute(
+      'id',
+      'birthDate-description',
     );
   });
 

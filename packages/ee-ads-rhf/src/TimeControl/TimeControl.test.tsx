@@ -84,12 +84,13 @@ describe('TimeControl', () => {
   });
 
   it('shows description id in aria-describedby', () => {
+    const description = 'We need this to verify your age.';
     render(
       <Wrapper>
         <TimeControl<FormValues>
           name="startTime"
           label="Start time"
-          description="We need this to verify your age."
+          description={description}
           testId="startTime"
         />
       </Wrapper>,
@@ -98,9 +99,9 @@ describe('TimeControl', () => {
     const input = screen.getByTestId('startTime');
     const describedBy = input.getAttribute('aria-describedby');
     expect(describedBy).toMatch(/startTime-description/);
-
-    expect(screen.getByTestId('startTime-description')).toHaveTextContent(
-      /verify your age/i,
+    expect(screen.getByText(description)).toHaveAttribute(
+      'id',
+      'startTime-description',
     );
   });
 
