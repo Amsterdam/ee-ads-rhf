@@ -21,11 +21,12 @@ describe('SelectControl', () => {
       </FormProvider>,
     );
 
-    expect(screen.getByLabelText('Test Label')).toBeInTheDocument();
-    expect(screen.getByLabelText('Test Label')).toHaveAttribute(
-      'id',
-      'country',
-    );
+    expect(
+      screen.getByLabelText('Test Label (niet verplicht)'),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByLabelText('Test Label (niet verplicht)'),
+    ).toHaveAttribute('id', 'country');
     expect(screen.getByRole('option', { name: 'A' })).toBeInTheDocument();
     expect(screen.getByRole('option', { name: 'B' })).toBeInTheDocument();
     expect(screen.getByRole('option', { name: 'C' })).toBeInTheDocument();
@@ -55,11 +56,12 @@ describe('SelectControl', () => {
       </FormProvider>,
     );
 
-    expect(screen.getByLabelText('Test Label')).toBeInTheDocument();
-    expect(screen.getByLabelText('Test Label')).toHaveAttribute(
-      'id',
-      'country',
-    );
+    expect(
+      screen.getByLabelText('Test Label (niet verplicht)'),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByLabelText('Test Label (niet verplicht)'),
+    ).toHaveAttribute('id', 'country');
     expect(
       screen.getByRole('option', { name: 'Option 1' }),
     ).toBeInTheDocument();
@@ -97,11 +99,12 @@ describe('SelectControl', () => {
       </FormProvider>,
     );
 
-    expect(screen.getByLabelText('Test Label')).toBeInTheDocument();
-    expect(screen.getByLabelText('Test Label')).toHaveAttribute(
-      'id',
-      'country',
-    );
+    expect(
+      screen.getByLabelText('Test Label (niet verplicht)'),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByLabelText('Test Label (niet verplicht)'),
+    ).toHaveAttribute('id', 'country');
     expect(screen.getByRole('group', { name: 'Group 1' })).toBeInTheDocument();
     expect(
       screen.getByRole('option', { name: 'Grouped Label 1' }),
@@ -124,7 +127,7 @@ describe('SelectControl', () => {
       </FormProvider>,
     );
 
-    fireEvent.change(screen.getByLabelText('Test Label'), {
+    fireEvent.change(screen.getByLabelText('Test Label (niet verplicht)'), {
       target: { value: 'B' },
     });
     fireEvent.click(screen.getByText('Submit'));
@@ -148,7 +151,7 @@ describe('SelectControl', () => {
       </FormProvider>,
     );
 
-    const select = screen.getByLabelText('Test Label');
+    const select = screen.getByLabelText('Test Label (niet verplicht)');
     expect(select).toHaveValue('C');
   });
 
@@ -182,7 +185,7 @@ describe('SelectControl', () => {
       </FormProvider>,
     );
 
-    const select = screen.getByLabelText('Test Label');
+    const select = screen.getByLabelText('Test Label (niet verplicht)');
 
     expect(select).toHaveAttribute('aria-describedby', 'country-description');
     expect(screen.getByText(description)).toHaveAttribute(

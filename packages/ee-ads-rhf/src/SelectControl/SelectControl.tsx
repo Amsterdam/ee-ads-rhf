@@ -139,7 +139,7 @@ const SelectControl = forwardRef(function SelectControl<
                   {description}
                 </Paragraph>
               ) : (
-                description
+                <div id={descriptionId}>{description}</div>
               ))}
             {hasError && (
               <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>

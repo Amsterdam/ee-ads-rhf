@@ -6,39 +6,40 @@ import {
   Ref,
 } from 'react';
 import {
-  ErrorMessage,
-  Field,
-  Label,
-  Paragraph,
-  TextInput,
-  type TextInputProps,
-} from '@amsterdam/design-system-react';
-import {
   Controller,
   useFormContext,
   type FieldValues,
   type RegisterOptions,
 } from 'react-hook-form';
+import {
+  Field,
+  Paragraph,
+  type CheckboxProps,
+  ErrorMessage,
+  Label,
+  Row,
+  Switch,
+} from '@amsterdam/design-system-react';
 import clsx from 'clsx';
 import { FormControlBase } from '../types';
 
-export type TextInputControlProps<TFieldValues extends FieldValues> =
-  TextInputProps &
+// Merge design-system and react-hook-form types
+export type SwitchControlProps<TFieldValues extends FieldValues> =
+  CheckboxProps &
     FormControlBase<TFieldValues> & {
       wrapperProps?: ComponentPropsWithoutRef<'div'>;
     };
 
-interface TextInputControlComponent
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  extends ForwardRefExoticComponent<any> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+interface SwitchControlComponent extends ForwardRefExoticComponent<any> {
   <TFieldValues extends FieldValues = FieldValues>(
-    props: TextInputControlProps<TFieldValues> & {
+    props: SwitchControlProps<TFieldValues> & {
       ref?: Ref<HTMLInputElement>;
     },
   ): ReactElement | null;
 }
 
-const TextInputControl = forwardRef(function TextInputControl<
+const SwitchControl = forwardRef(function SwitchControl<
   TFieldValues extends FieldValues = FieldValues,
 >(
   {
@@ -47,10 +48,11 @@ const TextInputControl = forwardRef(function TextInputControl<
     description,
     registerOptions,
     id,
+    disabled,
     testId,
     wrapperProps,
     ...attributes
-  }: TextInputControlProps<TFieldValues>,
+  }: SwitchControlProps<TFieldValues>,
   ref: Ref<HTMLInputElement>,
 ) {
   const { control } = useFormContext();
@@ -59,9 +61,6 @@ const TextInputControl = forwardRef(function TextInputControl<
   const descriptionId = `${identifier}-description`;
   const errorId = `${identifier}-error`;
 
-  const required = registerOptions?.required;
-  const optional = !required;
-
   return (
     <Controller
       name={name}
@@ -69,23 +68,14 @@ const TextInputControl = forwardRef(function TextInputControl<
       rules={registerOptions as RegisterOptions}
       render={({ field, fieldState }) => {
         const errorMessage = fieldState.error?.message;
-        const hasError = !!errorMessage;
+        const hasError = !!fieldState.error;
 
         return (
           <Field
+            data-testid={`${identifier}-checkbox-wrapper`}
             invalid={hasError}
-            data-testid={`${identifier}-text-input-wrapper`}
             {...wrapperProps}
           >
-            {label && (
-              <Label
-                htmlFor={identifier}
-                data-testid={`${identifier}-label`}
-                optional={optional}
-              >
-                {label}
-              </Label>
-            )}
             {!!description &&
               (typeof description === 'string' ? (
                 <Paragraph id={descriptionId} size="small">
@@ -94,30 +84,35 @@ const TextInputControl = forwardRef(function TextInputControl<
               ) : (
                 <div id={descriptionId}>{description}</div>
               ))}
+
             {hasError && (
               <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
             )}
 
-            <TextInput
-              id={identifier}
-              data-testid={identifier}
-              invalid={hasError}
-              aria-describedby={clsx(
-                { [descriptionId]: !!descriptionId },
-                { [errorId]: hasError },
-              )}
-              // Controlled props from RHF
-              {...field}
-              {...attributes}
-              ref={ref}
-            />
+            <Row>
+              <Label htmlFor={identifier}>{label}</Label>
+              <Switch
+                id={identifier}
+                disabled={disabled}
+                aria-describedby={clsx(
+                  { [descriptionId]: !!descriptionId },
+                  { [errorId]: hasError },
+                )}
+                checked={!!field.value}
+                // Controlled props from RHF
+                {...field}
+                {...attributes}
+                data-testid={identifier}
+                ref={ref}
+              />
+            </Row>
           </Field>
         );
       }}
     />
   );
-}) as TextInputControlComponent;
+}) as SwitchControlComponent;
 
-TextInputControl.displayName = 'TextInputControl';
+SwitchControl.displayName = 'SwitchControl';
 
-export default TextInputControl;
+export default SwitchControl;
