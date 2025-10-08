@@ -1,0 +1,64 @@
+import type { Meta, StoryObj } from '@storybook/react-vite';
+
+import { fn } from 'storybook/test';
+
+import { CheckboxControl } from './CheckboxControl';
+
+const meta = {
+  title: 'Example/Checkbox',
+  component: CheckboxControl,
+  parameters: {
+    layout: 'centered',
+  },
+  tags: ['autodocs'],
+  argTypes: {
+    label: {
+      control: 'text',
+      description: 'The checkbox label',
+    },
+    description: {
+      control: 'text',
+      description: 'Optional description text',
+    },
+    // TODO are these all necessary?
+    disabled: {
+      control: 'boolean',
+    },
+    indeterminate: {
+      control: 'boolean',
+    },
+  },
+  // args: {},
+} satisfies Meta<typeof CheckboxControl>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Primary: Story = {
+  args: {
+    label: 'Do you agree?',
+    registerOptions: {
+      required: 'The terms are required',
+    },
+    wrapperProps: {
+      className: 'ams-mb-m',
+    },
+  },
+};
+
+export const WithDescription: Story = {
+  args: {
+    label: 'Accept terms and conditions',
+    description: 'Please read the terms carefully before accepting',
+    registerOptions: {
+      required: 'You must accept the terms',
+    },
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    label: 'Disabled checkbox',
+    disabled: true,
+  },
+};
