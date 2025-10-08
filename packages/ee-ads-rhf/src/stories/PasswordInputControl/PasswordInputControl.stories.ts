@@ -30,6 +30,7 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     label: 'Password',
+    name: 'password',
     registerOptions: {
       required: 'A password is required',
     },
@@ -43,6 +44,7 @@ export const Primary: Story = {
 export const WithDescription: Story = {
   args: {
     label: 'Password',
+    name: 'password',
     description: 'Passwords must consist of at least 8 characters and ...',
     registerOptions: {
       required: 'You must accept the terms',
@@ -54,6 +56,7 @@ export const WithDescription: Story = {
 export const Disabled: Story = {
   args: {
     label: 'Disabled password',
+    name: 'password',
     disabled: true,
     placeholder: 'Password',
   },

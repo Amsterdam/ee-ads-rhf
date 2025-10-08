@@ -30,6 +30,7 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     label: 'Attachment',
+    name: 'attachment',
     registerOptions: {
       required: 'An attachment is required',
     },
@@ -42,6 +43,7 @@ export const Primary: Story = {
 export const WithDescription: Story = {
   args: {
     label: 'Attachment',
+    name: 'attachment',
     description: 'Please select your document.',
     registerOptions: {
       required: 'An attachment is required',
@@ -52,6 +54,7 @@ export const WithDescription: Story = {
 export const Disabled: Story = {
   args: {
     label: 'Select a document',
+    name: 'attachment',
     disabled: true,
   },
 };

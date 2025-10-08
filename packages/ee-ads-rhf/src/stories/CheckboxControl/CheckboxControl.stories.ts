@@ -30,6 +30,7 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     label: 'Do you agree?',
+    name: 'terms',
     registerOptions: {
       required: 'The terms are required',
     },
@@ -42,6 +43,7 @@ export const Primary: Story = {
 export const WithDescription: Story = {
   args: {
     label: 'Accept terms and conditions',
+    name: 'terms',
     description: 'Please read the terms carefully before accepting',
     registerOptions: {
       required: 'You must accept the terms',
@@ -52,6 +54,7 @@ export const WithDescription: Story = {
 export const Disabled: Story = {
   args: {
     label: 'Disabled checkbox',
+    name: 'terms',
     disabled: true,
   },
 };

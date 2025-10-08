@@ -180,12 +180,6 @@ function App() {
             label="Gender"
             description="Description text goes here..."
             name="gender"
-            registerOptions={{
-              required: 'This field is required.',
-            }}
-            wrapperProps={{
-              className: 'ams-mb-m',
-            }}
             options={[
               {
                 label: 'Female',
@@ -196,6 +190,12 @@ function App() {
                 value: 'm',
               },
             ]}
+            registerOptions={{
+              required: 'This field is required.',
+            }}
+            wrapperProps={{
+              className: 'ams-mb-m',
+            }}
           />
 
           <SwitchControl<{ notification: boolean }>
