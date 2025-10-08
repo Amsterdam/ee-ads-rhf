@@ -49,6 +49,19 @@ export const Primary: Story = {
   },
 };
 
+export const WithPlainArray: Story = {
+  args: {
+    label: 'Type',
+    options: ['A', 'B', 'C'],
+    registerOptions: {
+      required: 'A type is required',
+    },
+    wrapperProps: {
+      className: 'ams-mb-m',
+    },
+  },
+};
+
 export const WithDescription: Story = {
   args: {
     label: 'Type',
