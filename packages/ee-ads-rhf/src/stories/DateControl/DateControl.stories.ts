@@ -2,11 +2,11 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { fn } from 'storybook/test';
 
-import { CheckboxControl } from './CheckboxControl';
+import { DateControl } from './DateControl';
 
 const meta = {
-  title: 'Example/Checkbox',
-  component: CheckboxControl,
+  title: 'Example/DateInput',
+  component: DateControl,
   parameters: {
     layout: 'centered',
   },
@@ -14,46 +14,46 @@ const meta = {
   argTypes: {
     label: {
       control: 'text',
-      description: 'The checkbox label',
+      description: 'The date input label',
     },
     description: {
       control: 'text',
-      description: 'Optional description text',
+      escription: 'Optional description text'
     },
     disabled: {
       control: 'boolean',
     },
   },
-} satisfies Meta<typeof CheckboxControl>;
+} satisfies Meta<typeof DateControl>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    label: 'Do you agree?',
+    label: 'Start date',
     registerOptions: {
-      required: 'The terms are required',
+      required: 'The start date is required'
     },
     wrapperProps: {
-      className: 'ams-mb-m',
+      className: 'ams-md-m',
     },
   },
 };
 
 export const WithDescription: Story = {
   args: {
-    label: 'Accept terms and conditions',
-    description: 'Please read the terms carefully before accepting',
+    label: 'Start date',
+    description: 'Please select a date.',
     registerOptions: {
-      required: 'You must accept the terms',
+      required: 'The start date is required'
     },
   },
 };
 
 export const Disabled: Story = {
   args: {
-    label: 'Disabled checkbox',
+    label: 'Select a date',
     disabled: true,
-  },
+  }
 };
