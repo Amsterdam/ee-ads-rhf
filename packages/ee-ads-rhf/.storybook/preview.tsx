@@ -1,15 +1,15 @@
-import '@amsterdam/design-system-tokens/dist/index.css'
-import '@amsterdam/design-system-tokens/dist/compact.theme.css'
-import '@amsterdam/design-system-assets/font/index.css'
-import '@amsterdam/design-system-css/dist/index.css'
+import '@amsterdam/design-system-tokens/dist/index.css';
+import '@amsterdam/design-system-tokens/dist/compact.theme.css';
+import '@amsterdam/design-system-assets/font/index.css';
+import '@amsterdam/design-system-css/dist/index.css';
 
-import type { StoryContext, StoryFn } from '@storybook/react-vite'
+import type { Preview, StoryContext, StoryFn } from '@storybook/react-vite';
 
-import { Page } from '@amsterdam/design-system-react'
-import { withThemeByClassName } from '@storybook/addon-themes'
-import { clsx } from 'clsx'
+import { Page } from '@amsterdam/design-system-react';
+import { withThemeByClassName } from '@storybook/addon-themes';
+import { clsx } from 'clsx';
 
-import { viewports } from './viewports'
+import { viewports } from './viewports.ts';
 
 export const decorators = [
   (Story: StoryFn, { args }: StoryContext) => (
@@ -30,7 +30,7 @@ export const decorators = [
       Spacious: '',
     },
   }),
-]
+];
 
 export const parameters = {
   backgrounds: {
@@ -54,9 +54,9 @@ export const parameters = {
   viewport: {
     viewports,
   },
-}
+};
 
-export const tags = ['autodocs']
+export const tags = ['autodocs'];
 
 const preview: Preview = {
   parameters: {

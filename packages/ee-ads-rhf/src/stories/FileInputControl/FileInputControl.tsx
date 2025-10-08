@@ -1,8 +1,12 @@
-import React, { ComponentPropsWithoutRef } from 'react';
-import Component, { FileInputControlProps as OriginalFileInputControlProps } from '../../FileInputControl/FileInputControl';
-import { FieldValues, FormProvider, RegisterOptions, useForm } from 'react-hook-form';
+import Component, {
+  FileInputControlProps as OriginalFileInputControlProps,
+} from '../../FileInputControl/FileInputControl';
+import { FieldValues, FormProvider, useForm } from 'react-hook-form';
 
-export type FileInputControlProps = Partial<OriginalFileInputControlProps<any>> & {
+export type FileInputControlProps = Partial<
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  OriginalFileInputControlProps<any>
+> & {
   label?: string;
   name?: string;
 };
@@ -15,19 +19,24 @@ export const FileInputControl = ({
   wrapperProps,
   ...props
 }: FileInputControlProps) => {
-  const methods = useForm<FieldValues>({ defaultValues: {
-    [name]: ''
-  } })
+  const methods = useForm<FieldValues>({
+    defaultValues: {
+      [name]: '',
+    },
+  });
   return (
     <FormProvider {...methods}>
-      <Component<{ example: string }>
+      <Component<{ [name]: string }>
         label={label}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         name={name as any}
         description={description}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         registerOptions={registerOptions as any}
         wrapperProps={wrapperProps}
-        {...props as any}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        {...(props as any)}
       />
     </FormProvider>
-  )
-}
+  );
+};

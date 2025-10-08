@@ -1,7 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { fn } from 'storybook/test';
-
 import { FileInputControl } from './FileInputControl';
 
 const meta = {
@@ -18,7 +16,7 @@ const meta = {
     },
     description: {
       control: 'text',
-      escription: 'Optional description text'
+      escription: 'Optional description text',
     },
     disabled: {
       control: 'boolean',
@@ -33,7 +31,7 @@ export const Primary: Story = {
   args: {
     label: 'Attachment',
     registerOptions: {
-      required: 'An attachment is required'
+      required: 'An attachment is required',
     },
     wrapperProps: {
       className: 'ams-md-m',
@@ -46,7 +44,7 @@ export const WithDescription: Story = {
     label: 'Attachment',
     description: 'Please select your document.',
     registerOptions: {
-      required: 'An attachment is required'
+      required: 'An attachment is required',
     },
   },
 };
@@ -55,5 +53,5 @@ export const Disabled: Story = {
   args: {
     label: 'Select a document',
     disabled: true,
-  }
+  },
 };

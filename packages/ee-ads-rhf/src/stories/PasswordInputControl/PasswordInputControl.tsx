@@ -1,9 +1,13 @@
-import React, { ComponentPropsWithoutRef } from 'react';
-import Component, { PasswordInputControlProps as OriginalPasswordInputControlProps } from '../../PasswordInputControl/PasswordInputControl';
-import { FieldValues, FormProvider, RegisterOptions, useForm } from 'react-hook-form';
+import Component, {
+  PasswordInputControlProps as OriginalPasswordInputControlProps,
+} from '../../PasswordInputControl/PasswordInputControl';
+import { FieldValues, FormProvider, useForm } from 'react-hook-form';
 
 // Re-export the props type but make form-specific props optional for Storybook
-export type PasswordInputControlProps = Partial<OriginalPasswordInputControlProps<any>> & {
+export type PasswordInputControlProps = Partial<
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  OriginalPasswordInputControlProps<any>
+> & {
   label?: string;
   name?: string;
 };
@@ -16,19 +20,24 @@ export const PasswordInputControl = ({
   wrapperProps,
   ...props
 }: PasswordInputControlProps) => {
-  const methods = useForm<FieldValues>({ defaultValues: {
-    [name]: ''
-  } });
+  const methods = useForm<FieldValues>({
+    defaultValues: {
+      [name]: '',
+    },
+  });
 
   return (
     <FormProvider {...methods}>
       <Component<{ [name]: string }>
         label={label}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         name={name as any}
         description={description}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         registerOptions={registerOptions as any}
         wrapperProps={wrapperProps}
-        {...props as any}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        {...(props as any)}
       />
     </FormProvider>
   );

@@ -1,9 +1,9 @@
-import { addons } from 'storybook/manager-api'
-import { create } from 'storybook/theming/create'
+import { addons } from 'storybook/manager-api';
+import { create } from 'storybook/theming/create';
 
 import Logo from '@amsterdam/design-system-assets/logo/amsterdam.svg';
 
-import '@amsterdam/design-system-assets/font/index.css'
+import '@amsterdam/design-system-assets/font/index.css';
 
 addons.setConfig({
   theme: create({
@@ -23,4 +23,4 @@ addons.setConfig({
     textColor: '#181818',
     textInverseColor: '#ffffff',
   }),
-})
+});

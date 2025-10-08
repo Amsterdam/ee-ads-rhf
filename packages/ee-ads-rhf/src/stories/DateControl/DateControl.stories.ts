@@ -1,7 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { fn } from 'storybook/test';
-
 import { DateControl } from './DateControl';
 
 const meta = {
@@ -18,7 +16,7 @@ const meta = {
     },
     description: {
       control: 'text',
-      escription: 'Optional description text'
+      escription: 'Optional description text',
     },
     disabled: {
       control: 'boolean',
@@ -33,7 +31,7 @@ export const Primary: Story = {
   args: {
     label: 'Start date',
     registerOptions: {
-      required: 'The start date is required'
+      required: 'The start date is required',
     },
     wrapperProps: {
       className: 'ams-md-m',
@@ -46,7 +44,7 @@ export const WithDescription: Story = {
     label: 'Start date',
     description: 'Please select a date.',
     registerOptions: {
-      required: 'The start date is required'
+      required: 'The start date is required',
     },
   },
 };
@@ -55,5 +53,5 @@ export const Disabled: Story = {
   args: {
     label: 'Select a date',
     disabled: true,
-  }
+  },
 };
