@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { SelectControl } from './SelectControl';
 
 const meta = {
-  title: 'Example/Select',
+  title: 'Components/SelectControl',
   component: SelectControl,
   parameters: {
     layout: 'centered',

@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { RadioControl } from './RadioControl';
 
 const meta = {
-  title: 'Example/Radio',
+  title: 'Components/RadioControl',
   component: RadioControl,
   parameters: {
     layout: 'centered',

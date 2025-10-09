@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { FileInputControl } from './FileInputControl';
 
 const meta = {
-  title: 'Example/FileInput',
+  title: 'Components/FileInputControl',
   component: FileInputControl,
   parameters: {
     layout: 'centered',

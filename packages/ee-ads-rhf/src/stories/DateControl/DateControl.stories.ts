@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { DateControl } from './DateControl';
 
 const meta = {
-  title: 'Example/DateInput',
+  title: 'Components/DateControl',
   component: DateControl,
   parameters: {
     layout: 'centered',

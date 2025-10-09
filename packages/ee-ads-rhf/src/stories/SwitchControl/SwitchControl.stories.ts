@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { SwitchControl } from './SwitchControl';
 
 const meta = {
-  title: 'Example/Switch',
+  title: 'Components/SwitchControl',
   component: SwitchControl,
   parameters: {
     layout: 'centered',

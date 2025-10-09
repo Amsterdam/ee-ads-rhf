@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { TimeControl } from './TimeControl';
 
 const meta = {
-  title: 'Example/Time',
+  title: 'Components/TimeControl',
   component: TimeControl,
   parameters: {
     layout: 'centered',

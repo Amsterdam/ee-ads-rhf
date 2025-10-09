@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { TextInputControl } from './TextInputControl';
 
 const meta = {
-  title: 'Example/TextInput',
+  title: 'Components/TextInputControl',
   component: TextInputControl,
   parameters: {
     layout: 'centered',
