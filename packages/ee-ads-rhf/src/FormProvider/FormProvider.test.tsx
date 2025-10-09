@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { vi } from 'vitest';
-import FormProvider from './FormProvider';
+import { FormProvider } from './FormProvider';
 import { useFormContext } from 'react-hook-form';
 
 function EmailInput() {

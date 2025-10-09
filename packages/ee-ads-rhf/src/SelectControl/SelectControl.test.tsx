@@ -1,9 +1,9 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import SelectControl from './SelectControl';
 import userEvent from '@testing-library/user-event';
 import { SubmitHandler } from 'react-hook-form';
-import FormProvider from '../FormProvider/FormProvider';
+import { SelectControl } from './SelectControl';
+import { FormProvider } from '../FormProvider/FormProvider';
 
 type FormValues = {
   country: string;

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { useForm, FormProvider } from 'react-hook-form';
-import TextAreaControl from './TextAreaControl';
+import { TextAreaControl } from './TextAreaControl';
 import userEvent from '@testing-library/user-event';
 
 type FormValues = {

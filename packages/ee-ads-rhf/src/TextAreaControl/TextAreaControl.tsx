@@ -39,7 +39,7 @@ interface TextAreaControlComponent extends ForwardRefExoticComponent<any> {
   ): ReactElement | null;
 }
 
-const TextAreaControl = forwardRef(function TextAreaControl<
+export const TextAreaControl = forwardRef(function TextAreaControl<
   TFieldValues extends FieldValues = FieldValues,
 >(
   {
@@ -125,5 +125,3 @@ const TextAreaControl = forwardRef(function TextAreaControl<
 }) as TextAreaControlComponent;
 
 TextAreaControl.displayName = 'TextAreaControl';
-
-export default TextAreaControl;

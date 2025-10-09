@@ -39,7 +39,7 @@ interface SwitchControlComponent extends ForwardRefExoticComponent<any> {
   ): ReactElement | null;
 }
 
-const SwitchControl = forwardRef(function SwitchControl<
+export const SwitchControl = forwardRef(function SwitchControl<
   TFieldValues extends FieldValues = FieldValues,
 >(
   {
@@ -114,5 +114,3 @@ const SwitchControl = forwardRef(function SwitchControl<
 }) as SwitchControlComponent;
 
 SwitchControl.displayName = 'SwitchControl';
-
-export default SwitchControl;

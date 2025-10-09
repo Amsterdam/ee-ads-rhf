@@ -38,7 +38,7 @@ interface TextInputControlComponent
   ): ReactElement | null;
 }
 
-const TextInputControl = forwardRef(function TextInputControl<
+export const TextInputControl = forwardRef(function TextInputControl<
   TFieldValues extends FieldValues = FieldValues,
 >(
   {
@@ -119,5 +119,3 @@ const TextInputControl = forwardRef(function TextInputControl<
 }) as TextInputControlComponent;
 
 TextInputControl.displayName = 'TextInputControl';
-
-export default TextInputControl;

@@ -36,7 +36,7 @@ interface RadioControlComponent extends ForwardRefExoticComponent<any> {
   ): ReactElement | null;
 }
 
-const RadioControl = forwardRef(function RadioControl<
+export const RadioControl = forwardRef(function RadioControl<
   TFieldValues extends FieldValues = FieldValues,
 >(
   {
@@ -122,5 +122,3 @@ const RadioControl = forwardRef(function RadioControl<
 }) as RadioControlComponent;
 
 RadioControl.displayName = 'RadioControl';
-
-export default RadioControl;

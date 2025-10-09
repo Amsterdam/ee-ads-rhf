@@ -1,8 +1,13 @@
 {
   "name": "@amsterdam/ee-ads-rhf",
   "private": true,
+  "license": "EUPL-1.2",
+  "engines": {
+    "node": "^22"
+  },
   "workspaces": [
-    "packages/*"
+    "./packages/*",
+    "./storybook"
   ],
   "scripts": {
     "dev": "concurrently \"npm run dev -w @amsterdam/ee-ads-rhf-dev\" \"npm run dev -w @amsterdam/ee-ads-rhf-lib\"",

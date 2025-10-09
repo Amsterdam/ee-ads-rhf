@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import RadioControl from './RadioControl';
-import FormProvider from '../FormProvider/FormProvider';
+import { RadioControl } from './RadioControl';
+import { FormProvider } from '../FormProvider/FormProvider';
 import { SubmitHandler } from 'react-hook-form';
 import userEvent from '@testing-library/user-event';
 

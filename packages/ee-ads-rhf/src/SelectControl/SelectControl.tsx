@@ -43,7 +43,7 @@ interface SelectControlComponent extends ForwardRefExoticComponent<any> {
   ): ReactElement | null;
 }
 
-const SelectControl = forwardRef(function SelectControl<
+export const SelectControl = forwardRef(function SelectControl<
   TFieldValues extends FieldValues = FieldValues,
 >(
   {
@@ -167,5 +167,3 @@ const SelectControl = forwardRef(function SelectControl<
 }) as SelectControlComponent;
 
 SelectControl.displayName = 'SelectControl';
-
-export default SelectControl;

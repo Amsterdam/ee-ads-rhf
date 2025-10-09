@@ -41,7 +41,7 @@ interface DateControlComponent extends ForwardRefExoticComponent<any> {
   ): ReactElement | null;
 }
 
-const DateControl = forwardRef(function DateControl<
+export const DateControl = forwardRef(function DateControl<
   TFieldValues extends FieldValues = FieldValues,
 >(
   {
@@ -120,5 +120,3 @@ const DateControl = forwardRef(function DateControl<
     />
   );
 }) as DateControlComponent;
-
-export default DateControl;

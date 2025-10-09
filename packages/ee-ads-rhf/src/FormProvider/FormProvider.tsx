@@ -7,7 +7,7 @@ import {
   UseFormProps,
 } from 'react-hook-form';
 
-interface FormProviderProps<TFieldValues extends FieldValues>
+export interface FormProviderProps<TFieldValues extends FieldValues>
   extends PropsWithChildren {
   mode?: 'onChange' | 'onSubmit' | 'onBlur' | 'onTouched' | 'all' | undefined;
   noValidate?: boolean;
@@ -15,7 +15,7 @@ interface FormProviderProps<TFieldValues extends FieldValues>
   defaultValues: UseFormProps<TFieldValues>['defaultValues'];
 }
 
-const FormProvider = <TFieldValues extends FieldValues>({
+export const FormProvider = <TFieldValues extends FieldValues>({
   mode = 'onChange',
   noValidate = true,
   onSubmit,
@@ -36,5 +36,3 @@ const FormProvider = <TFieldValues extends FieldValues>({
     </RHFFormProvider>
   );
 };
-
-export default FormProvider;

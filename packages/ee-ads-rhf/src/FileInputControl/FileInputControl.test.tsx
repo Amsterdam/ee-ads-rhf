@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { useForm, FormProvider } from 'react-hook-form';
-import FileInputControl from './FileInputControl';
+import { FileInputControl } from './FileInputControl';
 import userEvent from '@testing-library/user-event';
 
 type FormValues = {
