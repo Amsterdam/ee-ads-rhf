@@ -8,15 +8,13 @@
     "dist/"
   ],
   "scripts": {
-    "dev": "tsc --watch",
+    "dev": "rollup -c --watch",
     "build": "tsc --project ./tsconfig.build.json && rollup -c",
-    "build:watch": "rollup -c --watch",
+    "clean": "rimraf dist/",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "lint": "eslint . --ext .js,.ts,.jsx,.tsx",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "lint": "eslint . --ext .js,.ts,.jsx,.tsx"
   },
   "dependencies": {
     "@amsterdam/design-system-assets": "^1.0.0",
