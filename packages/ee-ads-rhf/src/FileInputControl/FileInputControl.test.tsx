@@ -19,7 +19,7 @@ const Wrapper = ({
   return <FormProvider {...methods}>{children}</FormProvider>;
 };
 
-describe('TextInputControl', () => {
+describe('FileInputControl', () => {
   it('renders with label and input', () => {
     render(
       <Wrapper>

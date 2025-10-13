@@ -9,11 +9,8 @@
     "isolatedModules": true,
     "resolveJsonModule": true,
     "jsx": "react-jsx",
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["packages/client/src/*"]
-    }
+    "baseUrl": "."
   },
   "include": ["packages/*/src/**/*", "packages/*/test/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["**/node_modules", "*/dist"]
 }

@@ -6,6 +6,12 @@ import {
   Ref,
 } from 'react';
 import {
+  Controller,
+  useFormContext,
+  type FieldValues,
+  type RegisterOptions,
+} from 'react-hook-form';
+import {
   ErrorMessage,
   Field,
   Label,
@@ -13,12 +19,6 @@ import {
   TextInput,
   type TextInputProps,
 } from '@amsterdam/design-system-react';
-import {
-  Controller,
-  useFormContext,
-  type FieldValues,
-  type RegisterOptions,
-} from 'react-hook-form';
 import clsx from 'clsx';
 import { FormControlBase } from '../types';
 
