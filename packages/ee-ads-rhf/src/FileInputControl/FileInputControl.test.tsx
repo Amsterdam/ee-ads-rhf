@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { useForm, FormProvider } from 'react-hook-form';
-import FileInputControl from './FileInputControl';
+import { FileInputControl } from './FileInputControl';
 import userEvent from '@testing-library/user-event';
 
 type FormValues = {
@@ -19,7 +19,7 @@ const Wrapper = ({
   return <FormProvider {...methods}>{children}</FormProvider>;
 };
 
-describe('TextInputControl', () => {
+describe('FileInputControl', () => {
   it('renders with label and input', () => {
     render(
       <Wrapper>

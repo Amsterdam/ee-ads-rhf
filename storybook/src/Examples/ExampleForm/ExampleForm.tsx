@@ -30,7 +30,7 @@ interface AppFormData {
   terms: boolean;
 }
 
-function App() {
+export function ExampleForm() {
   const defaultValues = {
     email: '',
     comment: '',
@@ -180,12 +180,6 @@ function App() {
             label="Gender"
             description="Description text goes here..."
             name="gender"
-            registerOptions={{
-              required: 'This field is required.',
-            }}
-            wrapperProps={{
-              className: 'ams-mb-m',
-            }}
             options={[
               {
                 label: 'Female',
@@ -196,6 +190,12 @@ function App() {
                 value: 'm',
               },
             ]}
+            registerOptions={{
+              required: 'This field is required.',
+            }}
+            wrapperProps={{
+              className: 'ams-mb-m',
+            }}
           />
 
           <SwitchControl<{ notification: boolean }>
@@ -238,5 +238,3 @@ function App() {
     </Grid>
   );
 }
-
-export default App;

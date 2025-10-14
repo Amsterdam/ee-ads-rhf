@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { useForm, FormProvider } from 'react-hook-form';
-import TimeControl from './TimeControl';
+import { TimeControl } from './TimeControl';
 
 type FormValues = {
   startTime: string;

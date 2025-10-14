@@ -38,7 +38,7 @@ interface FileInputControlComponent
   ): ReactElement | null;
 }
 
-const FileInputControl = forwardRef(function FileInputControl<
+export const FileInputControl = forwardRef(function FileInputControl<
   TFieldValues extends FieldValues = FieldValues,
 >(
   {
@@ -123,5 +123,3 @@ const FileInputControl = forwardRef(function FileInputControl<
 }) as FileInputControlComponent;
 
 FileInputControl.displayName = 'FileInputControl';
-
-export default FileInputControl;

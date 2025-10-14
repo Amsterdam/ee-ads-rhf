@@ -1,0 +1,108 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+import Github from "./assets/github.svg";
+import DocumentCheckmark from "./assets/DocumentCheckmark.svg";
+
+export const RightArrow = () => <svg
+    viewBox="0 0 14 14"
+    width="8px"
+    height="14px"
+    style={{
+      marginLeft: '4px',
+      display: 'inline-block',
+      shapeRendering: 'inherit',
+      verticalAlign: 'middle',
+      fill: 'currentColor',
+      'path fill': 'currentColor'
+    }}
+>
+  <path d="m11.1 7.35-5.5 5.5a.5.5 0 0 1-.7-.7L10.04 7 4.9 1.85a.5.5 0 1 1 .7-.7l5.5 5.5c.2.2.2.5 0 .7Z" />
+</svg>
+
+<Meta title="Introduction" />
+
+<div className="sb-container">
+  <div className="sb-section-title">
+    # Amsterdam Design System + React Hook Forms
+
+    This package combines [Amsterdam Design System](https://designsystem.amsterdam/) and [React Hook Form](https://react-hook-form.com/) to enable a straightforward path to building forms in [React](https://react.dev/) based applications.
+  </div>
+</div>
+
+## Feedback
+
+Contributions and feedback are highly appreciated, if you have spotted something that you think is incorrect or unsure about please <a href="https://github.com/Amsterdam/ee-ads-rhf/issues/new" target="_blank">create an issue</a> in the <a href="https://github.com/Amsterdam/ee-ads-rhf" target="_blank">GitHub repository</a>. Missing an example you think is necessary? Think an improvement can be made to an existing demo? Feel free to <a href="https://github.com/Amsterdam/ee-ads-rhf/compare" target="_blank">make a pull request</a>!
+
+Otherwise if you have any questions or other matters regarding implementing forms or a demo here, you can contact us via Slack (#dv-enablement) or Teams (DV - Enablement).
+
+<div className="sb-section sb-socials">
+  <div className="sb-section-item">
+    <img src={Github} alt="Github logo" className="sb-explore-image"/>
+    This project's repository.
+
+    <a
+      href="https://github.com/Amsterdam/ee-ads-rhf"
+      target="_blank"
+    >Browse on GitHub<RightArrow /></a>
+  </div>
+  <div className="sb-section-item">
+    <img src={DocumentCheckmark} alt="A book" className="sb-explore-image"/>
+    <p>Browse the City of Amsterdam technology standards and guidance.</p>
+
+    <a
+      href="https://developers.amsterdam/"
+      target="_blank"
+    >developers.amsterdam<RightArrow /></a>
+  </div>
+</div>
+
+<style>
+  {`
+  .sb-container {
+    margin-bottom: 48px;
+  }
+
+  .sb-section {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  img {
+    object-fit: cover;
+  }
+
+  .sb-section-title {
+    margin-bottom: 32px;
+  }
+
+  .sb-section a:not(h1 a, h2 a, h3 a) {
+    font-size: 14px;
+  }
+
+  .sb-socials {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .sb-socials p {
+    margin-bottom: 10px;
+  }
+
+  .sb-explore-image {
+    max-height: 32px;
+    align-self: flex-start;
+  }
+
+  @media screen and (max-width: 600px) {
+    .sb-section {
+      flex-direction: column;
+    }
+
+    .sb-socials {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  `}
+</style>

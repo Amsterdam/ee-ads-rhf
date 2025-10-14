@@ -7,7 +7,7 @@ export default [
       { label: 'Kop Zeedijk', value: 'kop-zeedijk' },
       { label: 'Nes e.o.', value: 'nes' },
       { label: 'Oude Kerk e.o.', value: 'oude-kerk' },
-    ]
+    ],
   },
   {
     group: 'Burgwallen-Nieuwe Zijde',
@@ -20,7 +20,7 @@ export default [
       { label: 'Spuistraat Noord', value: 'spuistraat-noord' },
       { label: 'Spuistraat Zuid', value: 'spuistraat-zuid' },
       { label: 'Stationsplein e.o.', value: 'stationsplein' },
-    ]
+    ],
   },
   {
     group: 'Grachtengordel-West',
@@ -29,7 +29,7 @@ export default [
       { label: 'Langestraat e.o.', value: 'langestraat' },
       { label: 'Leidsegracht Noord', value: 'leidsegracht-noord' },
       { label: 'Leliegracht e.o.', value: 'leliegracht' },
-    ]
+    ],
   },
   {
     group: 'Haarlemmerbuurt',
@@ -40,7 +40,7 @@ export default [
       { label: 'Planciusbuurt Zuid', value: 'planciusbuurt-zuid' },
       { label: 'Westelijke eilanden', value: 'westelijke-eilanden' },
       { label: 'Westerdokseiland', value: 'westerdokseiland' },
-    ]
+    ],
   },
   {
     group: 'Jordaan',
@@ -56,6 +56,6 @@ export default [
       { label: 'Marnixbuurt Zuid', value: 'marnixbuurt-zuid' },
       { label: 'Passeerdersgrachtbuurt', value: 'passeerdersgrachtbuurt' },
       { label: 'Zaagpoortbuurt', value: 'zaagpoortbuurt' },
-    ]
-  }
+    ],
+  },
 ];

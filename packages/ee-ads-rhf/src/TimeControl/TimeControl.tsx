@@ -38,7 +38,7 @@ interface TimeControlComponent extends ForwardRefExoticComponent<any> {
   ): ReactElement | null;
 }
 
-const TimeControl = forwardRef(function TimeControl<
+export const TimeControl = forwardRef(function TimeControl<
   TFieldValues extends FieldValues = FieldValues,
 >(
   {
@@ -118,4 +118,4 @@ const TimeControl = forwardRef(function TimeControl<
   );
 }) as TimeControlComponent;
 
-export default TimeControl;
+TimeControl.displayName = 'TimeControl';

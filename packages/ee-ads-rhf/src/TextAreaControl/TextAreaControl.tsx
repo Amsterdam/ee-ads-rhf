@@ -7,8 +7,8 @@ import {
 } from 'react';
 import {
   Controller,
-  FieldValues,
-  RegisterOptions,
+  type FieldValues,
+  type RegisterOptions,
   useFormContext,
 } from 'react-hook-form';
 import {
@@ -22,12 +22,11 @@ import {
 import clsx from 'clsx';
 import { FormControlBase } from '../types';
 
-export type TextAreaControlProps<
-  TFieldValues extends FieldValues = FieldValues,
-> = TextAreaProps &
-  FormControlBase<TFieldValues> & {
-    wrapperProps?: ComponentPropsWithoutRef<'div'>;
-  };
+export type TextAreaControlProps<TFieldValues extends FieldValues> =
+  TextAreaProps &
+    FormControlBase<TFieldValues> & {
+      wrapperProps?: ComponentPropsWithoutRef<'div'>;
+    };
 
 // This interface allows us to use a generic type argum/ent in parent components to specify the shape of the form value
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -39,7 +38,7 @@ interface TextAreaControlComponent extends ForwardRefExoticComponent<any> {
   ): ReactElement | null;
 }
 
-const TextAreaControl = forwardRef(function TextAreaControl<
+export const TextAreaControl = forwardRef(function TextAreaControl<
   TFieldValues extends FieldValues = FieldValues,
 >(
   {
@@ -125,5 +124,3 @@ const TextAreaControl = forwardRef(function TextAreaControl<
 }) as TextAreaControlComponent;
 
 TextAreaControl.displayName = 'TextAreaControl';
-
-export default TextAreaControl;

@@ -37,7 +37,7 @@ interface CheckboxControlComponent extends ForwardRefExoticComponent<any> {
   ): ReactElement | null;
 }
 
-const CheckboxControl = forwardRef(function CheckboxControl<
+export const CheckboxControl = forwardRef(function CheckboxControl<
   TFieldValues extends FieldValues = FieldValues,
 >(
   {
@@ -116,5 +116,3 @@ const CheckboxControl = forwardRef(function CheckboxControl<
 }) as CheckboxControlComponent;
 
 CheckboxControl.displayName = 'CheckboxControl';
-
-export default CheckboxControl;

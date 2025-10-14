@@ -6,6 +6,12 @@ import {
   Ref,
 } from 'react';
 import {
+  Controller,
+  useFormContext,
+  type FieldValues,
+  type RegisterOptions,
+} from 'react-hook-form';
+import {
   ErrorMessage,
   Field,
   Label,
@@ -13,12 +19,6 @@ import {
   TextInput,
   type TextInputProps,
 } from '@amsterdam/design-system-react';
-import {
-  Controller,
-  useFormContext,
-  type FieldValues,
-  type RegisterOptions,
-} from 'react-hook-form';
 import clsx from 'clsx';
 import { FormControlBase } from '../types';
 
@@ -38,7 +38,7 @@ interface TextInputControlComponent
   ): ReactElement | null;
 }
 
-const TextInputControl = forwardRef(function TextInputControl<
+export const TextInputControl = forwardRef(function TextInputControl<
   TFieldValues extends FieldValues = FieldValues,
 >(
   {
@@ -119,5 +119,3 @@ const TextInputControl = forwardRef(function TextInputControl<
 }) as TextInputControlComponent;
 
 TextInputControl.displayName = 'TextInputControl';
-
-export default TextInputControl;

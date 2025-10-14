@@ -38,7 +38,7 @@ interface PasswordInputControlComponent
   ): ReactElement | null;
 }
 
-const PasswordInputControl = forwardRef(function PasswordInputControl<
+export const PasswordInputControl = forwardRef(function PasswordInputControl<
   TFieldValues extends FieldValues = FieldValues,
 >(
   {
@@ -120,5 +120,3 @@ const PasswordInputControl = forwardRef(function PasswordInputControl<
 }) as PasswordInputControlComponent;
 
 PasswordInputControl.displayName = 'PasswordInputControl';
-
-export default PasswordInputControl;
