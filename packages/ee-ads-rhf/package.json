@@ -16,14 +16,14 @@
     "lint": "eslint . --ext .js,.ts,.jsx,.tsx"
   },
   "dependencies": {
-    "@amsterdam/design-system-assets": "^1.0.0",
-    "@amsterdam/design-system-css": "^1.0.1",
-    "@amsterdam/design-system-react": "^1.1.0",
-    "@amsterdam/design-system-react-icons": "^1.0.0",
-    "@amsterdam/design-system-tokens": "^1.0.1",
+    "@amsterdam/design-system-assets": "^1.1.0",
+    "@amsterdam/design-system-css": "^2.0.1",
+    "@amsterdam/design-system-react": "^2.0.2",
+    "@amsterdam/design-system-react-icons": "^1.1.0",
+    "@amsterdam/design-system-tokens": "^2.0.0",
     "clsx": "^2.1.1",
-    "react": "16 - 19",
-    "react-dom": "16 - 19",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
     "react-hook-form": "^7.62.0"
   },
   "devDependencies": {
