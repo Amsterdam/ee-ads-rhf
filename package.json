@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "dev": "concurrently \"npm run dev -w @amsterdam/ee-ads-rhf-lib\" \"npm run start -w @amsterdam/ee-ads-rhf-storybook\"",
-    "build": "npm run build -w @amsterdam/ee-ads-rhf-lib"
+    "build": "concurrently \"npm run build -w @amsterdam/ee-ads-rhf-lib\" \"npm run build -w @amsterdam/ee-ads-rhf-storybook\""
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
