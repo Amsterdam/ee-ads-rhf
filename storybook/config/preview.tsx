@@ -9,7 +9,8 @@ import { Page } from '@amsterdam/design-system-react';
 import { withThemeByClassName } from '@storybook/addon-themes';
 import { clsx } from 'clsx';
 
-import { viewports } from './viewports.ts';
+import { viewports } from './viewports';
+import '../src/styles/overrides.css';
 
 export const decorators = [
   (Story: StoryFn, { args }: StoryContext) => (
