@@ -34,16 +34,14 @@ export const Primary: Story = {
     registerOptions: {
       required: 'An attachment is required',
     },
-    wrapperProps: {
-      className: 'ams-md-m',
-    },
+    wrapperProps: {},
   },
 };
 
 export const WithDescription: Story = {
   args: {
     label: 'Attachment',
-    name: 'attachment',
+    name: 'attachment1',
     description: 'Please select your document.',
     registerOptions: {
       required: 'An attachment is required',
@@ -54,7 +52,7 @@ export const WithDescription: Story = {
 export const Disabled: Story = {
   args: {
     label: 'Select a document',
-    name: 'attachment',
+    name: 'attachment2',
     disabled: true,
   },
 };

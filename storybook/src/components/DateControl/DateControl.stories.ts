@@ -34,16 +34,14 @@ export const Primary: Story = {
     registerOptions: {
       required: 'The start date is required',
     },
-    wrapperProps: {
-      className: 'ams-md-m',
-    },
+    wrapperProps: {},
   },
 };
 
 export const WithDescription: Story = {
   args: {
     label: 'Start date',
-    name: 'start_date',
+    name: 'start_date1',
     description: 'Please select a date.',
     registerOptions: {
       required: 'The start date is required',
@@ -54,7 +52,7 @@ export const WithDescription: Story = {
 export const Disabled: Story = {
   args: {
     label: 'Select a date',
-    name: 'start_date',
+    name: 'start_date2',
     disabled: true,
   },
 };

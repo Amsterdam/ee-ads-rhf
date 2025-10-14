@@ -34,16 +34,14 @@ export const Primary: Story = {
     registerOptions: {
       required: 'The terms are required',
     },
-    wrapperProps: {
-      className: 'ams-mb-m',
-    },
+    wrapperProps: {},
   },
 };
 
 export const WithDescription: Story = {
   args: {
     label: 'Accept terms and conditions',
-    name: 'terms',
+    name: 'terms2',
     description: 'Please read the terms carefully before accepting',
     registerOptions: {
       required: 'You must accept the terms',
@@ -54,7 +52,7 @@ export const WithDescription: Story = {
 export const Disabled: Story = {
   args: {
     label: 'Disabled switch',
-    name: 'terms',
+    name: 'terms3',
     disabled: true,
   },
 };

@@ -34,16 +34,14 @@ export const Primary: Story = {
     registerOptions: {
       required: 'A name is required',
     },
-    wrapperProps: {
-      className: 'ams-mb-m',
-    },
+    wrapperProps: {},
   },
 };
 
 export const WithDescription: Story = {
   args: {
     label: 'Name',
-    name: 'name',
+    name: 'name1',
     description: 'Please provide your name',
     registerOptions: {
       required: 'Please enter your name',
@@ -54,7 +52,7 @@ export const WithDescription: Story = {
 export const Disabled: Story = {
   args: {
     label: 'Disabled name',
-    name: 'name',
+    name: 'name2',
     disabled: true,
   },
 };

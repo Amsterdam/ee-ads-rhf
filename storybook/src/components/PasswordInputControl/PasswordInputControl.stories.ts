@@ -34,9 +34,7 @@ export const Primary: Story = {
     registerOptions: {
       required: 'A password is required',
     },
-    wrapperProps: {
-      className: 'ams-mb-m',
-    },
+    wrapperProps: { },
     placeholder: 'Password',
   },
 };
@@ -44,7 +42,7 @@ export const Primary: Story = {
 export const WithDescription: Story = {
   args: {
     label: 'Password',
-    name: 'password',
+    name: 'password1',
     description: 'Passwords must consist of at least 8 characters and ...',
     registerOptions: {
       required: 'You must accept the terms',
@@ -56,7 +54,7 @@ export const WithDescription: Story = {
 export const Disabled: Story = {
   args: {
     label: 'Disabled password',
-    name: 'password',
+    name: 'password2',
     disabled: true,
     placeholder: 'Password',
   },

@@ -34,9 +34,7 @@ export const Primary: Story = {
     registerOptions: {
       required: 'A comment is required',
     },
-    wrapperProps: {
-      className: 'ams-mb-m',
-    },
+    wrapperProps: {},
     placeholder: 'Comments',
   },
 };
@@ -44,7 +42,7 @@ export const Primary: Story = {
 export const WithDescription: Story = {
   args: {
     label: 'Comments',
-    name: 'comments',
+    name: 'comments1',
     description: 'Please enter a comment',
     registerOptions: {
       required: 'A comment is required',
@@ -56,7 +54,7 @@ export const WithDescription: Story = {
 export const Disabled: Story = {
   args: {
     label: 'Disabled comments',
-    name: 'comments',
+    name: 'comments2',
     disabled: true,
     placeholder: 'Comments',
   },

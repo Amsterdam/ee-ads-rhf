@@ -34,16 +34,14 @@ export const Primary: Story = {
     registerOptions: {
       required: 'A start time is required',
     },
-    wrapperProps: {
-      className: 'ams-mb-m',
-    },
+    wrapperProps: {},
   },
 };
 
 export const WithDescription: Story = {
   args: {
     label: 'Start time',
-    name: 'start_time',
+    name: 'start_time1',
     description: 'Please provide a start time',
     registerOptions: {
       required: 'A start time is required',
@@ -54,7 +52,7 @@ export const WithDescription: Story = {
 export const Disabled: Story = {
   args: {
     label: 'Disabled name',
-    name: 'start_time',
+    name: 'start_time2',
     disabled: true,
   },
 };

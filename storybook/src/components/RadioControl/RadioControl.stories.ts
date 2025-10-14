@@ -43,28 +43,26 @@ export const Primary: Story = {
     registerOptions: {
       required: 'A type is required',
     },
-    wrapperProps: {
-      className: 'ams-mb-m',
-    },
+    wrapperProps: {},
   },
 };
 
 export const WithPlainArray: Story = {
   args: {
     label: 'Type',
+    name: 'type',
     options: ['A', 'B', 'C'],
     registerOptions: {
       required: 'A type is required',
     },
-    wrapperProps: {
-      className: 'ams-mb-m',
-    },
+    wrapperProps: {},
   },
 };
 
 export const WithDescription: Story = {
   args: {
     label: 'Type',
+    name: 'type1',
     options: [
       {
         label: 'A',
@@ -85,6 +83,7 @@ export const WithDescription: Story = {
 export const Disabled: Story = {
   args: {
     label: 'Disabled select a type',
+    name: 'type2',
     options: [
       {
         label: 'A',

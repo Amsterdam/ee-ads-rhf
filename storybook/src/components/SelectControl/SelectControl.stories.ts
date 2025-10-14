@@ -30,6 +30,7 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     label: 'Province',
+    name: 'province',
     options: [
       {
         label: 'Groningen',
@@ -83,15 +84,14 @@ export const Primary: Story = {
     registerOptions: {
       required: 'A province is required',
     },
-    wrapperProps: {
-      className: 'ams-mb-m',
-    },
+    wrapperProps: {},
   },
 };
 
 export const WithPlainArray: Story = {
   args: {
     label: 'Province',
+    name: 'province1',
     options: [
       'Groningen',
       'Fryslân (Friesland)',
@@ -109,15 +109,14 @@ export const WithPlainArray: Story = {
     registerOptions: {
       required: 'A province is required',
     },
-    wrapperProps: {
-      className: 'ams-mb-m',
-    },
+    wrapperProps: {},
   },
 };
 
 export const WithDescription: Story = {
   args: {
     label: 'Province',
+    name: 'province2',
     options: [
       {
         label: 'Groningen',
@@ -178,6 +177,7 @@ export const WithDescription: Story = {
 export const Disabled: Story = {
   args: {
     label: 'Disabled province',
+    name: 'province3',
     options: [
       {
         label: 'Groningen',
