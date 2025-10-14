@@ -45,6 +45,8 @@ jobs:
         run: npm ci
 
       - name: Build packages
+        env:
+          STORYBOOK_BUILD_PATH: demo-${{ env.BRANCH_NAME }}
         run: npm run build
 
       # - name: Build Storybook
