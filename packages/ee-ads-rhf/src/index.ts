@@ -9,3 +9,4 @@ export * from './SwitchControl';
 export * from './TextInputControl';
 export * from './TextAreaControl';
 export * from './TimeControl';
+export * from './ReactSelectControl';

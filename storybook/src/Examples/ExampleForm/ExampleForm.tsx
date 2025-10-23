@@ -11,6 +11,7 @@ import {
   SwitchControl,
   PasswordInputControl,
   FileInputControl,
+  ReactSelectControl,
 } from '@amsterdam/ee-ads-rhf-lib';
 import {
   Grid,
@@ -44,6 +45,7 @@ export function ExampleForm() {
     notification: false,
     password: '',
     attachment: '',
+    tag: [],
   };
 
   const onSubmit = useCallback(async (data: AppFormData) => {
@@ -222,6 +224,17 @@ export function ExampleForm() {
             label="Attachment"
             name="attachment"
             description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            registerOptions={{}}
+            wrapperProps={{
+              className: 'ams-mb-m',
+            }}
+          />
+
+          <ReactSelectControl<{ tags: string[] }>
+            label="Tags"
+            name="tags"
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            options={districts[0].options}
             registerOptions={{}}
             wrapperProps={{
               className: 'ams-mb-m',
