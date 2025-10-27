@@ -1,12 +1,14 @@
 .react-select {
   &--is-disabled {
     &.react-select__container {
-      box-shadow: var(--ams-select-disabled-box-shadow);
+      border-color: var(--ams-text-input-disabled-color);
+      color: var(--ams-text-input-disabled-color);
       pointer-events: all;
 
       /* stylelint-disable-next-line max-nesting-depth */
       &:hover {
-        box-shadow: var(--ams-select-disabled-box-shadow);
+        border-color: var(--ams-text-input-disabled-color);
+        box-shadow: none;
       }
     }
 
@@ -14,13 +16,13 @@
       color: var(--ams-select-disabled-color);
     }
 
-    .react-select__dropdown-indicator {
+    .react-select__indicator svg {
       fill: var(--ams-select-disabled-color);
     }
   }
 }
 
-// Some styles for this class are defined in the component to ensure priority
+/* Some styles for this class are defined in the component to ensure priority */
 .react-select__container {
   border-color: var(--ams-select-border-color);
   border-style: var(--ams-select-border-style);
@@ -33,18 +35,12 @@
 
     &:has(input:last-of-type:invalid) {
       border-color: var(--ams-select-invalid-hover-border-color);
-      box-shadow: var(--ams-select-invalid-hover-box-shadow);
     }
   }
 
-  &--is-focused {
-    box-shadow: var(--ams-select-hover-box-shadow);
-  }
 
-  /* stylelint-disable-next-line selector-no-qualifying-type */
   &:has(input:last-of-type:invalid) {
     border-color: var(--ams-select-invalid-border-color);
-    // box-shadow: var(--ams-select-invalid-hover-box-shadow);
   }
 }
 
@@ -68,6 +64,7 @@
   font-size: var(--ams-text-input-font-size);
   font-weight: var(--ams-text-input-font-weight);
   grid-area: 1 / 1 / 2 / 3;
+  margin-right: 50px;
 }
 
 .react-select__indicator {
@@ -80,7 +77,7 @@
   }
 }
 
-// Some styles for this class are defined in the component to ensure priority
+/* Some styles for this class are defined in the component to ensure priority */
 .react-select__clear-indicator {
   box-sizing: border-box;
   display: flex;
@@ -101,7 +98,7 @@
   padding: 1px;
 }
 
-// Some styles for this class are defined in the component to ensure priority
+/* Some styles for this class are defined in the component to ensure priority */
 .react-select__option {
   box-shadow: 0 var(--ams-select-hover-box-shadow);
   font-family: var(--ams-text-input-font-family);
@@ -149,7 +146,7 @@
   }
 }
 
-// This class inherits styling
+/* This class inherits styling */
 .react-select__single-value {
   border-radius: 2px;
   box-sizing: border-box;
@@ -171,9 +168,9 @@
   box-sizing: border-box;
   display: flex;
   font-family: var(--ams-typography-font-family);
-  // uncomment if using design-system compact mode
-  // margin: 1px 8px 1px -2px;
-  // comment if using design-system compact mode
+  /* Uncomment if using design-system compact mode */
+  /* margin: 1px 8px 1px -2px; */
+  /* comment if using design-system compact mode */
   margin: var(--ams-column-gap-x-small) 8px var(--ams-column-gap-x-small) -2px;
   min-width: 0;
 }
@@ -197,14 +194,14 @@
     color: #fff;
   }
 
-  // Comment if using design-system compact mode
+  /* Comment if using design-system compact mode */
   svg {
     height: 20px;
     width: 20px;
   }
 }
 
-// This class inherits styling
+/* This class inherits styling */
 .react-select__menu-notice {
   font-family: var(--ams-text-input-font-family);
   font-size: var(--ams-text-input-font-size);

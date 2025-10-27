@@ -30,6 +30,7 @@ export type ReactSelectControlProps<TFieldValues extends FieldValues> =
       options?: SelectOption[];
       isMulti?: boolean;
       required?: boolean;
+      disabled?: boolean;
       wrapperProps?: ComponentPropsWithoutRef<'div'>;
       inputProps?: Omit<
         ComponentPropsWithoutRef<typeof InputAutoSelect>,
@@ -60,6 +61,7 @@ export const ReactSelectControl = forwardRef(function ReactSelectControl<
     testId,
     isMulti = false,
     required,
+    disabled = false,
     wrapperProps,
     inputProps,
   }: ReactSelectControlProps<TFieldValues>,
@@ -112,6 +114,7 @@ export const ReactSelectControl = forwardRef(function ReactSelectControl<
               options={options}
               isMulti={isMulti}
               required={required}
+              isDisabled={disabled}
               value={value}
               onChange={handleChange}
               aria-describedby={[

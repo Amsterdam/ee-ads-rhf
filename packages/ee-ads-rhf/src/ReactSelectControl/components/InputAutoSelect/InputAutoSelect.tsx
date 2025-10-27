@@ -15,6 +15,7 @@ interface InputAutoSelectProps {
   name?: string;
   required?: boolean;
   value?: ReactSelectValue;
+  menuPortalTarget?: HTMLElement | null;
   ref: Ref<SelectInstance<SelectOption> | null> | undefined;
   error?: string;
   onChange: (
@@ -38,6 +39,7 @@ const InputAutoSelect = ({
   name = undefined,
   required = false,
   value = undefined,
+  menuPortalTarget = document.body,
   ref,
   error,
   onChange,
@@ -64,6 +66,7 @@ const InputAutoSelect = ({
     name={name}
     required={required}
     value={value}
+    menuPortalTarget={menuPortalTarget}
     ref={ref}
     onChange={onChange}
     onBlur={onBlur}
