@@ -45,7 +45,11 @@ export function ExampleForm() {
     notification: false,
     password: '',
     attachment: '',
-    tag: [],
+    districtAutoComplete: [],
+    districtAutoCompleteMulti: [
+      { label: 'Nieuwe Kerk e.o.', value: 'nieuwe-kerk' },
+      { label: 'Stationsplein e.o.', value: 'stationsplein' },
+    ],
   };
 
   const onSubmit = useCallback(async (data: AppFormData) => {
@@ -230,11 +234,23 @@ export function ExampleForm() {
             }}
           />
 
-          <ReactSelectControl<{ tags: string[] }>
-            label="Tags"
-            name="tags"
+          <ReactSelectControl<{ districtAutoComplete: string[] }>
+            label="Gebieden autocomplete"
+            name="districtAutoComplete"
             description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
             options={districts[0].options}
+            registerOptions={{}}
+            wrapperProps={{
+              className: 'ams-mb-m',
+            }}
+          />
+
+          <ReactSelectControl<{ districtAutoCompleteMulti: string[] }>
+            label="Gebieden autocomplete (multiple)"
+            name="districtAutoCompleteMulti"
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            isMulti
+            options={districts[1].options}
             registerOptions={{}}
             wrapperProps={{
               className: 'ams-mb-m',

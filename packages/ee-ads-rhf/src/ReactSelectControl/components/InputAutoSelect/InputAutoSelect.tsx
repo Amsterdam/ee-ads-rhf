@@ -5,9 +5,7 @@ import DropdownIndicator from '../DropdownIndicator/DropdownIndicator';
 import { ReactSelectOption, ReactSelectValue } from '../../types';
 import './InputAutoSelect.scss';
 
-// TODO css modules nesting?
 // TODO ref prop - https://stackoverflow.com/a/78007121
-// TODO test isMulti variants
 
 interface InputAutoSelectProps {
   isClearable?: boolean;

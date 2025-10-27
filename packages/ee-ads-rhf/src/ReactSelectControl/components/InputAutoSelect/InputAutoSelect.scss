@@ -20,7 +20,7 @@
   }
 }
 
-/* Some styles for this class are defined in the component to ensure priority */
+// Some styles for this class are defined in the component to ensure priority
 .react-select__container {
   border-color: var(--ams-select-border-color);
   border-style: var(--ams-select-border-style);
@@ -44,7 +44,7 @@
   /* stylelint-disable-next-line selector-no-qualifying-type */
   &:has(input:last-of-type:invalid) {
     border-color: var(--ams-select-invalid-border-color);
-    /* box-shadow: var(--ams-select-invalid-hover-box-shadow); */
+    // box-shadow: var(--ams-select-invalid-hover-box-shadow);
   }
 }
 
@@ -80,7 +80,7 @@
   }
 }
 
-/* Some styles for this class are defined in the component to ensure priority */
+// Some styles for this class are defined in the component to ensure priority
 .react-select__clear-indicator {
   box-sizing: border-box;
   display: flex;
@@ -101,7 +101,7 @@
   padding: 1px;
 }
 
-/* Some styles for this class are defined in the component to ensure priority */
+// Some styles for this class are defined in the component to ensure priority
 .react-select__option {
   box-shadow: 0 var(--ams-select-hover-box-shadow);
   font-family: var(--ams-text-input-font-family);
@@ -149,7 +149,7 @@
   }
 }
 
-/* This class inherits styling */
+// This class inherits styling
 .react-select__single-value {
   border-radius: 2px;
   box-sizing: border-box;
@@ -171,10 +171,10 @@
   box-sizing: border-box;
   display: flex;
   font-family: var(--ams-typography-font-family);
-  /* comment if not using design-system compact mode */
-  margin: 1px 8px 1px -2px;
-  /* uncomment if not using design-system compact mode */
-  /* margin: 2px 8px 2px -2px; */
+  // uncomment if using design-system compact mode
+  // margin: 1px 8px 1px -2px;
+  // comment if using design-system compact mode
+  margin: var(--ams-column-gap-x-small) 8px var(--ams-column-gap-x-small) -2px;
   min-width: 0;
 }
 
@@ -182,7 +182,7 @@
   border-radius: 2px;
   box-sizing: border-box;
   color: rgb(51, 51, 51);
-  font-size: var(--ams-typography-body-text-small-font-size);
+  font-size: var(--ams-text-input-font-size);
   overflow: hidden;
   padding: 0 6px 0 9px;
   text-overflow: ellipsis;
@@ -197,14 +197,14 @@
     color: #fff;
   }
 
-  /* Uncomment if not using design-system compact mode */
-  /* svg {
+  // Comment if using design-system compact mode
+  svg {
     height: 20px;
     width: 20px;
-  } */
+  }
 }
 
-/* This class inherits styling */
+// This class inherits styling
 .react-select__menu-notice {
   font-family: var(--ams-text-input-font-family);
   font-size: var(--ams-text-input-font-size);
