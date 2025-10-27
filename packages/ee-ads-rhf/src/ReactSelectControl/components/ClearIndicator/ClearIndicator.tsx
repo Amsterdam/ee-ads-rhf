@@ -1,13 +1,9 @@
 import { ClearIndicatorProps, components, GroupBase } from 'react-select';
 import { CloseIcon } from '@amsterdam/design-system-react-icons';
-import { ReactSelectOption } from '../../types';
+import { SelectOption } from '../../../types';
 
 const ClearIndicator = (
-  props: ClearIndicatorProps<
-    ReactSelectOption,
-    boolean,
-    GroupBase<ReactSelectOption>
-  >,
+  props: ClearIndicatorProps<SelectOption, boolean, GroupBase<SelectOption>>,
 ) => (
   <components.ClearIndicator {...props}>
     <CloseIcon />
