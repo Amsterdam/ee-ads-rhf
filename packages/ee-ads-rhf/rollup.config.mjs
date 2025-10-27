@@ -49,6 +49,7 @@ export default [
         modules: {
           generateScopedName: '[name]__[local]___[hash:base64:5]',
         },
+        use: ['sass'],
         extract: false, // don't generate a separate .css file unless you want to
         minimize: true,
         sourceMap: true,
@@ -60,5 +61,6 @@ export default [
     input: './dist/index.d.ts',
     output: [{ file: 'dist/index.d.ts', format: 'es' }],
     plugins: [dts()],
+    external: ['react', 'react-dom', /\.scss$/, /\.css$/],
   },
 ];

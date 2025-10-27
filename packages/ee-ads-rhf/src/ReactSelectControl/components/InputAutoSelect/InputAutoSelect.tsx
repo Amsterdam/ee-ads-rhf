@@ -3,7 +3,7 @@ import Select, { ActionMeta } from 'react-select';
 import ClearIndicator from '../ClearIndicator/ClearIndicator';
 import DropdownIndicator from '../DropdownIndicator/DropdownIndicator';
 import { ReactSelectOption, ReactSelectValue } from '../../types';
-import './InputAutoSelect.module.css';
+import './InputAutoSelect.scss';
 
 // TODO css modules nesting?
 // TODO ref prop - https://stackoverflow.com/a/78007121

@@ -20,6 +20,7 @@ import {
   type RegisterOptions,
 } from 'react-hook-form';
 import { FormControlBase, SelectGroup, SelectOption } from '../types';
+import clsx from 'clsx';
 
 // Merge design-system and react-hook-form types
 export type SelectControlProps<TFieldValues extends FieldValues> = SelectProps &
@@ -144,7 +145,7 @@ export const SelectControl = forwardRef(function SelectControl<
               <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
             )}
 
-            {/* <Select
+            <Select
               aria-describedby={clsx(
                 { [`${identifier}-description`]: description },
                 { [`${identifier}-error`]: hasError },
@@ -157,8 +158,7 @@ export const SelectControl = forwardRef(function SelectControl<
               ref={ref}
             >
               {children}
-            </Select> */}
-
+            </Select>
           </Field>
         );
       }}
