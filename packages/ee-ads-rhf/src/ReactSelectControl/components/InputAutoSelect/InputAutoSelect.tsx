@@ -1,26 +1,25 @@
 import { Ref } from 'react';
-import Select, { ActionMeta } from 'react-select';
+import Select, { ActionMeta, SelectInstance } from 'react-select';
 import ClearIndicator from '../ClearIndicator/ClearIndicator';
 import DropdownIndicator from '../DropdownIndicator/DropdownIndicator';
-import { ReactSelectOption, ReactSelectValue } from '../../types';
+import { ReactSelectValue } from '../../types';
+import { SelectOption } from '../../../types';
 import './InputAutoSelect.scss';
-
-// TODO ref prop - https://stackoverflow.com/a/78007121
 
 interface InputAutoSelectProps {
   isClearable?: boolean;
   isDisabled?: boolean;
   isMulti?: boolean;
-  options: ReactSelectOption[] | undefined;
+  options: SelectOption[] | undefined;
   id?: string;
   name?: string;
   required?: boolean;
   value?: ReactSelectValue;
-  ref: Ref<HTMLInputElement>;
+  ref: Ref<SelectInstance<SelectOption> | null> | undefined;
   error?: string;
   onChange: (
     newValue: ReactSelectValue,
-    actionMeta: ActionMeta<ReactSelectOption>,
+    actionMeta: ActionMeta<SelectOption>,
   ) => void;
   onBlur?: () => void;
 }
@@ -65,7 +64,7 @@ const InputAutoSelect = ({
     name={name}
     required={required}
     value={value}
-    // ref={ref}
+    ref={ref}
     onChange={onChange}
     onBlur={onBlur}
     {...eventHandlers}

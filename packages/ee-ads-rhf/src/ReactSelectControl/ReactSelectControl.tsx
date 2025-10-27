@@ -18,15 +18,16 @@ import {
   ErrorMessage,
 } from '@amsterdam/design-system-react';
 import InputAutoSelect from './components/InputAutoSelect/InputAutoSelect';
-import { ReactSelectOption, ReactSelectValue } from './types';
-import { FormControlBase } from '../types';
+import { ReactSelectValue } from './types';
+import { FormControlBase, SelectOption } from '../types';
+import { SelectInstance } from 'react-select';
 
 export type ReactSelectControlProps<TFieldValues extends FieldValues> =
   FormControlBase<TFieldValues> &
     ComponentPropsWithoutRef<'div'> & {
       label: string;
       description?: React.ReactNode;
-      options?: ReactSelectOption[];
+      options?: SelectOption[];
       isMulti?: boolean;
       required?: boolean;
       wrapperProps?: ComponentPropsWithoutRef<'div'>;
@@ -62,7 +63,7 @@ export const ReactSelectControl = forwardRef(function ReactSelectControl<
     wrapperProps,
     inputProps,
   }: ReactSelectControlProps<TFieldValues>,
-  ref: Ref<HTMLInputElement>,
+  ref: Ref<SelectInstance<SelectOption> | null>,
 ) {
   const { control } = useFormContext();
 

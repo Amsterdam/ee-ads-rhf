@@ -1,14 +1,10 @@
 import { MultiValue, SingleValue } from 'react-select';
+import { SelectOption } from '../types';
 
 export type SelectValue<IsMulti extends boolean> = IsMulti extends true
-  ? MultiValue<ReactSelectOption>
-  : SingleValue<ReactSelectOption>;
-
-export type ReactSelectOption = {
-  value: string;
-  label: string;
-};
+  ? MultiValue<SelectOption>
+  : SingleValue<SelectOption>;
 
 export type ReactSelectValue =
-  | SingleValue<ReactSelectOption>
-  | MultiValue<ReactSelectOption>;
+  | SingleValue<SelectOption>
+  | MultiValue<SelectOption>;
