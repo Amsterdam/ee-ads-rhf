@@ -47,7 +47,6 @@ export const CheckboxControl = forwardRef(function CheckboxControl<
     registerOptions,
     id,
     disabled,
-    testId,
     indeterminate,
     icon,
     wrapperProps,
@@ -57,7 +56,7 @@ export const CheckboxControl = forwardRef(function CheckboxControl<
 ) {
   const { control } = useFormContext();
 
-  const identifier = testId || id || name;
+  const identifier = id || name;
   const descriptionId = `${identifier}-description`;
   const errorId = `${identifier}-error`;
 
@@ -71,11 +70,7 @@ export const CheckboxControl = forwardRef(function CheckboxControl<
         const hasError = !!fieldState.error;
 
         return (
-          <Field
-            data-testid={`${identifier}-checkbox-wrapper`}
-            invalid={hasError}
-            {...wrapperProps}
-          >
+          <Field invalid={hasError} {...wrapperProps}>
             {!!description &&
               (typeof description === 'string' ? (
                 <Paragraph id={descriptionId} size="small">
@@ -103,7 +98,6 @@ export const CheckboxControl = forwardRef(function CheckboxControl<
               // Controlled props from RHF
               {...field}
               {...attributes}
-              data-testid={identifier}
               ref={ref}
             >
               {label && label}

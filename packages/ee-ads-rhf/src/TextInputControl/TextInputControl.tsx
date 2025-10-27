@@ -47,7 +47,6 @@ export const TextInputControl = forwardRef(function TextInputControl<
     description,
     registerOptions,
     id,
-    testId,
     wrapperProps,
     ...attributes
   }: TextInputControlProps<TFieldValues>,
@@ -55,7 +54,7 @@ export const TextInputControl = forwardRef(function TextInputControl<
 ) {
   const { control } = useFormContext();
 
-  const identifier = testId || id || name;
+  const identifier = id || name;
   const descriptionId = `${identifier}-description`;
   const errorId = `${identifier}-error`;
 
@@ -72,17 +71,9 @@ export const TextInputControl = forwardRef(function TextInputControl<
         const hasError = !!errorMessage;
 
         return (
-          <Field
-            invalid={hasError}
-            data-testid={`${identifier}-text-input-wrapper`}
-            {...wrapperProps}
-          >
+          <Field invalid={hasError} {...wrapperProps}>
             {label && (
-              <Label
-                htmlFor={identifier}
-                data-testid={`${identifier}-label`}
-                optional={optional}
-              >
+              <Label htmlFor={identifier} optional={optional}>
                 {label}
               </Label>
             )}
@@ -100,7 +91,6 @@ export const TextInputControl = forwardRef(function TextInputControl<
 
             <TextInput
               id={identifier}
-              data-testid={identifier}
               invalid={hasError}
               aria-describedby={clsx(
                 { [descriptionId]: !!descriptionId },

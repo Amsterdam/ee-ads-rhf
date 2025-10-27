@@ -26,7 +26,6 @@ describe('PasswordInput', () => {
         <PasswordInputControl<FormValues>
           name="password"
           label="Your Password"
-          testId="password"
         />
       </Wrapper>,
     );
@@ -39,15 +38,11 @@ describe('PasswordInput', () => {
     const user = userEvent.setup();
     render(
       <Wrapper>
-        <PasswordInputControl
-          name="password"
-          label="Password"
-          testId="password"
-        />
+        <PasswordInputControl name="password" label="Password" />
       </Wrapper>,
     );
 
-    const input = screen.getByTestId('password') as HTMLInputElement;
+    const input = screen.getByLabelText(/password/i) as HTMLInputElement;
     await user.type(input, 'secret123');
     expect(input.value).toBe('secret123');
   });
@@ -55,15 +50,11 @@ describe('PasswordInput', () => {
   it('renders with initial value', () => {
     render(
       <Wrapper defaultValues={{ password: 'preset' }}>
-        <PasswordInputControl
-          name="password"
-          label="Password"
-          testId="password"
-        />
+        <PasswordInputControl name="password" label="Password" />
       </Wrapper>,
     );
 
-    const input = screen.getByTestId('password') as HTMLInputElement;
+    const input = screen.getByLabelText(/password/i) as HTMLInputElement;
     expect(input.value).toBe('preset');
   });
 
@@ -74,16 +65,13 @@ describe('PasswordInput', () => {
           name="password"
           label="Password"
           description="Use at least 8 characters."
-          testId="password"
         />
       </Wrapper>,
     );
 
-    expect(screen.getByText('Use at least 8 characters.')).toBeInTheDocument();
-    expect(screen.getByTestId('password-description')).toHaveAttribute(
-      'id',
-      'password-description',
-    );
+    const description = screen.getByText('Use at least 8 characters.');
+    expect(description).toBeInTheDocument();
+    expect(description).toHaveAttribute('id', 'password-description');
   });
 
   it('shows description id in aria-describedby', () => {
@@ -93,12 +81,11 @@ describe('PasswordInput', () => {
           name="password"
           label="Password"
           description="Your secure password"
-          testId="password"
         />
       </Wrapper>,
     );
 
-    const input = screen.getByTestId('password');
+    const input = screen.getByLabelText(/password/i);
     expect(input).toHaveAttribute(
       'aria-describedby',
       expect.stringContaining('password-description'),
@@ -121,7 +108,6 @@ describe('PasswordInput', () => {
               name="password"
               label="Your Password"
               registerOptions={{ required: 'Password is required' }}
-              testId="password"
             />
             <button type="submit">Submit</button>
           </form>

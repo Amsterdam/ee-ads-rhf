@@ -46,7 +46,6 @@ export const RadioControl = forwardRef(function RadioControl<
     options,
     registerOptions,
     id,
-    testId,
     wrapperProps,
     ...attributes
   }: RadioControlProps<TFieldValues>,
@@ -54,7 +53,7 @@ export const RadioControl = forwardRef(function RadioControl<
 ) {
   const { control } = useFormContext();
 
-  const identifier = testId || id || name;
+  const identifier = id || name;
   const descriptionId = `${identifier}-description`;
   const errorId = `${identifier}-error`;
 
@@ -79,7 +78,7 @@ export const RadioControl = forwardRef(function RadioControl<
           return (
             <Radio
               key={`${identifier}-${index}`}
-              id={identifier}
+              id={`${identifier}-${index}`}
               name={field.name}
               value={value}
               checked={field.value === value}

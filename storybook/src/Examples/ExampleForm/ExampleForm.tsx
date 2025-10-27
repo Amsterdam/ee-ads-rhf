@@ -95,7 +95,6 @@ export function ExampleForm() {
             name="email"
             type="email"
             registerOptions={{ required: 'This field is required.' }}
-            testId="create-email"
             wrapperProps={{
               className: 'ams-mb-m',
             }}
@@ -103,7 +102,6 @@ export function ExampleForm() {
           <TextAreaControl<{ comments: string }>
             label="Additional comments"
             name="comments"
-            testId="create-comments"
             wrapperProps={{
               className: 'ams-mb-m',
             }}
@@ -112,7 +110,6 @@ export function ExampleForm() {
             <DateControl<{ startDate: string }>
               label="Start date"
               name="startDate"
-              testId="create-start-date"
               registerOptions={{
                 required: 'This field is required.',
               }}
@@ -120,7 +117,6 @@ export function ExampleForm() {
             <TimeControl<{ startTime: string }>
               label="Start time"
               name="startTime"
-              testId="create-start-time"
               registerOptions={{ required: 'This field is required.' }}
             />
           </Row>

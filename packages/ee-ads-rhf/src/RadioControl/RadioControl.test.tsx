@@ -57,7 +57,7 @@ describe('RadioControl', () => {
       </FormProvider>,
     );
 
-    await user.click(screen.getByLabelText('Yellow'));
+    await user.click(screen.getByText('Yellow'));
     await user.click(screen.getByText('Submit'));
     await waitFor(() => {
       expect(onSubmitMock).toHaveBeenCalledWith(

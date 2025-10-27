@@ -23,11 +23,7 @@ describe('TextAreaControl', () => {
   it('renders with label and textarea', () => {
     render(
       <Wrapper>
-        <TextAreaControl<FormValues>
-          name="message"
-          label="Your Message"
-          testId="message"
-        />
+        <TextAreaControl<FormValues> name="message" label="Your Message" />
       </Wrapper>,
     );
 
@@ -40,11 +36,7 @@ describe('TextAreaControl', () => {
   it('handles user typing', async () => {
     render(
       <Wrapper>
-        <TextAreaControl<FormValues>
-          name="message"
-          label="Your Message"
-          testId="message"
-        />
+        <TextAreaControl<FormValues> name="message" label="Your Message" />
       </Wrapper>,
     );
 
@@ -72,11 +64,7 @@ describe('TextAreaControl', () => {
             'A placeat harum est sint eaque et aperiam quis et voluptas deleniti id expedita modi aut magnam minima. Vel quaerat dolores ut explicabo similique aut expedita molestiae quo doloremque temporibus ut veniam quos.',
         }}
       >
-        <TextAreaControl<FormValues>
-          name="message"
-          label="Your Message"
-          testId="message"
-        />
+        <TextAreaControl<FormValues> name="message" label="Your Message" />
       </Wrapper>,
     );
 
@@ -97,7 +85,6 @@ describe('TextAreaControl', () => {
           name="message"
           label="Your Message"
           description="Please enter your full legal name."
-          testId="message"
         />
       </Wrapper>,
     );
@@ -115,7 +102,6 @@ describe('TextAreaControl', () => {
           name="message"
           label="Your Message"
           description={description}
-          testId="message"
         />
       </Wrapper>,
     );
@@ -147,7 +133,6 @@ describe('TextAreaControl', () => {
               name="message"
               label="Your Message"
               registerOptions={{ required: 'Message is required' }}
-              testId="message"
             />
             <button type="submit">Submit</button>
           </form>

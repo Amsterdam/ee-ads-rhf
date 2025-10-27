@@ -22,31 +22,22 @@ describe('DateControl', () => {
   it('renders with label and input', () => {
     render(
       <Wrapper>
-        <DateControl<FormValues>
-          name="birthDate"
-          label="Date of Birth"
-          testId="birthDate"
-        />
+        <DateControl<FormValues> name="birthDate" label="Date of Birth" />
       </Wrapper>,
     );
 
-    const input = screen.getByTestId('birthDate') as HTMLInputElement;
+    const input = screen.getByLabelText(/date of birth/i) as HTMLInputElement;
     expect(input).toBeInTheDocument();
-    expect(screen.getByLabelText(/date of birth/i)).toBe(input);
   });
 
   it('handles user input', () => {
     render(
       <Wrapper>
-        <DateControl<FormValues>
-          name="birthDate"
-          label="Date of Birth"
-          testId="birthDate"
-        />
+        <DateControl<FormValues> name="birthDate" label="Date of Birth" />
       </Wrapper>,
     );
 
-    const input = screen.getByTestId('birthDate') as HTMLInputElement;
+    const input = screen.getByLabelText(/date of birth/i) as HTMLInputElement;
     expect(input.value).toBe('');
 
     fireEvent.input(input, { target: { value: '2000-01-01' } });
@@ -56,15 +47,11 @@ describe('DateControl', () => {
   it('renders initial value', () => {
     render(
       <Wrapper defaultValues={{ birthDate: '1990-12-25' }}>
-        <DateControl<FormValues>
-          name="birthDate"
-          label="Date of Birth"
-          testId="birthDate"
-        />
+        <DateControl<FormValues> name="birthDate" label="Date of Birth" />
       </Wrapper>,
     );
 
-    const input = screen.getByTestId('birthDate') as HTMLInputElement;
+    const input = screen.getByLabelText(/date of birth/i) as HTMLInputElement;
     expect(input.value).toBe('1990-12-25');
   });
 
@@ -75,7 +62,6 @@ describe('DateControl', () => {
           name="birthDate"
           label="Date of Birth"
           description="Please enter your birth date."
-          testId="birthDate"
         />
       </Wrapper>,
     );
@@ -93,12 +79,11 @@ describe('DateControl', () => {
           name="birthDate"
           label="Date of Birth"
           description={description}
-          testId="birthDate"
         />
       </Wrapper>,
     );
 
-    const input = screen.getByTestId('birthDate');
+    const input = screen.getByLabelText(/date of birth/i);
     const describedBy = input.getAttribute('aria-describedby');
     expect(describedBy).toMatch(/birthDate-description/);
     expect(screen.getByText(description)).toHaveAttribute(
@@ -123,7 +108,6 @@ describe('DateControl', () => {
               name="birthDate"
               label="Date of Birth"
               registerOptions={{ required: 'Birth date is required' }}
-              testId="birthDate"
             />
             <button type="submit">Submit</button>
           </form>
@@ -136,7 +120,7 @@ describe('DateControl', () => {
     fireEvent.click(screen.getByRole('button', { name: /submit/i }));
 
     await waitFor(() => {
-      const input = screen.getByTestId('birthDate');
+      const input = screen.getByLabelText(/date of birth/i);
       expect(input.getAttribute('aria-describedby')).toMatch(/birthDate-error/);
     });
   });
