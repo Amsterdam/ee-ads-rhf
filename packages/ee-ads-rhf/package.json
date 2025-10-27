@@ -13,7 +13,8 @@
     "clean": "rimraf dist/",
     "test": "vitest run",
     "test:watch": "vitest",
-    "lint": "eslint . --ext .js,.ts,.jsx,.tsx"
+    "lint": "eslint . --ext .js,.ts,.jsx,.tsx",
+    "lint:styles": "stylelint ./**/*.{css,scss}"
   },
   "dependencies": {
     "@amsterdam/design-system-assets": "^1.1.0",
@@ -44,6 +45,10 @@
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-typescript2": "0.36.0",
     "sass": "^1.93.2",
+    "stylelint": "^16.25.0",
+    "stylelint-config-recommended": "^17.0.0",
+    "stylelint-order": "^7.0.0",
+    "stylelint-prettier": "^5.0.3",
     "vitest": "^3.2.4"
   },
   "peerDependencies": {
