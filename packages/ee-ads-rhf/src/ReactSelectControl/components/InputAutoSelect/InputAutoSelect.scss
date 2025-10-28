@@ -38,7 +38,6 @@
     }
   }
 
-
   &:has(input:last-of-type:invalid) {
     border-color: var(--ams-select-invalid-border-color);
   }
@@ -54,6 +53,10 @@
   &--is-disabled {
     color: var(--ams-select-disabled-color);
     cursor: var(--ams-select-disabled-cursor) !important;
+  }
+
+  &--is-focused {
+    box-shadow: var(--ams-select-hover-box-shadow);
   }
 }
 
