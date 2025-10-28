@@ -9,7 +9,11 @@ const meta = {
   argTypes: {
     label: {
       control: 'text',
-      description: 'The checkbox label',
+      description: 'The react-select label',
+    },
+    name: {
+      control: 'text',
+      description: 'The react-select name',
     },
     description: {
       control: 'text',
@@ -18,6 +22,10 @@ const meta = {
     options: {
       control: 'object',
       description: 'Array of options that populate the select menu',
+    },
+    registerOptions: {
+      control: 'object',
+      description: '...',
     },
     isMulti: {
       control: 'boolean',

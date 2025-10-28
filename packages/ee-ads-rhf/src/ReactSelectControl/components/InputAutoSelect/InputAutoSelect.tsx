@@ -1,29 +1,30 @@
 import { Ref } from 'react';
-import Select, { ActionMeta, SelectInstance } from 'react-select';
+import Select, {
+  Props as SelectProps,
+  ActionMeta,
+  SelectInstance,
+} from 'react-select';
 import ClearIndicator from '../ClearIndicator/ClearIndicator';
 import DropdownIndicator from '../DropdownIndicator/DropdownIndicator';
+import Input from '../Input/Input';
 import { ReactSelectValue } from '../../types';
 import { SelectOption } from '../../../types';
 import './InputAutoSelect.scss';
 
-interface InputAutoSelectProps {
-  isClearable?: boolean;
-  isDisabled?: boolean;
-  isMulti?: boolean;
+export type InputAutoSelectProps = Omit<
+  SelectProps<SelectOption, boolean>,
+  'onChange' | 'value' | 'options'
+> & {
   options: SelectOption[] | undefined;
-  id?: string;
-  name?: string;
-  required?: boolean;
   value?: ReactSelectValue;
-  menuPortalTarget?: HTMLElement | null;
-  ref: Ref<SelectInstance<SelectOption> | null> | undefined;
-  error?: string;
   onChange: (
     newValue: ReactSelectValue,
     actionMeta: ActionMeta<SelectOption>,
   ) => void;
-  onBlur?: () => void;
-}
+  ref: Ref<SelectInstance<SelectOption> | null> | undefined;
+  error?: string;
+  customAriaDescribedBy?: string;
+};
 
 // This is a wrapper for React-Select with Amsterdam Design System styling
 // @see https://react-select.com/props for more props
@@ -39,6 +40,7 @@ const InputAutoSelect = ({
   name = undefined,
   required = false,
   value = undefined,
+  customAriaDescribedBy = undefined,
   menuPortalTarget = document.body,
   ref,
   error,
@@ -54,12 +56,14 @@ const InputAutoSelect = ({
     unstyled
     aria-errormessage={error}
     aria-invalid={!!error}
+    customAriaDescribedBy={customAriaDescribedBy}
     className="react-select__container"
     classNamePrefix="react-select"
     components={{
       // Override these components to use ADS SVG icons
       ClearIndicator,
       DropdownIndicator,
+      Input,
     }}
     noOptionsMessage={() => 'Geen opties'}
     inputId={id}
@@ -73,8 +77,15 @@ const InputAutoSelect = ({
     {...eventHandlers}
     styles={{
       container: (baseStyles, state) => ({
-        ...baseStyles,
-        outline: state.isFocused ? '2px solid -webkit-focus-ring-color' : '0',
+        ...{
+          ...baseStyles,
+          outline: state.isFocused ? '2px solid -webkit-focus-ring-color' : '0',
+        },
+        ...(error
+          ? {
+              borderColor: 'var(--ams-select-invalid-border-color)',
+            }
+          : {}),
       }),
       clearIndicator: (baseStyles) => ({
         ...baseStyles,
@@ -98,5 +109,4 @@ const InputAutoSelect = ({
     }}
   />
 );
-
 export default InputAutoSelect;

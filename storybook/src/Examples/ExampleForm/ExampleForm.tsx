@@ -235,7 +235,7 @@ export function ExampleForm() {
             name="districtAutoComplete"
             description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
             options={districts[0].options}
-            registerOptions={{}}
+            registerOptions={{ required: 'A district is required.' }}
             wrapperProps={{
               className: 'ams-mb-m',
             }}
@@ -247,7 +247,7 @@ export function ExampleForm() {
             description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
             isMulti
             options={districts[1].options}
-            registerOptions={{}}
+            registerOptions={{ required: 'A district is required.' }}
             wrapperProps={{
               className: 'ams-mb-m',
             }}

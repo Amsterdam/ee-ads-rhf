@@ -58,7 +58,6 @@ export const ReactSelectControl = forwardRef(function ReactSelectControl<
     options = [],
     registerOptions,
     id,
-    testId,
     isMulti = false,
     required,
     disabled = false,
@@ -69,7 +68,7 @@ export const ReactSelectControl = forwardRef(function ReactSelectControl<
 ) {
   const { control } = useFormContext();
 
-  const identifier = testId || id || name;
+  const identifier = id || name;
   const descriptionId = `${identifier}-description`;
   const errorId = `${identifier}-error`;
 
@@ -116,14 +115,14 @@ export const ReactSelectControl = forwardRef(function ReactSelectControl<
               required={required}
               isDisabled={disabled}
               value={value}
-              onChange={handleChange}
-              aria-describedby={[
+              error={errorMessage}
+              customAriaDescribedBy={[
                 description ? descriptionId : '',
                 hasError ? errorId : '',
               ]
                 .filter(Boolean)
                 .join(' ')}
-              data-testid={identifier}
+              onChange={handleChange}
               {...inputProps}
             />
           </Field>

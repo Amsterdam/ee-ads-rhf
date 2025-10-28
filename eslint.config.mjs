@@ -1,5 +1,5 @@
 // For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
-import storybook from "eslint-plugin-storybook";
+import storybook from 'eslint-plugin-storybook';
 
 import { defineConfig, globalIgnores } from 'eslint/config';
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
@@ -71,6 +71,16 @@ export default defineConfig([
     },
 
     rules: {
+      'max-len': [
+        'warn',
+        {
+          code: 100,
+          comments: 80,
+          ignoreUrls: true,
+          ignoreStrings: true,
+          ignoreTemplateLiterals: true,
+        },
+      ],
       'prettier/prettier': 'error',
       'react/react-in-jsx-scope': 'off',
     },
