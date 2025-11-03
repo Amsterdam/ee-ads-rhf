@@ -19,8 +19,8 @@ import {
   type FieldValues,
   type RegisterOptions,
 } from 'react-hook-form';
-import clsx from 'clsx';
 import { FormControlBase, SelectGroup, SelectOption } from '../types';
+import clsx from 'clsx';
 
 // Merge design-system and react-hook-form types
 export type SelectControlProps<TFieldValues extends FieldValues> = SelectProps &
@@ -53,7 +53,6 @@ export const SelectControl = forwardRef(function SelectControl<
     options,
     registerOptions,
     id,
-    testId,
     wrapperProps,
     ...attributes
   }: SelectControlProps<TFieldValues>,
@@ -61,7 +60,7 @@ export const SelectControl = forwardRef(function SelectControl<
 ) {
   const { control } = useFormContext();
 
-  const identifier = testId || id || name;
+  const identifier = id || name;
   const descriptionId = `${identifier}-description`;
   const errorId = `${identifier}-error`;
 
@@ -154,7 +153,6 @@ export const SelectControl = forwardRef(function SelectControl<
               invalid={hasError}
               {...field}
               {...attributes}
-              data-testid={identifier}
               ref={ref}
             >
               {children}

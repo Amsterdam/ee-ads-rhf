@@ -50,7 +50,6 @@ export const DateControl = forwardRef(function DateControl<
     description,
     registerOptions,
     id,
-    testId,
     wrapperProps,
     ...attributes
   }: DateControlProps<TFieldValues>,
@@ -58,7 +57,7 @@ export const DateControl = forwardRef(function DateControl<
 ) {
   const { control } = useFormContext();
 
-  const identifier = testId || id || name;
+  const identifier = id || name;
   const descriptionId = `${identifier}-description`;
   const errorId = `${identifier}-error`;
 
@@ -75,17 +74,9 @@ export const DateControl = forwardRef(function DateControl<
         const hasError = !!fieldState.error;
 
         return (
-          <Field
-            invalid={hasError}
-            data-testid={`${identifier}-text-input-wrapper`}
-            {...wrapperProps}
-          >
+          <Field invalid={hasError} {...wrapperProps}>
             {label && (
-              <Label
-                htmlFor={identifier}
-                data-testid={`${identifier}-label`}
-                optional={optional}
-              >
+              <Label htmlFor={identifier} optional={optional}>
                 {label}
               </Label>
             )}
@@ -111,7 +102,6 @@ export const DateControl = forwardRef(function DateControl<
               // Controlled props from RHF
               {...field}
               {...attributes}
-              data-testid={identifier}
               ref={ref}
             />
           </Field>

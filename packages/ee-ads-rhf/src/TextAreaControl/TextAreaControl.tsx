@@ -47,7 +47,6 @@ export const TextAreaControl = forwardRef(function TextAreaControl<
     description,
     registerOptions,
     id,
-    testId,
     cols,
     rows,
     wrapperProps,
@@ -57,7 +56,7 @@ export const TextAreaControl = forwardRef(function TextAreaControl<
 ) {
   const { control } = useFormContext();
 
-  const identifier = testId || id || name;
+  const identifier = id || name;
   const descriptionId = `${identifier}-description`;
   const errorId = `${identifier}-error`;
 
@@ -74,17 +73,9 @@ export const TextAreaControl = forwardRef(function TextAreaControl<
         const hasError = !!fieldState.error;
 
         return (
-          <Field
-            invalid={hasError}
-            data-testid={`${identifier}-textarea-input-wrapper`}
-            {...wrapperProps}
-          >
+          <Field invalid={hasError} {...wrapperProps}>
             {label && (
-              <Label
-                htmlFor={identifier}
-                data-testid={`${identifier}-label`}
-                optional={optional}
-              >
+              <Label htmlFor={identifier} optional={optional}>
                 {label}
               </Label>
             )}
@@ -113,7 +104,6 @@ export const TextAreaControl = forwardRef(function TextAreaControl<
               // Controlled props from RHF
               {...field}
               {...attributes}
-              data-testid={identifier}
               ref={ref}
             />
           </Field>

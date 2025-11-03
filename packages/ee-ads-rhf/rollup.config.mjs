@@ -6,6 +6,7 @@ import nodePolyfills from 'rollup-plugin-node-polyfills';
 import dts from 'rollup-plugin-dts';
 import filesize from 'rollup-plugin-filesize';
 import fs from 'fs';
+import postcss from 'rollup-plugin-postcss';
 
 const packageJson = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
 
@@ -44,6 +45,15 @@ export default [
         declarationDir: 'dist',
         exclude: ['**/*.test.ts', '**/*.test.tsx'],
       }),
+      postcss({
+        modules: {
+          generateScopedName: '[name]__[local]___[hash:base64:5]',
+        },
+        use: ['sass'],
+        extract: false, // don't generate a separate .css file unless you want to
+        minimize: true,
+        sourceMap: true,
+      }),
       filesize(),
     ],
   },
@@ -51,5 +61,6 @@ export default [
     input: './dist/index.d.ts',
     output: [{ file: 'dist/index.d.ts', format: 'es' }],
     plugins: [dts()],
+    external: ['react', 'react-dom', /\.scss$/, /\.css$/],
   },
 ];

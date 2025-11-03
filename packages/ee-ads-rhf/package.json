@@ -13,7 +13,8 @@
     "clean": "rimraf dist/",
     "test": "vitest run",
     "test:watch": "vitest",
-    "lint": "eslint . --ext .js,.ts,.jsx,.tsx"
+    "lint": "eslint . --ext .js,.ts,.jsx,.tsx",
+    "lint:styles": "stylelint ./**/*.{css,scss}"
   },
   "dependencies": {
     "@amsterdam/design-system-assets": "^1.1.0",
@@ -22,8 +23,8 @@
     "@amsterdam/design-system-react-icons": "^1.1.0",
     "@amsterdam/design-system-tokens": "^2.0.0",
     "clsx": "^2.1.1",
-    "react": "19.2.0",
-    "react-dom": "19.2.0",
+    "react": "16 - 19",
+    "react-dom": "16 - 19",
     "react-hook-form": "^7.62.0"
   },
   "devDependencies": {
@@ -41,7 +42,13 @@
     "rollup-plugin-node-externals": "8.1.1",
     "rollup-plugin-node-polyfills": "^0.2.1",
     "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-typescript2": "0.36.0",
+    "sass": "^1.93.2",
+    "stylelint": "^16.25.0",
+    "stylelint-config-recommended": "^17.0.0",
+    "stylelint-order": "^7.0.0",
+    "stylelint-prettier": "^5.0.3",
     "vitest": "^3.2.4"
   },
   "peerDependencies": {

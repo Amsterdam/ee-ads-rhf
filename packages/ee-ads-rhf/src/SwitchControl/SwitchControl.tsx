@@ -49,7 +49,6 @@ export const SwitchControl = forwardRef(function SwitchControl<
     registerOptions,
     id,
     disabled,
-    testId,
     wrapperProps,
     ...attributes
   }: SwitchControlProps<TFieldValues>,
@@ -57,7 +56,7 @@ export const SwitchControl = forwardRef(function SwitchControl<
 ) {
   const { control } = useFormContext();
 
-  const identifier = testId || id || name;
+  const identifier = id || name;
   const descriptionId = `${identifier}-description`;
   const errorId = `${identifier}-error`;
 
@@ -71,11 +70,7 @@ export const SwitchControl = forwardRef(function SwitchControl<
         const hasError = !!fieldState.error;
 
         return (
-          <Field
-            data-testid={`${identifier}-checkbox-wrapper`}
-            invalid={hasError}
-            {...wrapperProps}
-          >
+          <Field invalid={hasError} {...wrapperProps}>
             {!!description &&
               (typeof description === 'string' ? (
                 <Paragraph id={descriptionId} size="small">
@@ -102,7 +97,6 @@ export const SwitchControl = forwardRef(function SwitchControl<
                 // Controlled props from RHF
                 {...field}
                 {...attributes}
-                data-testid={identifier}
                 ref={ref}
               />
             </Row>

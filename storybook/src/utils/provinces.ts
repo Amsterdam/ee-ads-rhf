@@ -1,0 +1,14 @@
+export default [
+  { label: 'Drenthe', value: 'DR' },
+  { label: 'Flevoland', value: 'FL' },
+  { label: 'Fryslân', value: 'FR' },
+  { label: 'Gelderland', value: 'GE' },
+  { label: 'Groningen', value: 'GR' },
+  { label: 'Limburg', value: 'LI' },
+  { label: 'Noord-Brabant', value: 'NB' },
+  { label: 'Noord-Holland', value: 'NH' },
+  { label: 'Overijssel', value: 'OV' },
+  { label: 'Utrecht', value: 'UT' },
+  { label: 'Zeeland', value: 'ZE' },
+  { label: 'Zuid-Holland', value: 'ZH' },
+];

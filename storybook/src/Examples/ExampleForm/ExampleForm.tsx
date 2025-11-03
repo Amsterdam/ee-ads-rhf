@@ -11,6 +11,7 @@ import {
   SwitchControl,
   PasswordInputControl,
   FileInputControl,
+  ReactSelectControl,
 } from '@amsterdam/ee-ads-rhf-lib';
 import {
   Grid,
@@ -44,6 +45,11 @@ export function ExampleForm() {
     notification: false,
     password: '',
     attachment: '',
+    districtAutoComplete: [],
+    districtAutoCompleteMulti: [
+      { label: 'Nieuwe Kerk e.o.', value: 'nieuwe-kerk' },
+      { label: 'Stationsplein e.o.', value: 'stationsplein' },
+    ],
   };
 
   const onSubmit = useCallback(async (data: AppFormData) => {
@@ -89,7 +95,6 @@ export function ExampleForm() {
             name="email"
             type="email"
             registerOptions={{ required: 'This field is required.' }}
-            testId="create-email"
             wrapperProps={{
               className: 'ams-mb-m',
             }}
@@ -97,7 +102,6 @@ export function ExampleForm() {
           <TextAreaControl<{ comments: string }>
             label="Additional comments"
             name="comments"
-            testId="create-comments"
             wrapperProps={{
               className: 'ams-mb-m',
             }}
@@ -106,7 +110,6 @@ export function ExampleForm() {
             <DateControl<{ startDate: string }>
               label="Start date"
               name="startDate"
-              testId="create-start-date"
               registerOptions={{
                 required: 'This field is required.',
               }}
@@ -114,7 +117,6 @@ export function ExampleForm() {
             <TimeControl<{ startTime: string }>
               label="Start time"
               name="startTime"
-              testId="create-start-time"
               registerOptions={{ required: 'This field is required.' }}
             />
           </Row>
@@ -223,6 +225,29 @@ export function ExampleForm() {
             name="attachment"
             description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
             registerOptions={{}}
+            wrapperProps={{
+              className: 'ams-mb-m',
+            }}
+          />
+
+          <ReactSelectControl<{ districtAutoComplete: string[] }>
+            label="Gebieden autocomplete"
+            name="districtAutoComplete"
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            options={districts[0].options}
+            registerOptions={{ required: 'A district is required.' }}
+            wrapperProps={{
+              className: 'ams-mb-m',
+            }}
+          />
+
+          <ReactSelectControl<{ districtAutoCompleteMulti: string[] }>
+            label="Gebieden autocomplete (multiple)"
+            name="districtAutoCompleteMulti"
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            isMulti
+            options={districts[1].options}
+            registerOptions={{ required: 'A district is required.' }}
             wrapperProps={{
               className: 'ams-mb-m',
             }}

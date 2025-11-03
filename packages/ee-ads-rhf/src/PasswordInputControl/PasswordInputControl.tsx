@@ -47,7 +47,6 @@ export const PasswordInputControl = forwardRef(function PasswordInputControl<
     description,
     registerOptions,
     id,
-    testId,
     wrapperProps,
     ...attributes
   }: PasswordInputControlProps<TFieldValues>,
@@ -55,7 +54,7 @@ export const PasswordInputControl = forwardRef(function PasswordInputControl<
 ) {
   const { control } = useFormContext();
 
-  const identifier = testId || id || name;
+  const identifier = id || name;
   const descriptionId = `${identifier}-description`;
   const errorId = `${identifier}-error`;
 
@@ -72,26 +71,14 @@ export const PasswordInputControl = forwardRef(function PasswordInputControl<
         const hasError = !!errorMessage;
 
         return (
-          <Field
-            invalid={hasError}
-            data-testid={`${identifier}-password-input-wrapper`}
-            {...wrapperProps}
-          >
+          <Field invalid={hasError} {...wrapperProps}>
             {label && (
-              <Label
-                htmlFor={identifier}
-                data-testid={`${identifier}-label`}
-                optional={optional}
-              >
+              <Label htmlFor={identifier} optional={optional}>
                 {label}
               </Label>
             )}
             {description && (
-              <Paragraph
-                size="small"
-                id={descriptionId}
-                data-testid={descriptionId}
-              >
+              <Paragraph size="small" id={descriptionId}>
                 {description}
               </Paragraph>
             )}
@@ -101,7 +88,6 @@ export const PasswordInputControl = forwardRef(function PasswordInputControl<
 
             <PasswordInput
               id={identifier}
-              data-testid={identifier}
               invalid={hasError}
               aria-describedby={clsx(
                 { [descriptionId]: !!descriptionId },

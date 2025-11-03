@@ -23,16 +23,12 @@ describe('SwitchControl', () => {
     const onSubmitMock: SubmitHandler<FormValues> = vi.fn();
     render(
       <FormProvider defaultValues={{ notify: false }} onSubmit={onSubmitMock}>
-        <SwitchControl<FormValues>
-          label="Test Label"
-          name="notify"
-          testId="switch-input"
-        />
+        <SwitchControl<FormValues> label="Test Label" name="notify" />
         <button type="submit">Submit</button>
       </FormProvider>,
     );
 
-    const input = screen.getByTestId('switch-input') as HTMLInputElement;
+    const input = screen.getByLabelText(/test label/i) as HTMLInputElement;
     expect(input.checked).toBe(false);
 
     fireEvent.click(input);
@@ -51,15 +47,11 @@ describe('SwitchControl', () => {
   it('renders with initial value', () => {
     render(
       <FormProvider defaultValues={{ notify: true }} onSubmit={vi.fn()}>
-        <SwitchControl<FormValues>
-          label="Test Label"
-          name="notify"
-          testId="switch-input"
-        />
+        <SwitchControl<FormValues> label="Test Label" name="notify" />
       </FormProvider>,
     );
 
-    const input = screen.getByTestId('switch-input') as HTMLInputElement;
+    const input = screen.getByLabelText(/test label/i) as HTMLInputElement;
     expect(input.checked).toBe(true);
   });
 
@@ -72,7 +64,6 @@ describe('SwitchControl', () => {
           description={
             <span data-testid="custom-description">Custom description</span>
           }
-          testId="switch-input"
         />
       </FormProvider>,
     );
@@ -88,19 +79,15 @@ describe('SwitchControl', () => {
           label="Test Label"
           name="notify"
           description={description}
-          testId="switch-input"
         />
       </FormProvider>,
     );
 
     const label = screen.getByLabelText('Test Label');
-    expect(label).toHaveAttribute(
-      'aria-describedby',
-      'switch-input-description',
-    );
+    expect(label).toHaveAttribute('aria-describedby', 'notify-description');
     expect(screen.getByText(description)).toHaveAttribute(
       'id',
-      'switch-input-description',
+      'notify-description',
     );
   });
 
@@ -116,7 +103,6 @@ describe('SwitchControl', () => {
             registerOptions={{
               required: 'This field is required',
             }}
-            testId="switch-input"
           />
           <button type="submit">Submit</button>
         </FormProvider>
@@ -129,9 +115,7 @@ describe('SwitchControl', () => {
 
     expect(await screen.findByText(/This field is required/i)).toBeVisible();
 
-    const checkbox = screen.getByTestId('switch-input');
-    expect(checkbox.getAttribute('aria-describedby')).toMatch(
-      /switch-input-error/,
-    );
+    const checkbox = screen.getByLabelText(/test label/i);
+    expect(checkbox.getAttribute('aria-describedby')).toMatch(/notify-error/);
   });
 });

@@ -26,7 +26,6 @@ describe('TextInputControl', () => {
         <TextInputControl<FormValues>
           name="name"
           label="Your Name"
-          testId="name"
         />
       </Wrapper>,
     );
@@ -39,11 +38,11 @@ describe('TextInputControl', () => {
     const user = userEvent.setup();
     render(
       <Wrapper>
-        <TextInputControl name="name" label="Your Name" testId="name" />
+        <TextInputControl name="name" label="Your Name" />
       </Wrapper>,
     );
 
-    const input = screen.getByTestId('name') as HTMLInputElement;
+    const input = screen.getByLabelText(/Your Name/i) as HTMLInputElement;
     await user.type(input, 'secret123');
     expect(input.value).toBe('secret123');
   });
@@ -51,11 +50,11 @@ describe('TextInputControl', () => {
   it('renders with initial value', () => {
     render(
       <Wrapper defaultValues={{ name: 'Thomas' }}>
-        <TextInputControl name="name" label="Your Name" testId="name" />
+        <TextInputControl name="name" label="Your Name" />
       </Wrapper>,
     );
 
-    const input = screen.getByTestId('name') as HTMLInputElement;
+    const input = screen.getByLabelText(/Your Name/i) as HTMLInputElement;
     expect(input.value).toBe('Thomas');
   });
 
@@ -66,7 +65,6 @@ describe('TextInputControl', () => {
           name="name"
           label="Your Name"
           description="First or last name."
-          testId="name"
         />
       </Wrapper>,
     );
@@ -81,12 +79,11 @@ describe('TextInputControl', () => {
           name="name"
           label="Your Name"
           description="First or last name."
-          testId="name"
         />
       </Wrapper>,
     );
 
-    const input = screen.getByTestId('name');
+    const input = screen.getByLabelText(/Your Name/i);;
     expect(input).toHaveAttribute(
       'aria-describedby',
       expect.stringContaining('name-description'),
@@ -109,7 +106,6 @@ describe('TextInputControl', () => {
               name="name"
               label="Your Name"
               registerOptions={{ required: 'A name is required' }}
-              testId="name"
             />
             <button type="submit">Submit</button>
           </form>

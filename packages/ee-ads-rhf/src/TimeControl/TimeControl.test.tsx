@@ -22,31 +22,22 @@ describe('TimeControl', () => {
   it('renders with label and input', () => {
     render(
       <Wrapper>
-        <TimeControl<FormValues>
-          name="startTime"
-          label="Start time"
-          testId="startTime"
-        />
+        <TimeControl<FormValues> name="startTime" label="Start time" />
       </Wrapper>,
     );
 
-    const input = screen.getByTestId('startTime') as HTMLInputElement;
+    const input = screen.getByLabelText(/start time/i) as HTMLInputElement;
     expect(input).toBeInTheDocument();
-    expect(screen.getByLabelText(/Start time/i)).toBe(input);
   });
 
   it('handles user input', () => {
     render(
       <Wrapper>
-        <TimeControl<FormValues>
-          name="startTime"
-          label="Start time"
-          testId="startTime"
-        />
+        <TimeControl<FormValues> name="startTime" label="Start time" />
       </Wrapper>,
     );
 
-    const input = screen.getByTestId('startTime') as HTMLInputElement;
+    const input = screen.getByLabelText(/start time/i) as HTMLInputElement;
     expect(input.value).toBe('');
 
     fireEvent.input(input, { target: { value: '12:02' } });
@@ -56,15 +47,11 @@ describe('TimeControl', () => {
   it('renders initial value', () => {
     render(
       <Wrapper defaultValues={{ startTime: '12:02' }}>
-        <TimeControl<FormValues>
-          name="startTime"
-          label="Start time"
-          testId="startTime"
-        />
+        <TimeControl<FormValues> name="startTime" label="Start time" />
       </Wrapper>,
     );
 
-    const input = screen.getByTestId('startTime') as HTMLInputElement;
+    const input = screen.getByLabelText(/start time/i) as HTMLInputElement;
     expect(input.value).toBe('12:02');
   });
 
@@ -75,7 +62,6 @@ describe('TimeControl', () => {
           name="startTime"
           label="Start time"
           description="Please enter a start time."
-          testId="startTime"
         />
       </Wrapper>,
     );
@@ -91,12 +77,11 @@ describe('TimeControl', () => {
           name="startTime"
           label="Start time"
           description={description}
-          testId="startTime"
         />
       </Wrapper>,
     );
 
-    const input = screen.getByTestId('startTime');
+    const input = screen.getByLabelText(/start time/i);
     const describedBy = input.getAttribute('aria-describedby');
     expect(describedBy).toMatch(/startTime-description/);
     expect(screen.getByText(description)).toHaveAttribute(
@@ -121,7 +106,6 @@ describe('TimeControl', () => {
               name="startTime"
               label="Start time"
               registerOptions={{ required: 'Start time is required' }}
-              testId="startTime"
             />
             <button type="submit">Submit</button>
           </form>
@@ -134,7 +118,7 @@ describe('TimeControl', () => {
     fireEvent.click(screen.getByRole('button', { name: /submit/i }));
 
     await waitFor(() => {
-      const input = screen.getByTestId('startTime');
+      const input = screen.getByLabelText(/start time/i);
       expect(input.getAttribute('aria-describedby')).toMatch(/startTime-error/);
     });
   });

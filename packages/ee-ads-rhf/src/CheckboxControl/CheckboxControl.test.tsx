@@ -25,15 +25,16 @@ describe('CheckboxControl', () => {
         <CheckboxControl<FormValues>
           name="remote"
           label="is the meeting remote?"
-          testId="remote"
         />
       </Wrapper>,
     );
 
-    const checkbox = screen.getByTestId('remote') as HTMLInputElement;
+    const checkbox = screen.getByLabelText(
+      /is the meeting remote/i,
+    ) as HTMLInputElement;
     expect(checkbox).toBeInTheDocument();
+    expect(checkbox).toBe(checkbox);
     expect(checkbox.type).toBe('checkbox');
-    expect(screen.getByLabelText(/is the meeting remote/i)).toBe(checkbox);
   });
 
   it('handles user input', () => {
@@ -42,12 +43,13 @@ describe('CheckboxControl', () => {
         <CheckboxControl<FormValues>
           name="remote"
           label="is the meeting remote?"
-          testId="remote"
         />
       </Wrapper>,
     );
 
-    const checkbox = screen.getByTestId('remote') as HTMLInputElement;
+    const checkbox = screen.getByLabelText(
+      /is the meeting remote/i,
+    ) as HTMLInputElement;
     expect(checkbox.checked).toBe(false);
 
     fireEvent.click(checkbox);
@@ -63,12 +65,13 @@ describe('CheckboxControl', () => {
         <CheckboxControl<FormValues>
           name="remote"
           label="is the meeting remote?"
-          testId="remote"
         />
       </Wrapper>,
     );
 
-    const checkbox = screen.getByTestId('remote') as HTMLInputElement;
+    const checkbox = screen.getByLabelText(
+      /is the meeting remote/i,
+    ) as HTMLInputElement;
     expect(checkbox.checked).toBe(true);
   });
 
@@ -79,7 +82,6 @@ describe('CheckboxControl', () => {
           name="remote"
           label="is the meeting remote?"
           description="For remote meetings a video call invite will be sent in advance"
-          testId="remote"
         />
       </Wrapper>,
     );
@@ -100,12 +102,11 @@ describe('CheckboxControl', () => {
           name="remote"
           label="is the meeting remote?"
           description={description}
-          testId="remote"
         />
       </Wrapper>,
     );
 
-    const checkbox = screen.getByTestId('remote');
+    const checkbox = screen.getByLabelText(/is the meeting remote/i);
     const describedBy = checkbox.getAttribute('aria-describedby');
     expect(describedBy).toMatch(/remote-description/);
     expect(screen.getByText(description)).toHaveAttribute(
@@ -133,7 +134,6 @@ describe('CheckboxControl', () => {
                 required:
                   'For remote meetings a video call invite will be sent in advance',
               }}
-              testId="remote"
             />
             <button type="submit">Submit</button>
           </form>
@@ -151,7 +151,7 @@ describe('CheckboxControl', () => {
       ),
     ).toBeVisible();
 
-    const checkbox = screen.getByTestId('remote');
+    const checkbox = screen.getByLabelText(/is the meeting remote/i);
     expect(checkbox.getAttribute('aria-describedby')).toMatch(/remote-error/);
   });
 });
