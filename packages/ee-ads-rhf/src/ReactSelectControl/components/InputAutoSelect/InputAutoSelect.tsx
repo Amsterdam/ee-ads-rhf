@@ -3,6 +3,7 @@ import Select, {
   Props as SelectProps,
   ActionMeta,
   SelectInstance,
+  GroupBase,
 } from 'react-select';
 import ClearIndicator from '../ClearIndicator/ClearIndicator';
 import DropdownIndicator from '../DropdownIndicator/DropdownIndicator';
@@ -11,8 +12,8 @@ import { ReactSelectValue } from '../../types';
 import { SelectOption } from '../../../types';
 import './InputAutoSelect.scss';
 
-export type InputAutoSelectProps = Omit<
-  SelectProps<SelectOption, boolean>,
+export type InputAutoSelectProps<IsMulti extends boolean = false> = Omit<
+  SelectProps<SelectOption, IsMulti, GroupBase<SelectOption>>,
   'onChange' | 'value' | 'options'
 > & {
   options: SelectOption[] | undefined;
@@ -21,7 +22,10 @@ export type InputAutoSelectProps = Omit<
     newValue: ReactSelectValue,
     actionMeta: ActionMeta<SelectOption>,
   ) => void;
-  ref: Ref<SelectInstance<SelectOption> | null> | undefined;
+  // 'any' will save a lot of complicated extra types to handle the isMulti
+  // prop
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ref?: Ref<SelectInstance<SelectOption, any> | null>;
   error?: string;
   customAriaDescribedBy?: string;
 };
@@ -31,10 +35,10 @@ export type InputAutoSelectProps = Omit<
 // WARNING: The following prop types are unstyled and untested:
 // - isLoading
 // - isRtl
-const InputAutoSelect = ({
+const InputAutoSelect = <IsMulti extends boolean = false>({
   isClearable = true,
   isDisabled = false,
-  isMulti = false,
+  isMulti,
   options,
   id = undefined,
   name = undefined,
@@ -47,7 +51,7 @@ const InputAutoSelect = ({
   onChange,
   onBlur,
   ...eventHandlers
-}: InputAutoSelectProps) => (
+}: InputAutoSelectProps<IsMulti>) => (
   <Select
     options={options}
     isClearable={isClearable}

@@ -29,17 +29,8 @@ These need either implementing and/or updating to surround the component with `f
 
 *✅ indicates a basic demo version is available with `forwardRef` and the correct types - and is consumable in the `packages/dev` application.*
 
-- TextAreaControl (implemented in ee-react-form-demos) ✅
-- CheckboxControl (implemented in ee-react-form-demos) ✅
-- DateControl (implemented in ee-react-form-demos) ✅
-- TextInputControl (implemented in ee-react-form-demos) ✅
-- TimeControl (implemented in ee-react-form-demos) ✅
-- Radio
-- Select (implemented in ee-react-form-demos)
-- React-select
-- File input
-- Switch
-- Password input
+- Docs for each component
+- Cleanup Example Form flow + validation
 
 ### Application
 
