@@ -2,39 +2,53 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { ReactSelectControl } from './ReactSelectControl';
 import provinces from '../../utils/provinces';
-import { SelectOption } from 'packages/ee-ads-rhf/dist/types';
 
 const meta = {
   title: 'Components/ReactSelectControl',
   component: ReactSelectControl,
   tags: ['autodocs'],
   argTypes: {
-    label: {
-      control: 'text',
-      description: 'The react-select label',
-    },
     name: {
       control: 'text',
-      description: 'The react-select name',
+      description: 'Form field name, used by React Hook Form for registration.',
+    },
+    label: {
+      control: 'text',
+      description: 'Field label displayed above the select.',
     },
     description: {
       control: 'text',
-      description: 'Optional description text',
+      description: 'Optional helper text displayed below the label.',
     },
     options: {
       control: 'object',
-      description: 'Array of options that populate the select menu',
-    },
-    registerOptions: {
-      control: 'object',
-      description: '...',
+      description:
+        'List of selectable options. Each option is an object `{ label, value }`',
     },
     isMulti: {
       control: 'boolean',
-      description: 'Support multiple selected options',
+      description: 'Enable multiple selected options',
+    },
+    required: {
+      control: 'boolean',
+      description: 'Marks the field as required.',
     },
     disabled: {
       control: 'boolean',
+      description: 'Disables user interaction with the select.',
+    },
+    registerOptions: {
+      control: 'object',
+      description: 'Validation rules passed directly to React Hook Form.',
+    },
+    wrapperProps: {
+      control: 'object',
+      description: 'Props passed to the wrapping `<Field>` container.',
+    },
+    inputProps: {
+      control: 'object',
+      description:
+        'Optional additional props for the underlying `InputAutoSelect` component.',
     },
   },
 } satisfies Meta<typeof ReactSelectControl>;
