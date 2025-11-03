@@ -1,0 +1,31 @@
+import { Canvas, Controls, Meta, Primary } from '@storybook/addon-docs/blocks';
+import * as ReactSelectControl from './ReactSelectControl.stories';
+
+<Meta of={ReactSelectControl} />
+
+# ReactSelectControl
+
+The ReactSelectControl component combines the power of [React Select](https://react-select.com/) with [React Hook Form](https://react-hook-form.com/) for seamless form integration and validation.
+
+It provides a modern, accessible, and highly customizable replacement for the native `<select>` element — offering features like search, async options and multi-select out of the box.
+
+This wrapper also integrates with [Amsterdam Design System](https://designsystem.amsterdam/?path=/docs/docs-introduction--docs) styles, form labels, descriptions, and error messaging.
+
+## References
+
+- [Amsterdam Design System - Select Docs](https://designsystem.amsterdam/?path=/docs/components-forms-select--docs)
+- [React Select](https://react-select.com/)
+
+<Primary />
+
+<Controls />
+
+## Examples
+
+### With Description
+
+<Canvas of={ReactSelectControl.WithDescription} />
+
+### Disabled
+
+<Canvas of={ReactSelectControl.Disabled} />
