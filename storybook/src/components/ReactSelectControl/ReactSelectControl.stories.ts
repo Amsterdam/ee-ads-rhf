@@ -80,10 +80,23 @@ export const WithDescription: Story = {
   },
 };
 
+export const WithMultiple: Story = {
+  args: {
+    label: 'Province',
+    name: 'province3',
+    options: provinces,
+    description: 'You can select multiple provinces',
+    isMulti: true,
+    registerOptions: {
+      required: 'You must select a province',
+    },
+  },
+};
+
 export const Disabled: Story = {
   args: {
     label: 'Disabled province',
-    name: 'province3',
+    name: 'province4',
     options: provinces,
     disabled: true,
   },
