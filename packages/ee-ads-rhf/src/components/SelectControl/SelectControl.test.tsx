@@ -1,10 +1,15 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import { SubmitHandler, useForm } from 'react-hook-form';
 import { ReactNode } from 'react';
+import {
+  FormProvider as RHFFormProvider,
+  SubmitHandler,
+  useForm,
+} from 'react-hook-form';
 import { SelectControl } from './SelectControl';
-import { FormProvider } from '../FormProvider/FormProvider';
+import { FormProvider } from '../FormProvider';
+// import { FormProvider } from '../FormProvider/FormProvider';
 
 type FormValues = {
   country: string;
@@ -288,5 +293,86 @@ describe('SelectControl', () => {
         /country-error/,
       );
     });
+  });
+
+  it('does not render when shouldShow returns false', () => {
+    render(
+      <Wrapper>
+        <SelectControl
+          name="country"
+          label="Test Label"
+          options={['A', 'B', 'C']}
+          shouldShow={() => false}
+        />
+      </Wrapper>,
+    );
+
+    expect(screen.queryByLabelText(/Test Label/i)).not.toBeInTheDocument();
+  });
+
+  it('renders when shouldShow returns true', () => {
+    render(
+      <Wrapper>
+        <SelectControl
+          name="country"
+          label="Test Label"
+          options={['A', 'B', 'C']}
+          shouldShow={() => true}
+        />
+      </Wrapper>,
+    );
+
+    expect(screen.getByLabelText(/Test Label/i)).toBeInTheDocument();
+  });
+
+  it('re-renders when shouldShow depends on watched value', async () => {
+    const user = userEvent.setup();
+
+    const ConditionalForm = () => {
+      const methods = useForm<{ country: string; showField: boolean }>({
+        defaultValues: { country: '', showField: false },
+      });
+
+      return (
+        <RHFFormProvider {...methods}>
+          <label>
+            <input
+              type="checkbox"
+              {...methods.register('showField')}
+              aria-label="Toggle field"
+            />
+          </label>
+
+          <SelectControl<{ country: string; showField: boolean }>
+            name="country"
+            label="Test Label"
+            options={[
+              {
+                label: 'Option 1',
+                value: 'option1',
+              },
+              {
+                label: 'Option 2',
+                value: 'option2',
+              },
+            ]}
+            shouldShow={(watch) => watch('showField')}
+          />
+        </RHFFormProvider>
+      );
+    };
+
+    render(<ConditionalForm />);
+
+    // Initially hidden
+    expect(screen.queryByLabelText(/Test Label/i)).not.toBeInTheDocument();
+
+    // Toggle checkbox - field should appear
+    await user.click(screen.getByLabelText('Toggle field'));
+    expect(await screen.findByLabelText(/Test Label/i)).toBeInTheDocument();
+
+    // Toggle checkbox - field should disappear
+    await user.click(screen.getByLabelText('Toggle field'));
+    expect(screen.queryByLabelText(/Test Label/i)).not.toBeInTheDocument();
   });
 });

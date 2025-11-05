@@ -15,7 +15,9 @@ import {
 } from '@amsterdam/design-system-react';
 import {
   Controller,
+  Path,
   useFormContext,
+  UseFormWatch,
   type FieldValues,
   type RegisterOptions,
 } from 'react-hook-form';
@@ -34,6 +36,8 @@ export type SelectControlProps<TFieldValues extends FieldValues> = SelectProps &
     wrapperProps?: ComponentPropsWithoutRef<'div'>;
     hideFieldError?: boolean;
     hideErrorMessage?: boolean;
+    shouldShow?: boolean | ((watch: UseFormWatch<TFieldValues>) => boolean);
+    registerOptions?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
   };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -58,11 +62,18 @@ export const SelectControl = forwardRef(function SelectControl<
     wrapperProps,
     hideFieldError = false,
     hideErrorMessage = false,
+    shouldShow = true,
     ...attributes
   }: SelectControlProps<TFieldValues>,
   ref: Ref<HTMLSelectElement>,
 ) {
-  const { control } = useFormContext();
+  const { control, watch } = useFormContext<TFieldValues>();
+  const isVisible =
+    typeof shouldShow === 'function' ? shouldShow(watch) : shouldShow;
+
+  if (!isVisible) {
+    return null;
+  }
 
   const identifier = id || name;
   const descriptionId = `${identifier}-description`;
@@ -126,7 +137,7 @@ export const SelectControl = forwardRef(function SelectControl<
     <Controller
       name={name}
       control={control}
-      rules={registerOptions as RegisterOptions}
+      rules={registerOptions}
       render={({ field, fieldState }) => {
         const errorMessage = fieldState.error?.message;
         const hasError = !!fieldState.error;
