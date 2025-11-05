@@ -7,7 +7,9 @@ import {
 } from 'react';
 import {
   Controller,
+  Path,
   useFormContext,
+  UseFormWatch,
   type FieldValues,
   type RegisterOptions,
 } from 'react-hook-form';
@@ -28,6 +30,8 @@ export type TextInputControlProps<TFieldValues extends FieldValues> =
       wrapperProps?: ComponentPropsWithoutRef<'div'>;
       hideFieldError?: boolean;
       hideErrorMessage?: boolean;
+      shouldShow?: boolean | ((watch: UseFormWatch<TFieldValues>) => boolean);
+      registerOptions?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
     };
 
 interface TextInputControlComponent
@@ -52,11 +56,18 @@ export const TextInputControl = forwardRef(function TextInputControl<
     wrapperProps,
     hideFieldError = false,
     hideErrorMessage = false,
+    shouldShow = true,
     ...attributes
   }: TextInputControlProps<TFieldValues>,
   ref: Ref<HTMLInputElement>,
 ) {
-  const { control } = useFormContext();
+  const { control, watch } = useFormContext<TFieldValues>();
+  const isVisible =
+    typeof shouldShow === 'function' ? shouldShow(watch) : shouldShow;
+
+  if (!isVisible) {
+    return null;
+  }
 
   const identifier = id || name;
   const descriptionId = `${identifier}-description`;
@@ -69,7 +80,7 @@ export const TextInputControl = forwardRef(function TextInputControl<
     <Controller
       name={name}
       control={control}
-      rules={registerOptions as RegisterOptions}
+      rules={registerOptions}
       render={({ field, fieldState }) => {
         const errorMessage = fieldState.error?.message;
         const hasError = !!errorMessage;
