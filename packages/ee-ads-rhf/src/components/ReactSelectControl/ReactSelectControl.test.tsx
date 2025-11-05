@@ -1,7 +1,11 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import {
+  FormProvider as RHFFormProvider,
+  SubmitHandler,
+  useForm,
+} from 'react-hook-form';
 import { ReactNode } from 'react';
 import { FormProvider } from '../FormProvider/FormProvider';
 import { ReactSelectControl } from './ReactSelectControl';
@@ -139,7 +143,7 @@ describe('ReactSelectControl', () => {
           color: { value: 'blue', label: 'Blue' },
         }}
       >
-        <ReactSelectControl<FormValues>
+        <ReactSelectControl
           name="color"
           label="Favorite Color"
           options={options}
@@ -213,5 +217,74 @@ describe('ReactSelectControl', () => {
       const input = screen.getByLabelText(/Favorite Color/i);
       expect(input.getAttribute('aria-describedby')).not.toMatch(/color-error/);
     });
+  });
+
+  it('does not render when shouldShow returns false', () => {
+    render(
+      <Wrapper onSubmit={vi.fn()}>
+        <ReactSelectControl
+          name="color"
+          label="Favorite color"
+          shouldShow={() => false}
+        />
+      </Wrapper>,
+    );
+
+    expect(screen.queryByLabelText(/Favorite color/i)).not.toBeInTheDocument();
+  });
+
+  it('renders when shouldShow returns true', () => {
+    render(
+      <Wrapper onSubmit={vi.fn()}>
+        <ReactSelectControl
+          name="color"
+          label="Favorite color"
+          shouldShow={() => true}
+        />
+      </Wrapper>,
+    );
+
+    expect(screen.getByLabelText(/Favorite color/i)).toBeInTheDocument();
+  });
+
+  it('re-renders when shouldShow depends on watched value', async () => {
+    const user = userEvent.setup();
+
+    const ConditionalForm = () => {
+      const methods = useForm<{ color: string; showField: boolean }>({
+        defaultValues: { color: '', showField: false },
+      });
+
+      return (
+        <RHFFormProvider {...methods}>
+          <label>
+            <input
+              type="checkbox"
+              {...methods.register('showField')}
+              aria-label="Toggle field"
+            />
+          </label>
+
+          <ReactSelectControl<{ color: string; showField: boolean }>
+            name="color"
+            label="Favorite color"
+            shouldShow={(watch) => watch('showField')}
+          />
+        </RHFFormProvider>
+      );
+    };
+
+    render(<ConditionalForm />);
+
+    // Initially hidden
+    expect(screen.queryByLabelText(/Favorite color/i)).not.toBeInTheDocument();
+
+    // Toggle checkbox - field should appear
+    await user.click(screen.getByLabelText('Toggle field'));
+    expect(await screen.findByLabelText(/Favorite color/i)).toBeInTheDocument();
+
+    // Toggle checkbox - field should disappear
+    await user.click(screen.getByLabelText('Toggle field'));
+    expect(screen.queryByLabelText(/Favorite color/i)).not.toBeInTheDocument();
   });
 });

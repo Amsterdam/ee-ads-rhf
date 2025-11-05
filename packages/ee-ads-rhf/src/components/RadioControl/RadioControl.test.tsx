@@ -1,16 +1,14 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import {
+  FormProvider as RHFFormProvider,
+  SubmitHandler,
+  useForm,
+} from 'react-hook-form';
 import userEvent from '@testing-library/user-event';
 import { ReactNode } from 'react';
 import { RadioControl } from './RadioControl';
 import { FormProvider } from '../FormProvider/FormProvider';
-import {
-  SubmitHandler,
-  useForm,
-  FormProvider as RHFFormProvider,
-} from 'react-hook-form';
-import userEvent from '@testing-library/user-event';
 
 type FormValues = {
   color: string;

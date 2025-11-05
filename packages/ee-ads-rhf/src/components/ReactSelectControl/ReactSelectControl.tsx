@@ -7,7 +7,9 @@ import {
 } from 'react';
 import {
   Controller,
+  Path,
   useFormContext,
+  UseFormWatch,
   type FieldValues,
   type RegisterOptions,
 } from 'react-hook-form';
@@ -38,6 +40,8 @@ export type ReactSelectControlProps<TFieldValues extends FieldValues> =
         ComponentPropsWithoutRef<typeof InputAutoSelect>,
         'value' | 'onChange' | 'options'
       >;
+      shouldShow?: boolean | ((watch: UseFormWatch<TFieldValues>) => boolean);
+      registerOptions?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
     };
 
 interface ReactSelectControlComponent
@@ -67,10 +71,17 @@ export const ReactSelectControl = forwardRef(function ReactSelectControl<
     hideFieldError = false,
     hideErrorMessage = false,
     inputProps,
+    shouldShow = true,
   }: ReactSelectControlProps<TFieldValues>,
   ref: Ref<SelectInstance<SelectOption> | null>,
 ) {
-  const { control } = useFormContext();
+  const { control, watch } = useFormContext<TFieldValues>();
+  const isVisible =
+    typeof shouldShow === 'function' ? shouldShow(watch) : shouldShow;
+
+  if (!isVisible) {
+    return null;
+  }
 
   const identifier = id || name;
   const descriptionId = `${identifier}-description`;
@@ -82,7 +93,7 @@ export const ReactSelectControl = forwardRef(function ReactSelectControl<
     <Controller
       name={name}
       control={control}
-      rules={registerOptions as RegisterOptions}
+      rules={registerOptions}
       render={({ field, fieldState }) => {
         const { onChange, value } = field;
         const hasError = !!fieldState.error;
