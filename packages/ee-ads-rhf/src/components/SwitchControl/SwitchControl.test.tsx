@@ -1,8 +1,12 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { SubmitHandler, useForm, FormProvider as RHFFormProvider } from 'react-hook-form';
 import userEvent from '@testing-library/user-event';
 import { ReactNode } from 'react';
+import {
+  SubmitHandler,
+  useForm,
+  FormProvider as RHFFormProvider,
+} from 'react-hook-form';
 import { FormProvider } from '../FormProvider/FormProvider';
 import { SwitchControl } from './SwitchControl';
 
@@ -192,13 +196,13 @@ describe('SwitchControl', () => {
 
   it('does not render when shouldShow returns false', () => {
     render(
-      <FormProvider defaultValues={{ notify: false }} onSubmit={vi.fn()}>
-        <SwitchControl
+      <Wrapper>
+        <SwitchControl<FormValues>
           name="notify"
           label="Test label"
           shouldShow={() => false}
         />
-      </FormProvider>,
+      </Wrapper>,
     );
 
     expect(screen.queryByLabelText(/Test label/i)).not.toBeInTheDocument();
@@ -206,13 +210,13 @@ describe('SwitchControl', () => {
 
   it('renders when shouldShow returns true', () => {
     render(
-      <FormProvider defaultValues={{ notify: false }} onSubmit={vi.fn()}>
-        <SwitchControl
+      <Wrapper>
+        <SwitchControl<FormValues>
           name="notify"
           label="Test label"
           shouldShow={() => true}
         />
-      </FormProvider>,
+      </Wrapper>,
     );
 
     expect(screen.getByLabelText(/Test label/i)).toBeInTheDocument();
