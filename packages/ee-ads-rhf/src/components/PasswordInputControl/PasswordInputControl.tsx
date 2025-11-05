@@ -15,7 +15,9 @@ import {
 } from '@amsterdam/design-system-react';
 import {
   Controller,
+  Path,
   useFormContext,
+  UseFormWatch,
   type FieldValues,
   type RegisterOptions,
 } from 'react-hook-form';
@@ -28,6 +30,8 @@ export type PasswordInputControlProps<TFieldValues extends FieldValues> =
       wrapperProps?: ComponentPropsWithoutRef<'div'>;
       hideFieldError?: boolean;
       hideErrorMessage?: boolean;
+      shouldShow?: boolean | ((watch: UseFormWatch<TFieldValues>) => boolean);
+      registerOptions?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
     };
 
 interface PasswordInputControlComponent
@@ -52,11 +56,18 @@ export const PasswordInputControl = forwardRef(function PasswordInputControl<
     wrapperProps,
     hideFieldError = false,
     hideErrorMessage = false,
+    shouldShow = true,
     ...attributes
   }: PasswordInputControlProps<TFieldValues>,
   ref: Ref<HTMLInputElement>,
 ) {
-  const { control } = useFormContext();
+  const { control, watch } = useFormContext<TFieldValues>();
+  const isVisible =
+    typeof shouldShow === 'function' ? shouldShow(watch) : shouldShow;
+
+  if (!isVisible) {
+    return null;
+  }
 
   const identifier = id || name;
   const descriptionId = `${identifier}-description`;
@@ -69,7 +80,7 @@ export const PasswordInputControl = forwardRef(function PasswordInputControl<
     <Controller
       name={name}
       control={control}
-      rules={registerOptions as RegisterOptions}
+      rules={registerOptions}
       render={({ field, fieldState }) => {
         const errorMessage = fieldState.error?.message;
         const hasError = !!errorMessage;

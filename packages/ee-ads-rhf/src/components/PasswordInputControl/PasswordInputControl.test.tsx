@@ -28,10 +28,7 @@ describe('PasswordInput', () => {
   it('renders with label and password input', () => {
     render(
       <Wrapper>
-        <PasswordInputControl<FormValues>
-          name="password"
-          label="Your Password"
-        />
+        <PasswordInputControl name="password" label="Your Password" />
       </Wrapper>,
     );
 
@@ -164,5 +161,74 @@ describe('PasswordInput', () => {
         /password-error/i,
       );
     });
+  });
+
+  it('does not render when shouldShow returns false', () => {
+    render(
+      <Wrapper>
+        <PasswordInputControl
+          name="password"
+          label="Your Password"
+          shouldShow={() => false}
+        />
+      </Wrapper>,
+    );
+
+    expect(screen.queryByLabelText(/Your Password/i)).not.toBeInTheDocument();
+  });
+
+  it('renders when shouldShow returns true', () => {
+    render(
+      <Wrapper>
+        <PasswordInputControl
+          name="password"
+          label="Your Password"
+          shouldShow={() => true}
+        />
+      </Wrapper>,
+    );
+
+    expect(screen.getByLabelText(/Your Password/i)).toBeInTheDocument();
+  });
+
+  it('re-renders when shouldShow depends on watched value', async () => {
+    const user = userEvent.setup();
+
+    const ConditionalForm = () => {
+      const methods = useForm<{ password: string; showField: boolean }>({
+        defaultValues: { password: '', showField: false },
+      });
+
+      return (
+        <FormProvider {...methods}>
+          <label>
+            <input
+              type="checkbox"
+              {...methods.register('showField')}
+              aria-label="Toggle field"
+            />
+          </label>
+
+          <PasswordInputControl<{ password: string; showField: boolean }>
+            name="password"
+            label="Your Password"
+            shouldShow={(watch) => watch('showField')}
+          />
+        </FormProvider>
+      );
+    };
+
+    render(<ConditionalForm />);
+
+    // Initially hidden
+    expect(screen.queryByLabelText(/Your Password/i)).not.toBeInTheDocument();
+
+    // Toggle checkbox - field should appear
+    await user.click(screen.getByLabelText('Toggle field'));
+    expect(await screen.findByLabelText(/Your Password/i)).toBeInTheDocument();
+
+    // Toggle checkbox - field should disappear
+    await user.click(screen.getByLabelText('Toggle field'));
+    expect(screen.queryByLabelText(/Your Password/i)).not.toBeInTheDocument();
   });
 });
