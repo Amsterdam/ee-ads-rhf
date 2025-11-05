@@ -28,6 +28,8 @@ export type FileInputControlProps<TFieldValues extends FieldValues> =
       wrapperProps?: ComponentPropsWithoutRef<'div'>;
       hideFieldError?: boolean;
       hideErrorMessage?: boolean;
+      shouldShow?: boolean | ((watch: UseFormWatch<TFieldValues>) => boolean);
+      registerOptions?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
     };
 
 interface FileInputControlComponent
@@ -52,11 +54,18 @@ export const FileInputControl = forwardRef(function FileInputControl<
     wrapperProps,
     hideFieldError = false,
     hideErrorMessage = false,
+    shouldShow = true,
     ...attributes
   }: FileInputControlProps<TFieldValues>,
   ref: Ref<HTMLInputElement>,
 ) {
-  const { control } = useFormContext();
+  const { control, watch } = useFormContext<TFieldValues>();
+  const isVisible =
+    typeof shouldShow === 'function' ? shouldShow(watch) : shouldShow;
+
+  if (!isVisible) {
+    return null;
+  }
 
   const identifier = id || name;
   const descriptionId = `${identifier}-description`;
@@ -69,7 +78,7 @@ export const FileInputControl = forwardRef(function FileInputControl<
     <Controller
       name={name}
       control={control}
-      rules={registerOptions as RegisterOptions}
+      rules={registerOptions}
       render={({ field, fieldState }) => {
         const errorMessage = fieldState.error?.message;
         const hasError = !!errorMessage;

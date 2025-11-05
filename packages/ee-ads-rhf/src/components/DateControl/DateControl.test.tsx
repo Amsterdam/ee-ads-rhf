@@ -28,7 +28,7 @@ describe('DateControl', () => {
   it('renders with label and input', () => {
     render(
       <Wrapper>
-        <DateControl<FormValues> name="birthDate" label="Date of Birth" />
+        <DateControl name="birthDate" label="Date of Birth" />
       </Wrapper>,
     );
 
@@ -39,7 +39,7 @@ describe('DateControl', () => {
   it('handles user input', () => {
     render(
       <Wrapper>
-        <DateControl<FormValues> name="birthDate" label="Date of Birth" />
+        <DateControl name="birthDate" label="Date of Birth" />
       </Wrapper>,
     );
 
@@ -53,7 +53,7 @@ describe('DateControl', () => {
   it('renders initial value', () => {
     render(
       <Wrapper defaultValues={{ birthDate: '1990-12-25' }}>
-        <DateControl<FormValues> name="birthDate" label="Date of Birth" />
+        <DateControl name="birthDate" label="Date of Birth" />
       </Wrapper>,
     );
 
@@ -64,7 +64,7 @@ describe('DateControl', () => {
   it('renders description', () => {
     render(
       <Wrapper>
-        <DateControl<FormValues>
+        <DateControl
           name="birthDate"
           label="Date of Birth"
           description="Please enter your birth date."
@@ -81,7 +81,7 @@ describe('DateControl', () => {
     const description = 'We need this to verify your age.';
     render(
       <Wrapper>
-        <DateControl<FormValues>
+        <DateControl
           name="birthDate"
           label="Date of Birth"
           description={description}
@@ -110,7 +110,7 @@ describe('DateControl', () => {
       return (
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(onSubmit)}>
-            <DateControl<FormValues>
+            <DateControl
               name="birthDate"
               label="Date of Birth"
               registerOptions={{ required: 'Birth date is required' }}
