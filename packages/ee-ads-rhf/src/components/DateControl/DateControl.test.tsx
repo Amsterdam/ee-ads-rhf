@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { DateControl } from './DateControl';
+import userEvent from '@testing-library/user-event';
 
 type FormValues = {
   birthDate: string;
@@ -177,5 +178,74 @@ describe('DateControl', () => {
         /birthDate-error/,
       );
     });
+  });
+
+  it('does not render when shouldShow returns false', () => {
+    render(
+      <Wrapper>
+        <DateControl
+          name="birthDate"
+          label="Date of Birth"
+          shouldShow={() => false}
+        />
+      </Wrapper>,
+    );
+
+    expect(screen.queryByLabelText(/Date of Birth/i)).not.toBeInTheDocument();
+  });
+
+  it('renders when shouldShow returns true', () => {
+    render(
+      <Wrapper>
+        <DateControl
+          name="birthDate"
+          label="Date of Birth"
+          shouldShow={() => true}
+        />
+      </Wrapper>,
+    );
+
+    expect(screen.getByLabelText(/Date of Birth/i)).toBeInTheDocument();
+  });
+
+  it('re-renders when shouldShow depends on watched value', async () => {
+    const user = userEvent.setup();
+
+    const ConditionalForm = () => {
+      const methods = useForm<{ birthDate: string; showField: boolean }>({
+        defaultValues: { birthDate: '', showField: false },
+      });
+
+      return (
+        <FormProvider {...methods}>
+          <label>
+            <input
+              type="checkbox"
+              {...methods.register('showField')}
+              aria-label="Toggle field"
+            />
+          </label>
+
+          <DateControl<{ birthDate: string; showField: boolean }>
+            name="birthDate"
+            label="Date of Birth"
+            shouldShow={(watch) => watch('showField')}
+          />
+        </FormProvider>
+      );
+    };
+
+    render(<ConditionalForm />);
+
+    // Initially hidden
+    expect(screen.queryByLabelText(/Date of Birth/i)).not.toBeInTheDocument();
+
+    // Toggle checkbox - field should appear
+    await user.click(screen.getByLabelText('Toggle field'));
+    expect(await screen.findByLabelText(/Date of Birth/i)).toBeInTheDocument();
+
+    // Toggle checkbox - field should disappear
+    await user.click(screen.getByLabelText('Toggle field'));
+    expect(screen.queryByLabelText(/Date of Birth/i)).not.toBeInTheDocument();
   });
 });
