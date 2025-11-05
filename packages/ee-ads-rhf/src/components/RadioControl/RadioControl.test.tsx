@@ -5,6 +5,12 @@ import userEvent from '@testing-library/user-event';
 import { ReactNode } from 'react';
 import { RadioControl } from './RadioControl';
 import { FormProvider } from '../FormProvider/FormProvider';
+import {
+  SubmitHandler,
+  useForm,
+  FormProvider as RHFFormProvider,
+} from 'react-hook-form';
+import userEvent from '@testing-library/user-event';
 
 type FormValues = {
   color: string;
@@ -193,5 +199,94 @@ describe('RadioControl', () => {
       // error message should NOT appear
       expect(screen.queryByText(/Color is required/i)).not.toBeInTheDocument();
     });
+  });
+
+  it('does not render when shouldShow returns false', () => {
+    render(
+      <Wrapper>
+        <RadioControl<FormValues>
+          name="color"
+          label="Test Label"
+          options={[
+            { label: 'Red', value: 'red' },
+            { label: 'Blue', value: 'blue' },
+          ]}
+          shouldShow={() => false}
+        />
+      </Wrapper>,
+    );
+
+    expect(screen.queryByLabelText(/Test Label/i)).not.toBeInTheDocument();
+  });
+
+  it('renders when shouldShow returns true', () => {
+    render(
+      <Wrapper>
+        <RadioControl<FormValues>
+          name="color"
+          label="Test Label"
+          options={[
+            { label: 'Red', value: 'red' },
+            { label: 'Blue', value: 'blue' },
+          ]}
+          shouldShow={() => true}
+        />
+      </Wrapper>,
+    );
+
+    expect(
+      screen.getByRole('radiogroup', { name: /Test Label/i }),
+    ).toBeInTheDocument();
+  });
+
+  it('re-renders when shouldShow depends on watched value', async () => {
+    const user = userEvent.setup();
+
+    const ConditionalForm = () => {
+      const methods = useForm<{ color: string; showField: boolean }>({
+        defaultValues: { color: '', showField: false },
+      });
+
+      return (
+        <RHFFormProvider {...methods}>
+          <label>
+            <input
+              type="checkbox"
+              {...methods.register('showField')}
+              aria-label="Toggle field"
+            />
+          </label>
+
+          <RadioControl<{ color: string; showField: boolean }>
+            name="color"
+            label="Test Label"
+            options={[
+              { label: 'Red', value: 'red' },
+              { label: 'Blue', value: 'blue' },
+            ]}
+            shouldShow={(watch) => watch('showField')}
+          />
+        </RHFFormProvider>
+      );
+    };
+
+    render(<ConditionalForm />);
+
+    // Initially hidden
+    expect(
+      screen.queryByRole('radiogroup', { name: /Test Label/i }),
+    ).not.toBeInTheDocument();
+
+    // Toggle checkbox - field should appear
+    await user.click(screen.getByLabelText('Toggle field'));
+    expect(
+      await screen.findByRole('radiogroup', { name: /Test Label/i }),
+    ).toBeInTheDocument();
+
+    // Toggle checkbox - field should disappear
+    await user.click(screen.getByLabelText('Toggle field'));
+    expect(
+      screen.queryByRole('radiogroup', { name: /Test Label/i }),
+    ).not.toBeInTheDocument();
   });
 });
