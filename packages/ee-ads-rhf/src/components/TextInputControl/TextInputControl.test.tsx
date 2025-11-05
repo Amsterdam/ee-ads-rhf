@@ -27,7 +27,7 @@ describe('TextInputControl', () => {
   it('renders with label and input', () => {
     render(
       <Wrapper>
-        <TextInputControl<FormValues> name="name" label="Your Name" />
+        <TextInputControl name="name" label="Your Name" />
       </Wrapper>,
     );
 
@@ -161,7 +161,7 @@ describe('TextInputControl', () => {
   it('does not render when shouldShow returns false', () => {
     render(
       <Wrapper>
-        <TextInputControl<FormValues>
+        <TextInputControl
           name="name"
           label="Your Name"
           shouldShow={() => false}
@@ -175,7 +175,7 @@ describe('TextInputControl', () => {
   it('renders when shouldShow returns true', () => {
     render(
       <Wrapper>
-        <TextInputControl<FormValues>
+        <TextInputControl
           name="name"
           label="Your Name"
           shouldShow={() => true}

@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { CheckboxControl } from './CheckboxControl';
+import userEvent from '@testing-library/user-event';
 
 type FormValues = {
   remote: boolean;
@@ -83,7 +84,7 @@ describe('CheckboxControl', () => {
   it('renders description', () => {
     render(
       <Wrapper>
-        <CheckboxControl<FormValues>
+        <CheckboxControl
           name="remote"
           label="Is the meeting remote?"
           description="This field is required"
@@ -98,7 +99,7 @@ describe('CheckboxControl', () => {
     const description = 'This field is required';
     render(
       <Wrapper>
-        <CheckboxControl<FormValues>
+        <CheckboxControl
           name="remote"
           label="Is the meeting remote?"
           description={description}
@@ -127,7 +128,7 @@ describe('CheckboxControl', () => {
       return (
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(onSubmit)}>
-            <CheckboxControl<FormValues>
+            <CheckboxControl
               name="remote"
               label="Is the meeting remote?"
               registerOptions={{
@@ -201,5 +202,82 @@ describe('CheckboxControl', () => {
         /remote-error/,
       );
     });
+  });
+
+  it('does not render when shouldShow returns false', () => {
+    render(
+      <Wrapper>
+        <CheckboxControl
+          name="remote"
+          label="Is the meeting remote?"
+          shouldShow={() => false}
+        />
+      </Wrapper>,
+    );
+
+    expect(
+      screen.queryByLabelText(/Is the meeting remote/i),
+    ).not.toBeInTheDocument();
+  });
+
+  it('renders when shouldShow returns true', () => {
+    render(
+      <Wrapper>
+        <CheckboxControl
+          name="remote"
+          label="Is the meeting remote?"
+          shouldShow={() => true}
+        />
+      </Wrapper>,
+    );
+
+    expect(screen.getByLabelText(/Is the meeting remote/i)).toBeInTheDocument();
+  });
+
+  it('re-renders when shouldShow depends on watched value', async () => {
+    const user = userEvent.setup();
+
+    const ConditionalForm = () => {
+      const methods = useForm<{ remote: boolean; showField: boolean }>({
+        defaultValues: { remote: false, showField: false },
+      });
+
+      return (
+        <FormProvider {...methods}>
+          <label>
+            <input
+              type="checkbox"
+              {...methods.register('showField')}
+              aria-label="Toggle field"
+            />
+          </label>
+
+          <CheckboxControl<{ remote: boolean; showField: boolean }>
+            name="remote"
+            label="Is the meeting remote?"
+            shouldShow={(watch) => watch('showField')}
+          />
+        </FormProvider>
+      );
+    };
+
+    render(<ConditionalForm />);
+
+    // Initially hidden
+    expect(
+      screen.queryByLabelText(/Is the meeting remote/i),
+    ).not.toBeInTheDocument();
+
+    // Toggle checkbox - field should appear
+    await user.click(screen.getByLabelText('Toggle field'));
+    expect(
+      await screen.findByLabelText(/Is the meeting remote/i),
+    ).toBeInTheDocument();
+
+    // Toggle checkbox - field should disappear
+    await user.click(screen.getByLabelText('Toggle field'));
+    expect(
+      screen.queryByLabelText(/Is the meeting remote/i),
+    ).not.toBeInTheDocument();
   });
 });

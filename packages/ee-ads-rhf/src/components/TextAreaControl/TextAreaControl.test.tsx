@@ -28,7 +28,7 @@ describe('TextAreaControl', () => {
   it('renders with label and textarea', () => {
     render(
       <Wrapper>
-        <TextAreaControl<FormValues> name="message" label="Comments" />
+        <TextAreaControl name="message" label="Comments" />
       </Wrapper>,
     );
 
@@ -41,7 +41,7 @@ describe('TextAreaControl', () => {
   it('handles user typing', async () => {
     render(
       <Wrapper>
-        <TextAreaControl<FormValues> name="message" label="Comments" />
+        <TextAreaControl name="message" label="Comments" />
       </Wrapper>,
     );
 
@@ -67,7 +67,7 @@ describe('TextAreaControl', () => {
             'A placeat harum est sint eaque et aperiam quis et voluptas deleniti id expedita modi aut magnam minima. Vel quaerat dolores ut explicabo similique aut expedita molestiae quo doloremque temporibus ut veniam quos.',
         }}
       >
-        <TextAreaControl<FormValues> name="message" label="Comments" />
+        <TextAreaControl name="message" label="Comments" />
       </Wrapper>,
     );
 
@@ -82,7 +82,7 @@ describe('TextAreaControl', () => {
   it('renders description when provided', () => {
     render(
       <Wrapper>
-        <TextAreaControl<FormValues>
+        <TextAreaControl
           name="message"
           label="Comments"
           description="Please enter your full legal name."
@@ -99,7 +99,7 @@ describe('TextAreaControl', () => {
     const description = 'Send us your ideas.';
     render(
       <Wrapper>
-        <TextAreaControl<FormValues>
+        <TextAreaControl
           name="message"
           label="Comments"
           description={description}
@@ -132,11 +132,11 @@ describe('TextAreaControl', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /submit/i }));
 
-    expect(await screen.findByText(/Comments is required/i)).toBeVisible();
+    expect(await screen.findByText(/Message is required/i)).toBeVisible();
 
     // Use regex lookup as textArea label can include (whitespace and
     // `(niet verplicht)`)
-    const textarea = screen.getByLabelText(/Comments/i);
+    const textarea = screen.getByLabelText(/Your message/i);
     expect(textarea.getAttribute('aria-describedby')).toMatch(/message-error/);
   });
 
@@ -188,7 +188,7 @@ describe('TextAreaControl', () => {
   it('does not render when shouldShow returns false', () => {
     render(
       <Wrapper>
-        <TextAreaControl<FormValues>
+        <TextAreaControl
           name="message"
           label="Comments"
           shouldShow={() => false}
@@ -202,7 +202,7 @@ describe('TextAreaControl', () => {
   it('renders when shouldShow returns true', () => {
     render(
       <Wrapper>
-        <TextAreaControl<FormValues>
+        <TextAreaControl
           name="message"
           label="Comments"
           shouldShow={() => true}
