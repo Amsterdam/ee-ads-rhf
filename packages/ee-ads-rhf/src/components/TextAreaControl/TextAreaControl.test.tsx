@@ -28,28 +28,26 @@ describe('TextAreaControl', () => {
   it('renders with label and textarea', () => {
     render(
       <Wrapper>
-        <TextAreaControl<FormValues> name="message" label="Your Message" />
+        <TextAreaControl<FormValues> name="message" label="Comments" />
       </Wrapper>,
     );
 
     // Use regex lookup as textArea label can include (whitespace and
     // `(niet verplicht)`)
-    const textarea = screen.getByLabelText(/Your Message/i);
+    const textarea = screen.getByLabelText(/Comments/i);
     expect(textarea).toBeInTheDocument();
   });
 
   it('handles user typing', async () => {
     render(
       <Wrapper>
-        <TextAreaControl<FormValues> name="message" label="Your Message" />
+        <TextAreaControl<FormValues> name="message" label="Comments" />
       </Wrapper>,
     );
 
     // Use regex lookup as textArea label can include (whitespace and
     // `(niet verplicht)`)
-    const textarea = screen.getByLabelText(
-      /Your Message/i,
-    ) as HTMLTextAreaElement;
+    const textarea = screen.getByLabelText(/Comments/i) as HTMLTextAreaElement;
     expect(textarea.value).toBe('');
 
     await userEvent.type(
@@ -69,15 +67,13 @@ describe('TextAreaControl', () => {
             'A placeat harum est sint eaque et aperiam quis et voluptas deleniti id expedita modi aut magnam minima. Vel quaerat dolores ut explicabo similique aut expedita molestiae quo doloremque temporibus ut veniam quos.',
         }}
       >
-        <TextAreaControl<FormValues> name="message" label="Your Message" />
+        <TextAreaControl<FormValues> name="message" label="Comments" />
       </Wrapper>,
     );
 
     // Use regex lookup as textArea label can include (whitespace and
     // `(niet verplicht)`)
-    const textarea = screen.getByLabelText(
-      /Your Message/i,
-    ) as HTMLTextAreaElement;
+    const textarea = screen.getByLabelText(/Comments/i) as HTMLTextAreaElement;
     expect(textarea.value).toBe(
       'A placeat harum est sint eaque et aperiam quis et voluptas deleniti id expedita modi aut magnam minima. Vel quaerat dolores ut explicabo similique aut expedita molestiae quo doloremque temporibus ut veniam quos.',
     );
@@ -88,7 +84,7 @@ describe('TextAreaControl', () => {
       <Wrapper>
         <TextAreaControl<FormValues>
           name="message"
-          label="Your Message"
+          label="Comments"
           description="Please enter your full legal name."
         />
       </Wrapper>,
@@ -105,7 +101,7 @@ describe('TextAreaControl', () => {
       <Wrapper>
         <TextAreaControl<FormValues>
           name="message"
-          label="Your Message"
+          label="Comments"
           description={description}
         />
       </Wrapper>,
@@ -113,7 +109,7 @@ describe('TextAreaControl', () => {
 
     // Use regex lookup as textArea label can include (whitespace and
     // `(niet verplicht)`)
-    const textarea = screen.getByLabelText(/Your Message/i);
+    const textarea = screen.getByLabelText(/Comments/i);
     const describedBy = textarea.getAttribute('aria-describedby');
     expect(describedBy).toMatch(/message-description/);
     expect(screen.getByText(description)).toHaveAttribute(
@@ -136,11 +132,11 @@ describe('TextAreaControl', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /submit/i }));
 
-    expect(await screen.findByText(/Message is required/i)).toBeVisible();
+    expect(await screen.findByText(/Comments is required/i)).toBeVisible();
 
     // Use regex lookup as textArea label can include (whitespace and
     // `(niet verplicht)`)
-    const textarea = screen.getByLabelText(/Your Message/i);
+    const textarea = screen.getByLabelText(/Comments/i);
     expect(textarea.getAttribute('aria-describedby')).toMatch(/message-error/);
   });
 
@@ -187,5 +183,74 @@ describe('TextAreaControl', () => {
         /message-error/,
       );
     });
+  });
+
+  it('does not render when shouldShow returns false', () => {
+    render(
+      <Wrapper>
+        <TextAreaControl<FormValues>
+          name="message"
+          label="Comments"
+          shouldShow={() => false}
+        />
+      </Wrapper>,
+    );
+
+    expect(screen.queryByLabelText(/Comments/i)).not.toBeInTheDocument();
+  });
+
+  it('renders when shouldShow returns true', () => {
+    render(
+      <Wrapper>
+        <TextAreaControl<FormValues>
+          name="message"
+          label="Comments"
+          shouldShow={() => true}
+        />
+      </Wrapper>,
+    );
+
+    expect(screen.getByLabelText(/Comments/i)).toBeInTheDocument();
+  });
+
+  it('re-renders when shouldShow depends on watched value', async () => {
+    const user = userEvent.setup();
+
+    const ConditionalForm = () => {
+      const methods = useForm<{ message: string; showField: boolean }>({
+        defaultValues: { message: '', showField: false },
+      });
+
+      return (
+        <FormProvider {...methods}>
+          <label>
+            <input
+              type="checkbox"
+              {...methods.register('showField')}
+              aria-label="Toggle field"
+            />
+          </label>
+
+          <TextAreaControl<{ message: string; showField: boolean }>
+            name="message"
+            label="Comments"
+            shouldShow={(watch) => watch('showField')}
+          />
+        </FormProvider>
+      );
+    };
+
+    render(<ConditionalForm />);
+
+    // Initially hidden
+    expect(screen.queryByLabelText(/Comments/i)).not.toBeInTheDocument();
+
+    // Toggle checkbox - field should appear
+    await user.click(screen.getByLabelText('Toggle field'));
+    expect(await screen.findByLabelText(/Comments/i)).toBeInTheDocument();
+
+    // Toggle checkbox - field should disappear
+    await user.click(screen.getByLabelText('Toggle field'));
+    expect(screen.queryByLabelText(/Comments/i)).not.toBeInTheDocument();
   });
 });

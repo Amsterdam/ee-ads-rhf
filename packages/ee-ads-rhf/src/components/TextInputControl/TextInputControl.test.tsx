@@ -157,4 +157,73 @@ describe('TextInputControl', () => {
       expect(input.getAttribute('aria-describedby')).not.toMatch(/name-error/);
     });
   });
+
+  it('does not render when shouldShow returns false', () => {
+    render(
+      <Wrapper>
+        <TextInputControl<FormValues>
+          name="name"
+          label="Your Name"
+          shouldShow={() => false}
+        />
+      </Wrapper>,
+    );
+
+    expect(screen.queryByLabelText(/Your Name/i)).not.toBeInTheDocument();
+  });
+
+  it('renders when shouldShow returns true', () => {
+    render(
+      <Wrapper>
+        <TextInputControl<FormValues>
+          name="name"
+          label="Your Name"
+          shouldShow={() => true}
+        />
+      </Wrapper>,
+    );
+
+    expect(screen.getByLabelText(/Your Name/i)).toBeInTheDocument();
+  });
+
+  it('re-renders when shouldShow depends on watched value', async () => {
+    const user = userEvent.setup();
+
+    const ConditionalForm = () => {
+      const methods = useForm<{ name: string; showField: boolean }>({
+        defaultValues: { name: '', showField: false },
+      });
+
+      return (
+        <FormProvider {...methods}>
+          <label>
+            <input
+              type="checkbox"
+              {...methods.register('showField')}
+              aria-label="Toggle field"
+            />
+          </label>
+
+          <TextInputControl<{ name: string; showField: boolean }>
+            name="name"
+            label="Your Name"
+            shouldShow={(watch) => watch('showField')}
+          />
+        </FormProvider>
+      );
+    };
+
+    render(<ConditionalForm />);
+
+    // Initially hidden
+    expect(screen.queryByLabelText(/Your Name/i)).not.toBeInTheDocument();
+
+    // Toggle checkbox - field should appear
+    await user.click(screen.getByLabelText('Toggle field'));
+    expect(await screen.findByLabelText(/Your Name/i)).toBeInTheDocument();
+
+    // Toggle checkbox - field should disappear
+    await user.click(screen.getByLabelText('Toggle field'));
+    expect(screen.queryByLabelText(/Your Name/i)).not.toBeInTheDocument();
+  });
 });
