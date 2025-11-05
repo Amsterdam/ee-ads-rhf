@@ -7,7 +7,9 @@ import {
 } from 'react';
 import {
   Controller,
+  Path,
   useFormContext,
+  UseFormWatch,
   type FieldValues,
   type RegisterOptions,
 } from 'react-hook-form';
@@ -30,6 +32,8 @@ export type SwitchControlProps<TFieldValues extends FieldValues> =
       wrapperProps?: ComponentPropsWithoutRef<'div'>;
       hideFieldError?: boolean;
       hideErrorMessage?: boolean;
+      shouldShow?: boolean | ((watch: UseFormWatch<TFieldValues>) => boolean);
+      registerOptions?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
     };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -54,11 +58,18 @@ export const SwitchControl = forwardRef(function SwitchControl<
     wrapperProps,
     hideFieldError = false,
     hideErrorMessage = false,
+    shouldShow = true,
     ...attributes
   }: SwitchControlProps<TFieldValues>,
   ref: Ref<HTMLInputElement>,
 ) {
-  const { control } = useFormContext();
+  const { control, watch } = useFormContext<TFieldValues>();
+  const isVisible =
+    typeof shouldShow === 'function' ? shouldShow(watch) : shouldShow;
+
+  if (!isVisible) {
+    return null;
+  }
 
   const identifier = id || name;
   const descriptionId = `${identifier}-description`;
@@ -68,7 +79,7 @@ export const SwitchControl = forwardRef(function SwitchControl<
     <Controller
       name={name}
       control={control}
-      rules={registerOptions as RegisterOptions}
+      rules={registerOptions}
       render={({ field, fieldState }) => {
         const errorMessage = fieldState.error?.message;
         const hasError = !!fieldState.error;
