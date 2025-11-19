@@ -13,10 +13,12 @@
     "@amsterdam/design-system-react-icons": "^1.1.0",
     "@amsterdam/design-system-tokens": "^2.0.0",
     "@amsterdam/ee-ads-rhf-lib": "*",
+    "@hookform/resolvers": "^5.2.2",
     "clsx": "^2.1.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-hook-form": "^7.62.0"
+    "react-hook-form": "^7.62.0",
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^4.1.1",
