@@ -13,8 +13,8 @@ This project is a Node.js monorepo application with two workspaces:
 
 ### Workspaces
 
-- `packages/dev` - A React SPA for testing the library
 - `packages/ee-ads-forms` - A library wrapping Amsterdam Design System form components with [React Hook Form](https://react-hook-form.com)
+- `storybook` - A Storybook application for presenting the library
 
 ## How to use this repo?
 
@@ -23,24 +23,10 @@ This project is a Node.js monorepo application with two workspaces:
 
 ## Todo
 
-### Basic components
-
-These need either implementing and/or updating to surround the component with `forwardRef` and the necessary type updates. 
-
-*✅ indicates a basic demo version is available with `forwardRef` and the correct types - and is consumable in the `packages/dev` application.*
-
-- Docs for each component
-- Cleanup Example Form flow + validation
-
-### Application
-
-- Clean up props order with spread vars (in `*Control` components)?
-- Add option to use compact version of amsterdam-design-system? / inherit styles/ADS from parent application - dangerous if mismatch in versions?
-- Tests
 - Docs
   - Examples
 - Package setup
-  - Release-it (enables releases, changelog +  NPM publish)
+  - release-please (enables releases, changelog +  NPM publish)
 
 ## How to contribute to this repo?
 
