@@ -10,4 +10,4 @@ export * from './components/TextInputControl';
 export * from './components/TextAreaControl';
 export * from './components/TimeControl';
 export * from './components/ReactSelectControl';
-export * from './utils/mapErrorsToAlert';
+export { default as mapErrorsToAlert } from './utils/mapErrorsToAlert';
