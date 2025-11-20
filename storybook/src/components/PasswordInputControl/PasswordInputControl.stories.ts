@@ -34,7 +34,7 @@ export const Primary: Story = {
     registerOptions: {
       required: 'A password is required',
     },
-    wrapperProps: { },
+    wrapperProps: {},
     placeholder: 'Password',
   },
 };

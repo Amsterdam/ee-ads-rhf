@@ -1,19 +1,40 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { ReactNode } from 'react';
 import { FormProvider } from '../FormProvider/FormProvider';
 import { SwitchControl } from './SwitchControl';
-import { SubmitHandler } from 'react-hook-form';
 
 type FormValues = {
   notify: boolean;
 };
 
+const Wrapper = ({
+  children,
+  defaultValues = { notify: false },
+  onSubmit = vi.fn(),
+}: {
+  children: ReactNode;
+  defaultValues?: Partial<FormValues>;
+  onSubmit?: SubmitHandler<FormValues>;
+}) => {
+  const form = useForm<FormValues>({
+    defaultValues,
+  });
+
+  return (
+    <FormProvider form={form} onSubmit={onSubmit}>
+      {children}
+    </FormProvider>
+  );
+};
+
 describe('SwitchControl', () => {
   it('renders with label and input', () => {
     render(
-      <FormProvider defaultValues={{ notify: false }} onSubmit={vi.fn()}>
+      <Wrapper>
         <SwitchControl<FormValues> label="Test Label" name="notify" />
-      </FormProvider>,
+      </Wrapper>,
     );
 
     expect(screen.getByLabelText('Test Label')).toBeInTheDocument();
@@ -21,11 +42,12 @@ describe('SwitchControl', () => {
 
   it('handles user input and submits updated value', async () => {
     const onSubmitMock: SubmitHandler<FormValues> = vi.fn();
+
     render(
-      <FormProvider defaultValues={{ notify: false }} onSubmit={onSubmitMock}>
+      <Wrapper onSubmit={onSubmitMock}>
         <SwitchControl<FormValues> label="Test Label" name="notify" />
         <button type="submit">Submit</button>
-      </FormProvider>,
+      </Wrapper>,
     );
 
     const input = screen.getByLabelText(/test label/i) as HTMLInputElement;
@@ -46,9 +68,9 @@ describe('SwitchControl', () => {
 
   it('renders with initial value', () => {
     render(
-      <FormProvider defaultValues={{ notify: true }} onSubmit={vi.fn()}>
+      <Wrapper defaultValues={{ notify: true }}>
         <SwitchControl<FormValues> label="Test Label" name="notify" />
-      </FormProvider>,
+      </Wrapper>,
     );
 
     const input = screen.getByLabelText(/test label/i) as HTMLInputElement;
@@ -57,7 +79,7 @@ describe('SwitchControl', () => {
 
   it('renders description', () => {
     render(
-      <FormProvider defaultValues={{ notify: false }} onSubmit={vi.fn()}>
+      <Wrapper defaultValues={{ notify: false }}>
         <SwitchControl<FormValues>
           label="Test Label"
           name="notify"
@@ -65,7 +87,7 @@ describe('SwitchControl', () => {
             <span data-testid="custom-description">Custom description</span>
           }
         />
-      </FormProvider>,
+      </Wrapper>,
     );
 
     expect(screen.getByTestId('custom-description')).toBeInTheDocument();
@@ -74,13 +96,13 @@ describe('SwitchControl', () => {
   it('shows description id in aria-describedby', () => {
     const description = 'This is a description';
     render(
-      <FormProvider defaultValues={{ notify: false }} onSubmit={vi.fn()}>
+      <Wrapper>
         <SwitchControl<FormValues>
           label="Test Label"
           name="notify"
           description={description}
         />
-      </FormProvider>,
+      </Wrapper>,
     );
 
     const label = screen.getByLabelText('Test Label');
@@ -96,7 +118,7 @@ describe('SwitchControl', () => {
       const onSubmitMock = vi.fn();
 
       return (
-        <FormProvider defaultValues={{ notify: false }} onSubmit={onSubmitMock}>
+        <Wrapper onSubmit={onSubmitMock}>
           <SwitchControl<FormValues>
             label="Test Label"
             name="notify"
@@ -105,7 +127,7 @@ describe('SwitchControl', () => {
             }}
           />
           <button type="submit">Submit</button>
-        </FormProvider>
+        </Wrapper>
       );
     };
 

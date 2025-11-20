@@ -8,13 +8,13 @@ describe('Examples / BookingForm - StepIntro', () => {
     expect(
       screen.getByRole('heading', {
         name: /waar u dit formulier voor gebruikt/i,
-      })
+      }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole('heading', { name: /de stappen in dit formulier/i })
+      screen.getByRole('heading', { name: /de stappen in dit formulier/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/met dit formulier maakt u een afspraak/i)
+      screen.getByText(/met dit formulier maakt u een afspraak/i),
     ).toBeInTheDocument();
     expect(screen.getByText(/uw gegevens/i)).toBeInTheDocument();
 

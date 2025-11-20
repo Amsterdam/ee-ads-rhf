@@ -2,19 +2,46 @@ import { describe, it, expect } from 'vitest';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { vi } from 'vitest';
 import { FormProvider } from './FormProvider';
-import { useFormContext } from 'react-hook-form';
+import { SubmitHandler, useForm, useFormContext } from 'react-hook-form';
+import { ReactNode } from 'react';
 
 function EmailInput() {
   const { register } = useFormContext<{ email: string }>();
   return <input {...register('email')} data-testid="email-input" />;
 }
 
+type FormValues = {
+  email: string;
+};
+
+const Wrapper = ({
+  children,
+  defaultValues = { email: '' },
+  noValidate = true,
+  onSubmit = vi.fn(),
+}: {
+  children: ReactNode;
+  defaultValues?: Partial<FormValues>;
+  noValidate?: boolean;
+  onSubmit?: SubmitHandler<FormValues>;
+}) => {
+  const form = useForm<FormValues>({
+    defaultValues,
+  });
+
+  return (
+    <FormProvider form={form} onSubmit={onSubmit} noValidate={noValidate}>
+      {children}
+    </FormProvider>
+  );
+};
+
 describe('FormProvider', () => {
   it('renders children inside the form', () => {
     render(
-      <FormProvider onSubmit={vi.fn()} defaultValues={{ email: '' }}>
+      <Wrapper>
         <div data-testid="child">Test</div>
-      </FormProvider>,
+      </Wrapper>,
     );
 
     expect(screen.getByTestId('child')).toBeInTheDocument();
@@ -22,9 +49,9 @@ describe('FormProvider', () => {
 
   it('sets noValidate by default', () => {
     const { container } = render(
-      <FormProvider onSubmit={vi.fn()} defaultValues={{ email: '' }}>
+      <Wrapper>
         <input name="email" />
-      </FormProvider>,
+      </Wrapper>,
     );
 
     expect(container.querySelector('form')).toHaveAttribute('novalidate');
@@ -32,13 +59,9 @@ describe('FormProvider', () => {
 
   it('respects noValidate={false}', () => {
     const { container } = render(
-      <FormProvider
-        onSubmit={vi.fn()}
-        defaultValues={{ email: '' }}
-        noValidate={false}
-      >
+      <Wrapper defaultValues={{ email: '' }} noValidate={false}>
         <input name="email" />
-      </FormProvider>,
+      </Wrapper>,
     );
 
     expect(container.querySelector('form')).not.toHaveAttribute('novalidate');
@@ -48,12 +71,12 @@ describe('FormProvider', () => {
     const onSubmitMock = vi.fn();
 
     render(
-      <FormProvider
+      <Wrapper
         onSubmit={onSubmitMock}
         defaultValues={{ email: 'test@example.com' }}
       >
         <button type="submit">Submit</button>
-      </FormProvider>,
+      </Wrapper>,
     );
 
     fireEvent.click(screen.getByText('Submit'));
@@ -70,10 +93,10 @@ describe('FormProvider', () => {
     const handleSubmit = vi.fn();
 
     render(
-      <FormProvider onSubmit={handleSubmit} defaultValues={{ email: '' }}>
+      <Wrapper onSubmit={handleSubmit}>
         <EmailInput />
         <button type="submit">Submit</button>
-      </FormProvider>,
+      </Wrapper>,
     );
 
     fireEvent.change(screen.getByTestId('email-input'), {

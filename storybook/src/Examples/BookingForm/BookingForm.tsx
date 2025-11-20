@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { FormProvider } from '@amsterdam/ee-ads-rhf-lib';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Page, PageHeader } from '@amsterdam/design-system-react';

@@ -1,24 +1,45 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import userEvent from '@testing-library/user-event';
+import { ReactNode } from 'react';
 import { RadioControl } from './RadioControl';
 import { FormProvider } from '../FormProvider/FormProvider';
-import { SubmitHandler } from 'react-hook-form';
-import userEvent from '@testing-library/user-event';
 
 type FormValues = {
   color: string;
 };
 
+const Wrapper = ({
+  children,
+  defaultValues = { color: '' },
+  onSubmit = vi.fn(),
+}: {
+  children: ReactNode;
+  defaultValues?: Partial<FormValues>;
+  onSubmit?: SubmitHandler<FormValues>;
+}) => {
+  const form = useForm<FormValues>({
+    defaultValues,
+  });
+
+  return (
+    <FormProvider form={form} onSubmit={onSubmit}>
+      {children}
+    </FormProvider>
+  );
+};
+
 describe('RadioControl', () => {
   it('renders with label and radio', () => {
     render(
-      <FormProvider defaultValues={{ color: '' }} onSubmit={vi.fn()}>
+      <Wrapper>
         <RadioControl<FormValues>
           label="Test Label"
           name="color"
           options={['Green', 'Yellow']}
         />
-      </FormProvider>,
+      </Wrapper>,
     );
     expect(screen.getByText('Test Label')).toBeInTheDocument();
     expect(screen.getByText('Green')).toBeInTheDocument();
@@ -27,7 +48,7 @@ describe('RadioControl', () => {
 
   it('renders with object options', () => {
     render(
-      <FormProvider defaultValues={{ color: '' }} onSubmit={vi.fn()}>
+      <Wrapper>
         <RadioControl<FormValues>
           label="Test Label"
           name="color"
@@ -36,7 +57,7 @@ describe('RadioControl', () => {
             { label: 'Blue', value: 'blue' },
           ]}
         />
-      </FormProvider>,
+      </Wrapper>,
     );
     expect(screen.getByText('Test Label')).toBeInTheDocument();
     expect(screen.getByText('Red')).toBeInTheDocument();
@@ -47,14 +68,14 @@ describe('RadioControl', () => {
     const user = userEvent.setup();
     const onSubmitMock: SubmitHandler<FormValues> = vi.fn();
     render(
-      <FormProvider defaultValues={{ color: '' }} onSubmit={onSubmitMock}>
+      <Wrapper onSubmit={onSubmitMock}>
         <RadioControl<FormValues>
           label="Test Label"
           name="color"
           options={['Green', 'Yellow']}
         />
         <button type="submit">Submit</button>
-      </FormProvider>,
+      </Wrapper>,
     );
 
     await user.click(screen.getByText('Yellow'));
@@ -69,13 +90,13 @@ describe('RadioControl', () => {
 
   it('renders with initial value', () => {
     render(
-      <FormProvider defaultValues={{ color: 'Yellow' }} onSubmit={vi.fn()}>
+      <Wrapper defaultValues={{ color: 'Yellow' }}>
         <RadioControl<FormValues>
           label="Test Label"
           name="color"
           options={['Green', 'Yellow']}
         />
-      </FormProvider>,
+      </Wrapper>,
     );
 
     const greenRadio = screen.getByRole('radio', { name: 'Green' });
@@ -87,7 +108,7 @@ describe('RadioControl', () => {
 
   it('renders description', () => {
     render(
-      <FormProvider defaultValues={{ color: '' }} onSubmit={vi.fn()}>
+      <Wrapper>
         <RadioControl<FormValues>
           label="Test Label"
           name="color"
@@ -99,7 +120,7 @@ describe('RadioControl', () => {
             { label: 'Blue', value: 'blue' },
           ]}
         />
-      </FormProvider>,
+      </Wrapper>,
     );
 
     expect(screen.getByTestId('custom-description')).toBeInTheDocument();
@@ -108,7 +129,7 @@ describe('RadioControl', () => {
   it('shows description id in aria-describedby', () => {
     const description = 'This is a description';
     render(
-      <FormProvider defaultValues={{ color: '' }} onSubmit={vi.fn()}>
+      <Wrapper>
         <RadioControl<FormValues>
           label="Test Label"
           name="color"
@@ -118,7 +139,7 @@ describe('RadioControl', () => {
             { label: 'Blue', value: 'blue' },
           ]}
         />
-      </FormProvider>,
+      </Wrapper>,
     );
 
     const fieldset = screen.getByText('Test Label').parentNode;
@@ -131,7 +152,7 @@ describe('RadioControl', () => {
 
   it('shows error message', async () => {
     render(
-      <FormProvider defaultValues={{ country: '' }} onSubmit={vi.fn()}>
+      <Wrapper>
         <RadioControl<FormValues>
           label="Test Label"
           name="color"
@@ -142,7 +163,7 @@ describe('RadioControl', () => {
           registerOptions={{ required: 'Color is required' }}
         />
         <button type="submit">Submit</button>
-      </FormProvider>,
+      </Wrapper>,
     );
 
     await userEvent.click(screen.getByRole('button', { name: /submit/i }));

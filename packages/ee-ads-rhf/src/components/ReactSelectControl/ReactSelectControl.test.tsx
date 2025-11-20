@@ -1,13 +1,34 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import { SubmitHandler } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { ReactNode } from 'react';
 import { FormProvider } from '../FormProvider/FormProvider';
 import { ReactSelectControl } from './ReactSelectControl';
 
 // A simple type for form values
 type FormValues = {
   color: { label: string; value: string } | null;
+};
+
+const Wrapper = ({
+  children,
+  defaultValues = { color: null },
+  onSubmit = vi.fn(),
+}: {
+  children: ReactNode;
+  defaultValues?: Partial<FormValues>;
+  onSubmit?: SubmitHandler<FormValues>;
+}) => {
+  const form = useForm<FormValues>({
+    defaultValues,
+  });
+
+  return (
+    <FormProvider form={form} onSubmit={onSubmit}>
+      {children}
+    </FormProvider>
+  );
 };
 
 describe('ReactSelectControl', () => {
@@ -19,13 +40,13 @@ describe('ReactSelectControl', () => {
 
   it('renders label and options', () => {
     render(
-      <FormProvider defaultValues={{ color: null }} onSubmit={vi.fn()}>
+      <Wrapper>
         <ReactSelectControl<FormValues>
           name="color"
           label="Favorite Color"
           options={options}
         />
-      </FormProvider>,
+      </Wrapper>,
     );
 
     // The label should render
@@ -39,14 +60,14 @@ describe('ReactSelectControl', () => {
 
   it('renders a description when provided', () => {
     render(
-      <FormProvider defaultValues={{ color: null }} onSubmit={vi.fn()}>
+      <Wrapper>
         <ReactSelectControl<FormValues>
           name="color"
           label="Favorite Color"
           description="Pick your favorite"
           options={options}
         />
-      </FormProvider>,
+      </Wrapper>,
     );
 
     expect(screen.getByText('Pick your favorite')).toBeInTheDocument();
@@ -59,7 +80,7 @@ describe('ReactSelectControl', () => {
 
   it('shows error message when validation fails', async () => {
     render(
-      <FormProvider defaultValues={{ color: null }} onSubmit={vi.fn()}>
+      <Wrapper>
         <ReactSelectControl<FormValues>
           name="color"
           label="Favorite Color"
@@ -67,7 +88,7 @@ describe('ReactSelectControl', () => {
           registerOptions={{ required: 'Color is required' }}
         />
         <button type="submit">Submit</button>
-      </FormProvider>,
+      </Wrapper>,
     );
     await userEvent.click(screen.getByRole('button', { name: /submit/i }));
 
@@ -83,14 +104,14 @@ describe('ReactSelectControl', () => {
     const onSubmitMock: SubmitHandler<FormValues> = vi.fn();
 
     render(
-      <FormProvider defaultValues={{ color: null }} onSubmit={onSubmitMock}>
+      <Wrapper onSubmit={onSubmitMock}>
         <ReactSelectControl<FormValues>
           name="color"
           label="Favorite Color"
           options={options}
         />
         <button type="submit">Submit</button>
-      </FormProvider>,
+      </Wrapper>,
     );
 
     // open the menu
@@ -113,18 +134,17 @@ describe('ReactSelectControl', () => {
 
   it('renders with initial value', () => {
     render(
-      <FormProvider
+      <Wrapper
         defaultValues={{
           color: { value: 'blue', label: 'Blue' },
         }}
-        onSubmit={vi.fn()}
       >
         <ReactSelectControl<FormValues>
           name="color"
           label="Favorite Color"
           options={options}
         />
-      </FormProvider>,
+      </Wrapper>,
     );
 
     expect(screen.getByText('Blue')).toBeInTheDocument();
@@ -132,14 +152,14 @@ describe('ReactSelectControl', () => {
 
   it('respects disabled prop', () => {
     render(
-      <FormProvider defaultValues={{ color: null }} onSubmit={vi.fn()}>
+      <Wrapper>
         <ReactSelectControl<FormValues>
           name="color"
           label="Favorite Color"
           disabled
           options={options}
         />
-      </FormProvider>,
+      </Wrapper>,
     );
 
     const combo = screen.getByRole('combobox', { hidden: true });
