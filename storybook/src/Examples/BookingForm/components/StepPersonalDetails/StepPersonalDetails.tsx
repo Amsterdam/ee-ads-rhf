@@ -97,6 +97,7 @@ const StepPersonalDetails = ({
             label="Voornaam"
             name="name"
             registerOptions={{ required: 'Voornaam is verplicht' }}
+            className="ams-mb-m"
           />
 
           <TextInputControl<BookingFormData>
@@ -110,6 +111,7 @@ const StepPersonalDetails = ({
                 message: 'Ongeldig e-mailadres',
               },
             }}
+            className="ams-mb-m"
           />
 
           <Button type="button" onClick={handleNextButtonClick}>

@@ -33,7 +33,7 @@ const StepConfirm = ({
           <StandaloneLink
             href="#"
             icon={ChevronBackwardIcon}
-            onClick={e => {
+            onClick={(e) => {
               e.preventDefault();
               onPrevButtonClick();
             }}

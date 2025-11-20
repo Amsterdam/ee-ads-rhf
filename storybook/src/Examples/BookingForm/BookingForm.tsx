@@ -19,8 +19,8 @@ const BookingForm = () => {
   const nowDateTime = new Date();
   const nowDate = new Date().toISOString().split('T')[0];
 
-  const methods = useForm<BookingFormData>({
-    resolver: zodResolver(bookingFormSchema) as Resolver<BookingFormData>,
+  const form = useForm<BookingFormData>({
+    resolver: zodResolver(bookingFormSchema),
     defaultValues: {
       name: '',
       email: '',
@@ -82,10 +82,8 @@ const BookingForm = () => {
     <Page>
       <PageHeader className="ams-mb-xl" />
       {isLoading && !isSubmitted && <Loader />}
-      <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onValidSubmit)}>
-          {!isSubmitted ? steps[currentStep] : <SuccessContent />}
-        </form>
+      <FormProvider form={form} onSubmit={onValidSubmit}>
+        {!isSubmitted ? steps[currentStep] : <SuccessContent />}
       </FormProvider>
     </Page>
   );

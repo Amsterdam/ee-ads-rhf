@@ -4,33 +4,26 @@ import {
   FormProvider as RHFFormProvider,
   SubmitHandler,
   useForm,
-  UseFormProps,
+  // UseFormProps,
 } from 'react-hook-form';
 
 export interface FormProviderProps<TFieldValues extends FieldValues>
   extends PropsWithChildren {
-  mode?: 'onChange' | 'onSubmit' | 'onBlur' | 'onTouched' | 'all' | undefined;
-  noValidate?: boolean;
+  form: ReturnType<typeof useForm<T>>;
   onSubmit: SubmitHandler<TFieldValues>;
-  defaultValues: UseFormProps<TFieldValues>['defaultValues'];
+  noValidate?: boolean;
 }
 
 export const FormProvider = <TFieldValues extends FieldValues>({
-  mode = 'onChange',
-  noValidate = true,
+  form,
   onSubmit,
+  noValidate = true,
   children,
-  defaultValues,
 }: FormProviderProps<TFieldValues>) => {
-  const methods = useForm<TFieldValues>({
-    mode,
-    defaultValues,
-  });
-
   return (
-    <RHFFormProvider {...methods}>
+    <RHFFormProvider {...form}>
       {/* Enable noValidate to prevent browser validation blocking JS */}
-      <form noValidate={noValidate} onSubmit={methods.handleSubmit(onSubmit)}>
+      <form noValidate={noValidate} onSubmit={form.handleSubmit(onSubmit)}>
         {children}
       </form>
     </RHFFormProvider>
