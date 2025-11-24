@@ -1,7 +1,7 @@
 import { vi } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { FormProvider, useForm } from 'react-hook-form';
-import { ReactElement } from 'react';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { ReactElement, ReactNode } from 'react';
 import StepAppointment from './StepAppointment';
 import { BookingFormData } from '../../schema';
 
@@ -9,8 +9,8 @@ const renderWithForm = (
   ui: ReactElement,
   defaultValues?: Partial<BookingFormData>,
 ) => {
-  const Wrapper = ({ children }: { children: React.ReactNode }) => {
-    const methods = useForm<BookingFormData>({
+  const Wrapper = ({ children }: { children: ReactNode }) => {
+    const form = useForm<BookingFormData>({
       defaultValues: {
         name: '',
         email: '',
@@ -23,7 +23,7 @@ const renderWithForm = (
       },
     });
 
-    return <FormProvider {...methods}>{children}</FormProvider>;
+    return <FormProvider {...form}>{children}</FormProvider>;
   };
 
   return render(ui, { wrapper: Wrapper });

@@ -9,7 +9,7 @@ import {
 
 export interface FormProviderProps<TFieldValues extends FieldValues>
   extends PropsWithChildren {
-  form: ReturnType<typeof useForm<T>>;
+  form: ReturnType<typeof useForm<TFieldValues>>;
   onSubmit: SubmitHandler<TFieldValues>;
   noValidate?: boolean;
 }
