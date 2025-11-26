@@ -64,11 +64,15 @@ describe('Examples / BookingForm - StepAppointment', () => {
   it('shows validation errors after clicking "Volgende vraag"', async () => {
     renderWithForm(<StepAppointment {...defaultProps} />);
 
-    expect(screen.queryByText(/verplicht/i)).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/verbeter de fouten voor u verder gaat/i),
+    ).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: /volgende vraag/i }));
 
     await waitFor(() => {
-      expect(screen.getAllByText(/verplicht/i).length).toBeGreaterThan(0);
+      expect(
+        screen.getByText(/verbeter de fouten voor u verder gaat/i),
+      ).toBeInTheDocument();
     });
   });
 
@@ -92,7 +96,9 @@ describe('Examples / BookingForm - StepAppointment', () => {
     fireEvent.click(screen.getByRole('button', { name: /volgende vraag/i }));
 
     await waitFor(() => {
-      expect(screen.getAllByText(/verplicht/i).length).toBeGreaterThan(0);
+      expect(
+        screen.getByText(/verbeter de fouten voor u verder gaat/i),
+      ).toBeInTheDocument();
     });
 
     fireEvent.click(screen.getByRole('link', { name: /vorige vraag/i }));
@@ -100,7 +106,9 @@ describe('Examples / BookingForm - StepAppointment', () => {
 
     // Ensure errors are cleared on return
     await waitFor(() => {
-      expect(screen.queryByText(/verplicht/i)).not.toBeInTheDocument();
+      expect(
+        screen.queryByText(/verbeter de fouten voor u verder gaat/i),
+      ).not.toBeInTheDocument();
     });
   });
 });

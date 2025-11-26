@@ -82,7 +82,7 @@ describe('DateTimeFieldset', () => {
     );
 
     expect(
-      screen.getByText(/start date field is required/i),
+      screen.getByText(/Het veld Startdatum is verplicht/i),
     ).toBeInTheDocument();
   });
 
@@ -90,8 +90,14 @@ describe('DateTimeFieldset', () => {
     render(
       <Wrapper
         errors={{
-          startDate: { type: 'required', message: 'Start date is required' },
-          startTime: { type: 'required', message: 'Start time is required' },
+          startDate: {
+            type: 'required',
+            message: 'Het veld Startdatum is verplicht.',
+          },
+          startTime: {
+            type: 'required',
+            message: 'Het veld Starttijd is verplicht.',
+          },
         }}
       >
         <DateTimeFieldset
@@ -104,7 +110,7 @@ describe('DateTimeFieldset', () => {
     );
 
     expect(
-      screen.getByText(/fields start date and start time are required/i),
+      screen.getByText(/de velden Startdatum en Starttijd zijn verplicht/i),
     ).toBeInTheDocument();
   });
 
@@ -125,7 +131,9 @@ describe('DateTimeFieldset', () => {
     );
 
     expect(
-      screen.getByText(/end date and time must be later/i),
+      screen.getByText(
+        /de einddatum en -tijd moeten later zijn dan de startdatum en -tijd/i,
+      ),
     ).toBeInTheDocument();
   });
 });

@@ -3,7 +3,7 @@ import { z } from 'zod';
 const bookingFormSchema = z
   .object({
     name: z.string().min(1, 'Voornaam is verplicht'),
-    email: z.string().email('Ongeldig e-mailadres'),
+    email: z.email({ message: 'Ongeldig e-mailadres' }),
     startDate: z.string().min(1, 'Startdatum is verplicht'),
     startTime: z.string().min(1, 'Starttijd is verplicht'),
     endDate: z.string().min(1, 'Einddatum is verplicht'),
@@ -23,11 +23,11 @@ const bookingFormSchema = z
       const sameDay = data.startDate === data.endDate;
 
       ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: 'custom',
         message:
           'De einddatum en -tijd moeten later zijn dan de startdatum en -tijd',
 
-        // 👇 conditionally choose where error appears
+        // Conditionally apply where the error appears
         path: sameDay ? ['endTime'] : ['endDate'],
       });
     }
