@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { PasswordInputControl } from './PasswordInputControl';
 import userEvent from '@testing-library/user-event';
@@ -16,7 +16,12 @@ const Wrapper = ({
   defaultValues?: Partial<FormValues>;
 }) => {
   const methods = useForm<FormValues>({ defaultValues });
-  return <FormProvider {...methods}>{children}</FormProvider>;
+  const onSubmit = vi.fn();
+  return (
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(onSubmit)}>{children}</form>
+    </FormProvider>
+  );
 };
 
 describe('PasswordInput', () => {
@@ -93,29 +98,16 @@ describe('PasswordInput', () => {
   });
 
   it('shows error message when invalid', async () => {
-    const Component = () => {
-      const methods = useForm<FormValues>({
-        defaultValues: { password: '' },
-        mode: 'onSubmit',
-      });
-
-      const onSubmit = vi.fn();
-
-      return (
-        <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(onSubmit)}>
-            <PasswordInputControl<FormValues>
-              name="password"
-              label="Your Password"
-              registerOptions={{ required: 'Password is required' }}
-            />
-            <button type="submit">Submit</button>
-          </form>
-        </FormProvider>
-      );
-    };
-
-    render(<Component />);
+    render(
+      <Wrapper>
+        <PasswordInputControl<FormValues>
+          name="password"
+          label="Your Password"
+          registerOptions={{ required: 'Password is required' }}
+        />
+        <button type="submit">Submit</button>
+      </Wrapper>,
+    );
 
     fireEvent.click(screen.getByRole('button', { name: /submit/i }));
 
@@ -125,5 +117,52 @@ describe('PasswordInput', () => {
     // `(niet verplicht)`)
     const textarea = screen.getByLabelText(/Your Password/i);
     expect(textarea.getAttribute('aria-describedby')).toMatch(/password-error/);
+  });
+
+  it('hides the error message when hideErrorMessage is true', async () => {
+    render(
+      <Wrapper>
+        <PasswordInputControl<FormValues>
+          name="password"
+          label="Your Password"
+          registerOptions={{ required: 'Password is required' }}
+          hideErrorMessage
+        />
+        <button type="submit">Submit</button>
+      </Wrapper>,
+    );
+
+    fireEvent.click(screen.getByText(/submit/i));
+
+    // error message should NOT appear
+    expect(screen.queryByText(/Password is required/i)).not.toBeInTheDocument();
+
+    await waitFor(() => {
+      const input = screen.getByLabelText(/Password/i);
+      expect(input).toHaveAttribute('aria-invalid', 'true');
+    });
+  });
+
+  it('does not add error to aria-describedby when hideErrorMessage is true', async () => {
+    render(
+      <Wrapper>
+        <PasswordInputControl<FormValues>
+          name="password"
+          label="Your Password"
+          registerOptions={{ required: 'Password is required' }}
+          hideErrorMessage
+        />
+        <button type="submit">Submit</button>
+      </Wrapper>,
+    );
+
+    fireEvent.click(screen.getByText(/submit/i));
+
+    await waitFor(() => {
+      const input = screen.getByLabelText(/Your Password/i);
+      expect(input.getAttribute('aria-describedby')).not.toMatch(
+        /password-error/i,
+      );
+    });
   });
 });

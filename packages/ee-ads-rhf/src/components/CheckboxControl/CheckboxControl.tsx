@@ -26,6 +26,8 @@ export type CheckboxControlProps<TFieldValues extends FieldValues> =
   CheckboxProps &
     FormControlBase<TFieldValues> & {
       wrapperProps?: ComponentPropsWithoutRef<'div'>;
+      hideFieldError?: boolean;
+      hideErrorMessage?: boolean;
     };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -50,6 +52,8 @@ export const CheckboxControl = forwardRef(function CheckboxControl<
     indeterminate,
     icon,
     wrapperProps,
+    hideFieldError = false,
+    hideErrorMessage = false,
     ...attributes
   }: CheckboxControlProps<TFieldValues>,
   ref: Ref<HTMLInputElement>,
@@ -70,7 +74,7 @@ export const CheckboxControl = forwardRef(function CheckboxControl<
         const hasError = !!fieldState.error;
 
         return (
-          <Field invalid={hasError} {...wrapperProps}>
+          <Field invalid={!hideFieldError && hasError} {...wrapperProps}>
             {!!description &&
               (typeof description === 'string' ? (
                 <Paragraph id={descriptionId} size="small">
@@ -80,7 +84,7 @@ export const CheckboxControl = forwardRef(function CheckboxControl<
                 <div id={descriptionId}>{description}</div>
               ))}
 
-            {hasError && (
+            {!hideErrorMessage && hasError && (
               <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
             )}
 
@@ -92,7 +96,7 @@ export const CheckboxControl = forwardRef(function CheckboxControl<
               icon={icon}
               aria-describedby={clsx(
                 { [descriptionId]: !!descriptionId },
-                { [errorId]: hasError },
+                { [errorId]: !hideErrorMessage && hasError },
               )}
               checked={!!field.value}
               // Controlled props from RHF

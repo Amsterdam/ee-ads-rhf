@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { CheckboxControl } from './CheckboxControl';
 
@@ -15,7 +15,12 @@ const Wrapper = ({
   defaultValues?: Partial<FormValues>;
 }) => {
   const methods = useForm<FormValues>({ defaultValues });
-  return <FormProvider {...methods}>{children}</FormProvider>;
+  const onSubmit = vi.fn();
+  return (
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(onSubmit)}>{children}</form>
+    </FormProvider>
+  );
 };
 
 describe('CheckboxControl', () => {
@@ -24,7 +29,7 @@ describe('CheckboxControl', () => {
       <Wrapper>
         <CheckboxControl<FormValues>
           name="remote"
-          label="is the meeting remote?"
+          label="Is the meeting remote?"
         />
       </Wrapper>,
     );
@@ -42,7 +47,7 @@ describe('CheckboxControl', () => {
       <Wrapper>
         <CheckboxControl<FormValues>
           name="remote"
-          label="is the meeting remote?"
+          label="Is the meeting remote?"
         />
       </Wrapper>,
     );
@@ -64,7 +69,7 @@ describe('CheckboxControl', () => {
       <Wrapper defaultValues={{ remote: true }}>
         <CheckboxControl<FormValues>
           name="remote"
-          label="is the meeting remote?"
+          label="Is the meeting remote?"
         />
       </Wrapper>,
     );
@@ -80,27 +85,22 @@ describe('CheckboxControl', () => {
       <Wrapper>
         <CheckboxControl<FormValues>
           name="remote"
-          label="is the meeting remote?"
-          description="For remote meetings a video call invite will be sent in advance"
+          label="Is the meeting remote?"
+          description="This field is required"
         />
       </Wrapper>,
     );
 
-    expect(
-      screen.getByText(
-        /For remote meetings a video call invite will be sent in advance/i,
-      ),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/This field is required/i)).toBeInTheDocument();
   });
 
   it('shows description id in aria-describedby', () => {
-    const description =
-      'For remote meetings a video call invite will be sent in advance';
+    const description = 'This field is required';
     render(
       <Wrapper>
         <CheckboxControl<FormValues>
           name="remote"
-          label="is the meeting remote?"
+          label="Is the meeting remote?"
           description={description}
         />
       </Wrapper>,
@@ -129,10 +129,9 @@ describe('CheckboxControl', () => {
           <form onSubmit={methods.handleSubmit(onSubmit)}>
             <CheckboxControl<FormValues>
               name="remote"
-              label="is the meeting remote?"
+              label="Is the meeting remote?"
               registerOptions={{
-                required:
-                  'For remote meetings a video call invite will be sent in advance',
+                required: 'This field is required',
               }}
             />
             <button type="submit">Submit</button>
@@ -145,13 +144,62 @@ describe('CheckboxControl', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /submit/i }));
 
-    expect(
-      await screen.findByText(
-        /For remote meetings a video call invite will be sent in advance/i,
-      ),
-    ).toBeVisible();
+    expect(await screen.findByText(/This field is required/i)).toBeVisible();
 
     const checkbox = screen.getByLabelText(/is the meeting remote/i);
     expect(checkbox.getAttribute('aria-describedby')).toMatch(/remote-error/);
+  });
+
+  it('hides the error message when hideErrorMessage is true', async () => {
+    render(
+      <Wrapper>
+        <CheckboxControl<FormValues>
+          name="remote"
+          label="Is the meeting remote?"
+          registerOptions={{
+            required: 'This field is required',
+          }}
+          hideErrorMessage
+        />
+        <button type="submit">Submit</button>
+      </Wrapper>,
+    );
+
+    fireEvent.click(screen.getByText(/submit/i));
+
+    // error message should NOT appear
+    expect(
+      screen.queryByText(/This field is required/i),
+    ).not.toBeInTheDocument();
+
+    await waitFor(() => {
+      const input = screen.getByLabelText(/Is the meeting remote/i);
+      expect(input).toHaveAttribute('aria-invalid', 'true');
+    });
+  });
+
+  it('does not add error to aria-describedby when hideErrorMessage is true', async () => {
+    render(
+      <Wrapper>
+        <CheckboxControl<FormValues>
+          name="remote"
+          label="Is the meeting remote?"
+          registerOptions={{
+            required: 'This field is required',
+          }}
+          hideErrorMessage
+        />
+        <button type="submit">Submit</button>
+      </Wrapper>,
+    );
+
+    fireEvent.click(screen.getByText(/submit/i));
+
+    await waitFor(() => {
+      const input = screen.getByLabelText(/Is the meeting remote/i);
+      expect(input.getAttribute('aria-describedby')).not.toMatch(
+        /remote-error/,
+      );
+    });
   });
 });

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { FileInputControl } from './FileInputControl';
 import userEvent from '@testing-library/user-event';
@@ -91,5 +91,51 @@ describe('FileInputControl', () => {
       'aria-describedby',
       expect.stringContaining('attachment-description'),
     );
+  });
+
+  it('hides the error message when hideErrorMessage is true', async () => {
+    render(
+      <Wrapper>
+        <FileInputControl<FormValues>
+          name="attachment"
+          label="Your documents"
+          description="Please select your documents."
+          registerOptions={{ required: 'Your documents is required' }}
+          hideErrorMessage
+        />
+        <button type="submit">Submit</button>
+      </Wrapper>,
+    );
+
+    fireEvent.click(screen.getByText(/submit/i));
+
+    // error message should NOT appear
+    expect(
+      screen.queryByText(/Your documents is required/i),
+    ).not.toBeInTheDocument();
+  });
+
+  it('does not add error to aria-describedby when hideErrorMessage is true', async () => {
+    render(
+      <Wrapper>
+        <FileInputControl<FormValues>
+          name="attachment"
+          label="Your documents"
+          description="Please select your documents."
+          registerOptions={{ required: 'Your documents is required' }}
+          hideErrorMessage
+        />
+        <button type="submit">Submit</button>
+      </Wrapper>,
+    );
+
+    fireEvent.click(screen.getByText(/submit/i));
+
+    await waitFor(() => {
+      const input = screen.getByLabelText(/Your documents/i);
+      expect(input.getAttribute('aria-describedby')).not.toMatch(
+        /attachment-error/i,
+      );
+    });
   });
 });

@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import userEvent from '@testing-library/user-event';
@@ -168,5 +168,30 @@ describe('RadioControl', () => {
 
     await userEvent.click(screen.getByRole('button', { name: /submit/i }));
     expect(await screen.findByText('Color is required')).toBeInTheDocument();
+  });
+
+  it('hides the error message when hideErrorMessage is true', async () => {
+    render(
+      <Wrapper>
+        <RadioControl<FormValues>
+          label="Test Label"
+          name="color"
+          options={[
+            { label: 'Red', value: 'red' },
+            { label: 'Blue', value: 'blue' },
+          ]}
+          registerOptions={{ required: 'Color is required' }}
+          hideErrorMessage
+        />
+        <button type="submit">Submit</button>
+      </Wrapper>,
+    );
+
+    fireEvent.click(screen.getByText(/submit/i));
+
+    await waitFor(() => {
+      // error message should NOT appear
+      expect(screen.queryByText(/Color is required/i)).not.toBeInTheDocument();
+    });
   });
 });

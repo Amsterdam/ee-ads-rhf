@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -164,5 +164,54 @@ describe('ReactSelectControl', () => {
 
     const combo = screen.getByRole('combobox', { hidden: true });
     expect(combo).toBeDisabled();
+  });
+
+  it('hides the error message when hideErrorMessage is true', async () => {
+    render(
+      <Wrapper>
+        <ReactSelectControl<FormValues>
+          name="color"
+          label="Favorite Color"
+          disabled
+          options={options}
+          registerOptions={{ required: 'Color is required' }}
+          hideErrorMessage
+        />
+        <button type="submit">Submit</button>
+      </Wrapper>,
+    );
+
+    fireEvent.click(screen.getByText(/submit/i));
+
+    // error message should NOT appear
+    expect(screen.queryByText(/Color is required/i)).not.toBeInTheDocument();
+
+    await waitFor(() => {
+      const input = screen.getByLabelText(/Favorite Color/i);
+      expect(input).toHaveAttribute('aria-invalid', 'true');
+    });
+  });
+
+  it('does not add error to aria-describedby when hideErrorMessage is true', async () => {
+    render(
+      <Wrapper>
+        <ReactSelectControl<FormValues>
+          name="color"
+          label="Favorite Color"
+          disabled
+          options={options}
+          registerOptions={{ required: 'Color is required' }}
+          hideErrorMessage
+        />
+        <button type="submit">Submit</button>
+      </Wrapper>,
+    );
+
+    fireEvent.click(screen.getByText(/submit/i));
+
+    await waitFor(() => {
+      const input = screen.getByLabelText(/Favorite Color/i);
+      expect(input.getAttribute('aria-describedby')).not.toMatch(/color-error/);
+    });
   });
 });

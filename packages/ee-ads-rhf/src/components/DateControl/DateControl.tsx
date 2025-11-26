@@ -29,6 +29,8 @@ export type DateControlProps<TFieldValues extends FieldValues> =
     // This component is wrapped in a `<Field>` component, which returns a `div`
     ComponentPropsWithoutRef<'div'> & {
       wrapperProps?: ComponentPropsWithoutRef<'div'>;
+      hideFieldError?: boolean;
+      hideErrorMessage?: boolean;
     };
 
 // This interface allows us to use a generic type argument in parent components
@@ -52,6 +54,8 @@ export const DateControl = forwardRef(function DateControl<
     registerOptions,
     id,
     wrapperProps,
+    hideFieldError = false,
+    hideErrorMessage = false,
     ...attributes
   }: DateControlProps<TFieldValues>,
   ref: Ref<HTMLInputElement>,
@@ -75,7 +79,7 @@ export const DateControl = forwardRef(function DateControl<
         const hasError = !!fieldState.error;
 
         return (
-          <Field invalid={hasError} {...wrapperProps}>
+          <Field invalid={!hideFieldError && hasError} {...wrapperProps}>
             {label && (
               <Label htmlFor={identifier} optional={optional}>
                 {label}
@@ -89,7 +93,7 @@ export const DateControl = forwardRef(function DateControl<
               ) : (
                 <div id={descriptionId}>{description}</div>
               ))}
-            {hasError && (
+            {!hideErrorMessage && hasError && (
               <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
             )}
 
@@ -98,7 +102,7 @@ export const DateControl = forwardRef(function DateControl<
               invalid={hasError}
               aria-describedby={clsx(
                 { [descriptionId]: !!descriptionId },
-                { [errorId]: hasError },
+                { [errorId]: !hideErrorMessage && hasError },
               )}
               // Controlled props from RHF
               {...field}

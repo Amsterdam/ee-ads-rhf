@@ -26,6 +26,8 @@ export type TextInputControlProps<TFieldValues extends FieldValues> =
   TextInputProps &
     FormControlBase<TFieldValues> & {
       wrapperProps?: ComponentPropsWithoutRef<'div'>;
+      hideFieldError?: boolean;
+      hideErrorMessage?: boolean;
     };
 
 interface TextInputControlComponent
@@ -48,6 +50,8 @@ export const TextInputControl = forwardRef(function TextInputControl<
     registerOptions,
     id,
     wrapperProps,
+    hideFieldError = false,
+    hideErrorMessage = false,
     ...attributes
   }: TextInputControlProps<TFieldValues>,
   ref: Ref<HTMLInputElement>,
@@ -71,7 +75,7 @@ export const TextInputControl = forwardRef(function TextInputControl<
         const hasError = !!errorMessage;
 
         return (
-          <Field invalid={hasError} {...wrapperProps}>
+          <Field invalid={!hideFieldError && hasError} {...wrapperProps}>
             {label && (
               <Label htmlFor={identifier} optional={optional}>
                 {label}
@@ -85,7 +89,7 @@ export const TextInputControl = forwardRef(function TextInputControl<
               ) : (
                 <div id={descriptionId}>{description}</div>
               ))}
-            {hasError && (
+            {!hideErrorMessage && hasError && (
               <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
             )}
 
@@ -94,7 +98,7 @@ export const TextInputControl = forwardRef(function TextInputControl<
               invalid={hasError}
               aria-describedby={clsx(
                 { [descriptionId]: !!descriptionId },
-                { [errorId]: hasError },
+                { [errorId]: !hideErrorMessage && hasError },
               )}
               // Controlled props from RHF
               {...field}

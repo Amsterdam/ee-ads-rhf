@@ -32,6 +32,8 @@ export type SelectControlProps<TFieldValues extends FieldValues> = SelectProps &
       | { label: string; value: string }[]
       | string[];
     wrapperProps?: ComponentPropsWithoutRef<'div'>;
+    hideFieldError?: boolean;
+    hideErrorMessage?: boolean;
   };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -54,6 +56,8 @@ export const SelectControl = forwardRef(function SelectControl<
     registerOptions,
     id,
     wrapperProps,
+    hideFieldError = false,
+    hideErrorMessage = false,
     ...attributes
   }: SelectControlProps<TFieldValues>,
   ref: Ref<HTMLSelectElement>,
@@ -128,7 +132,7 @@ export const SelectControl = forwardRef(function SelectControl<
         const hasError = !!fieldState.error;
 
         return (
-          <Field invalid={hasError} {...wrapperProps}>
+          <Field invalid={!hideFieldError && hasError} {...wrapperProps}>
             <Label htmlFor={identifier} optional={optional}>
               {label}
             </Label>
@@ -140,14 +144,14 @@ export const SelectControl = forwardRef(function SelectControl<
               ) : (
                 <div id={descriptionId}>{description}</div>
               ))}
-            {hasError && (
+            {!hideErrorMessage && hasError && (
               <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
             )}
 
             <Select
               aria-describedby={clsx(
                 { [`${identifier}-description`]: description },
-                { [`${identifier}-error`]: hasError },
+                { [`${identifier}-error`]: !hideErrorMessage && hasError },
               )}
               id={identifier}
               invalid={hasError}

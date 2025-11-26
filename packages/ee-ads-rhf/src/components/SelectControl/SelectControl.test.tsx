@@ -240,4 +240,53 @@ describe('SelectControl', () => {
     await userEvent.click(screen.getByRole('button', { name: /submit/i }));
     expect(await screen.findByText('Country is required')).toBeInTheDocument();
   });
+
+  it('hides the error message when hideErrorMessage is true', async () => {
+    render(
+      <Wrapper>
+        <SelectControl<FormValues>
+          label="Test Label"
+          name="country"
+          options={['A', 'B', 'C']}
+          registerOptions={{ required: 'Country is required' }}
+          hideErrorMessage
+        />
+        <button type="submit">Submit</button>
+      </Wrapper>,
+    );
+
+    fireEvent.click(screen.getByText(/submit/i));
+
+    // error message should NOT appear
+    expect(screen.queryByText(/Country is required/i)).not.toBeInTheDocument();
+
+    await waitFor(() => {
+      const input = screen.getByLabelText(/Test Label/i);
+      expect(input).toHaveAttribute('aria-invalid', 'true');
+    });
+  });
+
+  it('does not add error to aria-describedby when hideErrorMessage is true', async () => {
+    render(
+      <Wrapper>
+        <SelectControl<FormValues>
+          label="Test Label"
+          name="country"
+          options={['A', 'B', 'C']}
+          registerOptions={{ required: 'Country is required' }}
+          hideErrorMessage
+        />
+        <button type="submit">Submit</button>
+      </Wrapper>,
+    );
+
+    fireEvent.click(screen.getByText(/submit/i));
+
+    await waitFor(() => {
+      const input = screen.getByLabelText(/Test Label/i);
+      expect(input.getAttribute('aria-describedby')).not.toMatch(
+        /country-error/,
+      );
+    });
+  });
 });

@@ -28,6 +28,8 @@ export type SwitchControlProps<TFieldValues extends FieldValues> =
   CheckboxProps &
     FormControlBase<TFieldValues> & {
       wrapperProps?: ComponentPropsWithoutRef<'div'>;
+      hideFieldError?: boolean;
+      hideErrorMessage?: boolean;
     };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -50,6 +52,8 @@ export const SwitchControl = forwardRef(function SwitchControl<
     id,
     disabled,
     wrapperProps,
+    hideFieldError = false,
+    hideErrorMessage = false,
     ...attributes
   }: SwitchControlProps<TFieldValues>,
   ref: Ref<HTMLInputElement>,
@@ -70,7 +74,7 @@ export const SwitchControl = forwardRef(function SwitchControl<
         const hasError = !!fieldState.error;
 
         return (
-          <Field invalid={hasError} {...wrapperProps}>
+          <Field invalid={!hideFieldError && hasError} {...wrapperProps}>
             {!!description &&
               (typeof description === 'string' ? (
                 <Paragraph id={descriptionId} size="small">
@@ -80,7 +84,7 @@ export const SwitchControl = forwardRef(function SwitchControl<
                 <div id={descriptionId}>{description}</div>
               ))}
 
-            {hasError && (
+            {!hideErrorMessage && hasError && (
               <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
             )}
 
@@ -91,7 +95,7 @@ export const SwitchControl = forwardRef(function SwitchControl<
                 disabled={disabled}
                 aria-describedby={clsx(
                   { [descriptionId]: !!descriptionId },
-                  { [errorId]: hasError },
+                  { [errorId]: !hideErrorMessage && hasError },
                 )}
                 checked={!!field.value}
                 // Controlled props from RHF

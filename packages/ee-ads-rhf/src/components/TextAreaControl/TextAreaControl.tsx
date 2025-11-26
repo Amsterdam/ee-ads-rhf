@@ -26,6 +26,8 @@ export type TextAreaControlProps<TFieldValues extends FieldValues> =
   TextAreaProps &
     FormControlBase<TFieldValues> & {
       wrapperProps?: ComponentPropsWithoutRef<'div'>;
+      hideFieldError?: boolean;
+      hideErrorMessage?: boolean;
     };
 
 // This interface allows us to use a generic type argum/ent in parent components
@@ -51,6 +53,8 @@ export const TextAreaControl = forwardRef(function TextAreaControl<
     cols,
     rows,
     wrapperProps,
+    hideFieldError = false,
+    hideErrorMessage = false,
     ...attributes
   }: TextAreaControlProps<TFieldValues>,
   ref: Ref<HTMLTextAreaElement>,
@@ -74,7 +78,7 @@ export const TextAreaControl = forwardRef(function TextAreaControl<
         const hasError = !!fieldState.error;
 
         return (
-          <Field invalid={hasError} {...wrapperProps}>
+          <Field invalid={!hideFieldError && hasError} {...wrapperProps}>
             {label && (
               <Label htmlFor={identifier} optional={optional}>
                 {label}
@@ -89,7 +93,7 @@ export const TextAreaControl = forwardRef(function TextAreaControl<
               ) : (
                 <div id={descriptionId}>{description}</div>
               ))}
-            {hasError && (
+            {!hideErrorMessage && hasError && (
               <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
             )}
 
@@ -100,7 +104,7 @@ export const TextAreaControl = forwardRef(function TextAreaControl<
               invalid={hasError}
               aria-describedby={clsx(
                 { [descriptionId]: !!descriptionId },
-                { [errorId]: hasError },
+                { [errorId]: !hideErrorMessage && hasError },
               )}
               // Controlled props from RHF
               {...field}

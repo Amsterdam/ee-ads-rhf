@@ -26,6 +26,8 @@ export type FileInputControlProps<TFieldValues extends FieldValues> =
   FileInputProps &
     FormControlBase<TFieldValues> & {
       wrapperProps?: ComponentPropsWithoutRef<'div'>;
+      hideFieldError?: boolean;
+      hideErrorMessage?: boolean;
     };
 
 interface FileInputControlComponent
@@ -48,6 +50,8 @@ export const FileInputControl = forwardRef(function FileInputControl<
     registerOptions,
     id,
     wrapperProps,
+    hideFieldError = false,
+    hideErrorMessage = false,
     ...attributes
   }: FileInputControlProps<TFieldValues>,
   ref: Ref<HTMLInputElement>,
@@ -71,7 +75,7 @@ export const FileInputControl = forwardRef(function FileInputControl<
         const hasError = !!errorMessage;
 
         return (
-          <Field invalid={hasError} {...wrapperProps}>
+          <Field invalid={!hideFieldError && hasError} {...wrapperProps}>
             {label && (
               <Label htmlFor={identifier} optional={optional}>
                 {label}
@@ -82,7 +86,7 @@ export const FileInputControl = forwardRef(function FileInputControl<
                 {description}
               </Paragraph>
             )}
-            {hasError && (
+            {!hideErrorMessage && hasError && (
               <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
             )}
 
@@ -90,7 +94,7 @@ export const FileInputControl = forwardRef(function FileInputControl<
               id={identifier}
               aria-describedby={clsx(
                 { [descriptionId]: !!descriptionId },
-                { [errorId]: hasError },
+                { [errorId]: !hideErrorMessage && hasError },
               )}
               // Limited controlled props from RHF
               onChange={(e) => {

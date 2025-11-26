@@ -27,6 +27,8 @@ export type TimeControlProps<TFieldValues extends FieldValues> =
   TimeInputProps &
     FormControlBase<TFieldValues> & {
       wrapperProps?: ComponentPropsWithoutRef<'div'>;
+      hideFieldError?: boolean;
+      hideErrorMessage?: boolean;
     };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -48,6 +50,8 @@ export const TimeControl = forwardRef(function TimeControl<
     registerOptions,
     id,
     wrapperProps,
+    hideFieldError = false,
+    hideErrorMessage = false,
     ...attributes
   }: TimeControlProps<TFieldValues>,
   ref: Ref<HTMLInputElement>,
@@ -71,7 +75,7 @@ export const TimeControl = forwardRef(function TimeControl<
         const hasError = !!fieldState.error;
 
         return (
-          <Field invalid={hasError} {...wrapperProps}>
+          <Field invalid={!hideFieldError && hasError} {...wrapperProps}>
             {label && (
               <Label htmlFor={identifier} optional={optional}>
                 {label}
@@ -85,7 +89,7 @@ export const TimeControl = forwardRef(function TimeControl<
               ) : (
                 <div id={descriptionId}>{description}</div>
               ))}
-            {hasError && (
+            {!hideErrorMessage && hasError && (
               <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
             )}
 
@@ -94,7 +98,7 @@ export const TimeControl = forwardRef(function TimeControl<
               invalid={hasError}
               aria-describedby={clsx(
                 { [descriptionId]: !!descriptionId },
-                { [errorId]: hasError },
+                { [errorId]: !hideErrorMessage && hasError },
               )}
               // Controlled props from RHF
               {...field}

@@ -96,7 +96,7 @@ const StepPersonalDetails = ({
           <TextInputControl<BookingFormData>
             label="Voornaam"
             name="name"
-            registerOptions={{ required: 'Voornaam is verplicht' }}
+            registerOptions={{ required: true }}
             className="ams-mb-m"
           />
 
@@ -105,11 +105,7 @@ const StepPersonalDetails = ({
             type="email"
             name="email"
             registerOptions={{
-              required: 'E-mailadres is verplicht',
-              pattern: {
-                value: /^\S+@\S+$/i,
-                message: 'Ongeldig e-mailadres',
-              },
+              required: true,
             }}
             className="ams-mb-m"
           />

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { TextAreaControl } from './TextAreaControl';
 import userEvent from '@testing-library/user-event';
@@ -16,7 +16,12 @@ const Wrapper = ({
   defaultValues?: Partial<FormValues>;
 }) => {
   const methods = useForm<FormValues>({ defaultValues });
-  return <FormProvider {...methods}>{children}</FormProvider>;
+  const onSubmit = vi.fn();
+  return (
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(onSubmit)}>{children}</form>
+    </FormProvider>
+  );
 };
 
 describe('TextAreaControl', () => {
@@ -118,29 +123,16 @@ describe('TextAreaControl', () => {
   });
 
   it('shows error message when invalid', async () => {
-    const Component = () => {
-      const methods = useForm<FormValues>({
-        defaultValues: { message: '' },
-        mode: 'onSubmit',
-      });
-
-      const onSubmit = vi.fn();
-
-      return (
-        <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(onSubmit)}>
-            <TextAreaControl<FormValues>
-              name="message"
-              label="Your Message"
-              registerOptions={{ required: 'Message is required' }}
-            />
-            <button type="submit">Submit</button>
-          </form>
-        </FormProvider>
-      );
-    };
-
-    render(<Component />);
+    render(
+      <Wrapper>
+        <TextAreaControl<FormValues>
+          name="message"
+          label="Your Message"
+          registerOptions={{ required: 'Message is required' }}
+        />
+        <button type="submit">Submit</button>
+      </Wrapper>,
+    );
 
     fireEvent.click(screen.getByRole('button', { name: /submit/i }));
 
@@ -150,5 +142,50 @@ describe('TextAreaControl', () => {
     // `(niet verplicht)`)
     const textarea = screen.getByLabelText(/Your Message/i);
     expect(textarea.getAttribute('aria-describedby')).toMatch(/message-error/);
+  });
+
+  it('hides the error message when hideErrorMessage is true', async () => {
+    render(
+      <Wrapper>
+        <TextAreaControl<FormValues>
+          name="message"
+          label="Your Message"
+          registerOptions={{ required: 'Message is required' }}
+        />
+        <button type="submit">Submit</button>
+      </Wrapper>,
+    );
+
+    fireEvent.click(screen.getByText(/submit/i));
+
+    // error message should NOT appear
+    expect(screen.queryByText(/Message is required/i)).not.toBeInTheDocument();
+
+    await waitFor(() => {
+      const input = screen.getByLabelText(/Your message/i);
+      expect(input).toHaveAttribute('aria-invalid', 'true');
+    });
+  });
+
+  it('does not add error to aria-describedby when hideErrorMessage is true', async () => {
+    render(
+      <Wrapper>
+        <TextAreaControl<FormValues>
+          name="message"
+          label="Your Message"
+          registerOptions={{ required: 'Message is required' }}
+        />
+        <button type="submit">Submit</button>
+      </Wrapper>,
+    );
+
+    fireEvent.click(screen.getByText(/submit/i));
+
+    await waitFor(() => {
+      const input = screen.getByLabelText(/Your message/i);
+      expect(input.getAttribute('aria-describedby')).not.toMatch(
+        /message-error/,
+      );
+    });
   });
 });

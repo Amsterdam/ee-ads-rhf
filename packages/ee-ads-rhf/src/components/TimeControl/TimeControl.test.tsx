@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { TimeControl } from './TimeControl';
@@ -15,7 +15,11 @@ const Wrapper = ({
   defaultValues?: Partial<FormValues>;
 }) => {
   const methods = useForm<FormValues>({ defaultValues });
-  return <FormProvider {...methods}>{children}</FormProvider>;
+  return (
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(() => {})}>{children}</form>
+    </FormProvider>
+  );
 };
 
 describe('TimeControl', () => {
@@ -91,35 +95,71 @@ describe('TimeControl', () => {
   });
 
   it('shows error message when invalid', async () => {
-    const Component = () => {
-      const methods = useForm<FormValues>({
-        defaultValues: { startTime: '' },
-        mode: 'onSubmit',
-      });
-
-      const onSubmit = vi.fn();
-
-      return (
-        <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(onSubmit)}>
-            <TimeControl<FormValues>
-              name="startTime"
-              label="Start time"
-              registerOptions={{ required: 'Start time is required' }}
-            />
-            <button type="submit">Submit</button>
-          </form>
-        </FormProvider>
-      );
-    };
-
-    render(<Component />);
+    render(
+      <Wrapper>
+        <TimeControl<FormValues>
+          name="startTime"
+          label="Start time"
+          registerOptions={{ required: 'Start time is required' }}
+        />
+        <button type="submit">Submit</button>
+      </Wrapper>,
+    );
 
     fireEvent.click(screen.getByRole('button', { name: /submit/i }));
 
     await waitFor(() => {
       const input = screen.getByLabelText(/start time/i);
       expect(input.getAttribute('aria-describedby')).toMatch(/startTime-error/);
+    });
+  });
+
+  it('hides the error message when hideErrorMessage is true', async () => {
+    render(
+      <Wrapper>
+        <TimeControl<FormValues>
+          name="startTime"
+          label="Start time"
+          registerOptions={{ required: 'Start time is required' }}
+          hideErrorMessage
+        />
+        <button type="submit">Submit</button>
+      </Wrapper>,
+    );
+
+    fireEvent.click(screen.getByText(/submit/i));
+
+    // error message should NOT appear
+    expect(
+      screen.queryByText(/Start time is required/i),
+    ).not.toBeInTheDocument();
+
+    await waitFor(() => {
+      const input = screen.getByLabelText(/Start time/i);
+      expect(input).toHaveAttribute('aria-invalid', 'true');
+    });
+  });
+
+  it('does not add error to aria-describedby when hideErrorMessage is true', async () => {
+    render(
+      <Wrapper>
+        <TimeControl<FormValues>
+          name="startTime"
+          label="Start time"
+          registerOptions={{ required: 'Start time is required' }}
+          hideErrorMessage
+        />
+        <button type="submit">Submit</button>
+      </Wrapper>,
+    );
+
+    fireEvent.click(screen.getByText(/submit/i));
+
+    await waitFor(() => {
+      const input = screen.getByLabelText(/Start time/i);
+      expect(input.getAttribute('aria-describedby')).not.toMatch(
+        /startTime-error/i,
+      );
     });
   });
 });

@@ -38,41 +38,7 @@ const StepAppointment = ({
   const showErrors = Object.keys(errors).length > 0;
   const alertErrors = mapErrorsToAlert(errors);
 
-  const [startDate, startTime, endDate, endTime] = watch([
-    'startDate',
-    'startTime',
-    'endDate',
-    'endTime',
-  ]);
-
-  const startDateTime = useMemo(() => {
-    if (!startDate || !startTime) return null;
-    return new Date(`${startDate}T${startTime}`);
-  }, [startDate, startTime]);
-
-  const endDateTime = useMemo(() => {
-    if (!endDate || !endTime) return null;
-    return new Date(`${endDate}T${endTime}`);
-  }, [endDate, endTime]);
-
-  const isValidDateRange = useMemo(() => {
-    // Skip validation if values are incomplete
-    if (!startDateTime || !endDateTime) return true;
-
-    // It would logical to use a library like dayjs to validate date strings
-    return new Date(endDate).getTime() >= new Date(startDate).getTime();
-  }, [startDateTime, endDateTime]);
-
-  const isValidTimeRange = useMemo(() => {
-    // Skip validation if values are incomplete
-    if (!startDateTime || !endDateTime) return true;
-
-    if (endDateTime.getTime() > startDateTime.getTime()) {
-      return true;
-    }
-
-    return 'De einddatum en -tijd moeten later zijn dan de startdatum en -tijd';
-  }, [startDateTime, endDateTime]);
+  const [startDate] = watch(['startDate']);
 
   const handleNextButtonClick = async () => {
     const isValid = await trigger([
@@ -148,7 +114,7 @@ const StepAppointment = ({
               label="Startdatum"
               name="startDate"
               registerOptions={{
-                required: 'Startdatum is verplicht',
+                required: true,
               }}
               min={minDateValue}
             />
@@ -156,7 +122,7 @@ const StepAppointment = ({
             <TimeControl<BookingFormData>
               label="Starttijd"
               name="startTime"
-              registerOptions={{ required: 'Starttijd is verplicht' }}
+              registerOptions={{ required: true }}
             />
           </DateTimeFieldset>
           <DateTimeFieldset
@@ -167,19 +133,20 @@ const StepAppointment = ({
               label="Einddatum"
               name="endDate"
               registerOptions={{
-                required: 'Einddatum is verplicht',
-                validate: () => isValidDateRange,
+                required: true,
               }}
               min={startDate}
+              hideErrorMessage
+              hideFieldError
             />
 
             <TimeControl<BookingFormData>
               label="Eindtijd"
               name="endTime"
               registerOptions={{
-                required: 'Eindtijd is verplicht',
-                validate: () => isValidTimeRange,
+                required: true,
               }}
+              hideErrorMessage
             />
           </DateTimeFieldset>
 

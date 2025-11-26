@@ -15,7 +15,12 @@ const Wrapper = ({
   defaultValues?: Partial<FormValues>;
 }) => {
   const methods = useForm<FormValues>({ defaultValues });
-  return <FormProvider {...methods}>{children}</FormProvider>;
+  const onSubmit = vi.fn();
+  return (
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(onSubmit)}>{children}</form>
+    </FormProvider>
+  );
 };
 
 describe('DateControl', () => {
@@ -122,6 +127,55 @@ describe('DateControl', () => {
     await waitFor(() => {
       const input = screen.getByLabelText(/date of birth/i);
       expect(input.getAttribute('aria-describedby')).toMatch(/birthDate-error/);
+    });
+  });
+
+  it('hides the error message when hideErrorMessage is true', async () => {
+    render(
+      <Wrapper>
+        <DateControl<FormValues>
+          name="birthDate"
+          label="Date of Birth"
+          registerOptions={{ required: 'Birth date is required' }}
+          hideErrorMessage
+        />
+        <button type="submit">Submit</button>
+      </Wrapper>,
+    );
+
+    fireEvent.click(screen.getByText(/submit/i));
+
+    // error message should NOT appear
+    expect(
+      screen.queryByText(/Date of birth is required/i),
+    ).not.toBeInTheDocument();
+
+    await waitFor(() => {
+      const input = screen.getByLabelText(/Date of Birth/i);
+      expect(input).toHaveAttribute('aria-invalid', 'true');
+    });
+  });
+
+  it('does not add error to aria-describedby when hideErrorMessage is true', async () => {
+    render(
+      <Wrapper>
+        <DateControl<FormValues>
+          name="birthDate"
+          label="Date of Birth"
+          registerOptions={{ required: 'Birth date is required' }}
+          hideErrorMessage
+        />
+        <button type="submit">Submit</button>
+      </Wrapper>,
+    );
+
+    fireEvent.click(screen.getByText(/submit/i));
+
+    await waitFor(() => {
+      const input = screen.getByLabelText(/Date of Birth/i);
+      expect(input.getAttribute('aria-describedby')).not.toMatch(
+        /birthDate-error/,
+      );
     });
   });
 });

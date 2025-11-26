@@ -32,6 +32,8 @@ export type ReactSelectControlProps<TFieldValues extends FieldValues> =
       required?: boolean;
       disabled?: boolean;
       wrapperProps?: ComponentPropsWithoutRef<'div'>;
+      hideFieldError?: boolean;
+      hideErrorMessage?: boolean;
       inputProps?: Omit<
         ComponentPropsWithoutRef<typeof InputAutoSelect>,
         'value' | 'onChange' | 'options'
@@ -62,6 +64,8 @@ export const ReactSelectControl = forwardRef(function ReactSelectControl<
     required,
     disabled = false,
     wrapperProps,
+    hideFieldError = false,
+    hideErrorMessage = false,
     inputProps,
   }: ReactSelectControlProps<TFieldValues>,
   ref: Ref<SelectInstance<SelectOption> | null>,
@@ -89,7 +93,7 @@ export const ReactSelectControl = forwardRef(function ReactSelectControl<
         }
 
         return (
-          <Field invalid={hasError} {...wrapperProps}>
+          <Field invalid={!hideFieldError && hasError} {...wrapperProps}>
             <Label htmlFor={identifier} optional={optional}>
               {label}
             </Label>
@@ -103,7 +107,7 @@ export const ReactSelectControl = forwardRef(function ReactSelectControl<
                 <div id={descriptionId}>{description}</div>
               ))}
 
-            {hasError && (
+            {!hideErrorMessage && hasError && (
               <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
             )}
 

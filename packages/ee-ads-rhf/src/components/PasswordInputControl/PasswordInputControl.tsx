@@ -26,6 +26,8 @@ export type PasswordInputControlProps<TFieldValues extends FieldValues> =
   PasswordInputProps &
     FormControlBase<TFieldValues> & {
       wrapperProps?: ComponentPropsWithoutRef<'div'>;
+      hideFieldError?: boolean;
+      hideErrorMessage?: boolean;
     };
 
 interface PasswordInputControlComponent
@@ -48,6 +50,8 @@ export const PasswordInputControl = forwardRef(function PasswordInputControl<
     registerOptions,
     id,
     wrapperProps,
+    hideFieldError = false,
+    hideErrorMessage = false,
     ...attributes
   }: PasswordInputControlProps<TFieldValues>,
   ref: Ref<HTMLInputElement>,
@@ -71,7 +75,7 @@ export const PasswordInputControl = forwardRef(function PasswordInputControl<
         const hasError = !!errorMessage;
 
         return (
-          <Field invalid={hasError} {...wrapperProps}>
+          <Field invalid={!hideFieldError && hasError} {...wrapperProps}>
             {label && (
               <Label htmlFor={identifier} optional={optional}>
                 {label}
@@ -82,7 +86,7 @@ export const PasswordInputControl = forwardRef(function PasswordInputControl<
                 {description}
               </Paragraph>
             )}
-            {hasError && (
+            {!hideErrorMessage && hasError && (
               <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
             )}
 
@@ -91,7 +95,7 @@ export const PasswordInputControl = forwardRef(function PasswordInputControl<
               invalid={hasError}
               aria-describedby={clsx(
                 { [descriptionId]: !!descriptionId },
-                { [errorId]: hasError },
+                { [errorId]: !hideErrorMessage && hasError },
               )}
               // Controlled props from RHF
               {...field}

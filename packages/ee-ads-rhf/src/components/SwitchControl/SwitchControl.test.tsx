@@ -140,4 +140,52 @@ describe('SwitchControl', () => {
     const checkbox = screen.getByLabelText(/test label/i);
     expect(checkbox.getAttribute('aria-describedby')).toMatch(/notify-error/);
   });
+
+  it('hides the error message when hideErrorMessage is true', async () => {
+    render(
+      <Wrapper>
+        <SwitchControl<FormValues>
+          label="Test Label"
+          name="notify"
+          registerOptions={{
+            required: 'This field is required',
+          }}
+        />
+        <button type="submit">Submit</button>
+      </Wrapper>,
+    );
+
+    fireEvent.click(screen.getByText(/submit/i));
+
+    await waitFor(() => {
+      // error message should NOT appear
+      expect(
+        screen.queryByText(/This field is required/i),
+      ).not.toBeInTheDocument();
+    });
+  });
+
+  it('does not add error to aria-describedby when hideErrorMessage is true', async () => {
+    render(
+      <Wrapper>
+        <SwitchControl<FormValues>
+          label="Test Label"
+          name="notify"
+          registerOptions={{
+            required: 'This field is required',
+          }}
+        />
+        <button type="submit">Submit</button>
+      </Wrapper>,
+    );
+
+    fireEvent.click(screen.getByText(/submit/i));
+
+    await waitFor(() => {
+      const input = screen.getByLabelText(/Test Label/i);
+      expect(input.getAttribute('aria-describedby')).not.toMatch(
+        /message-error/,
+      );
+    });
+  });
 });

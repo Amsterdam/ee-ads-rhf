@@ -25,6 +25,7 @@ export type RadioControlProps<TFieldValues extends FieldValues = FieldValues> =
     FormControlBase<TFieldValues> & {
       options: { label: string; value: string }[] | string[];
       wrapperProps?: ComponentPropsWithoutRef<'fieldset'>;
+      hideErrorMessage?: boolean;
     };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -47,6 +48,7 @@ export const RadioControl = forwardRef(function RadioControl<
     registerOptions,
     id,
     wrapperProps,
+    hideErrorMessage = false,
     ...attributes
   }: RadioControlProps<TFieldValues>,
   ref: Ref<HTMLInputElement>,
@@ -108,7 +110,7 @@ export const RadioControl = forwardRef(function RadioControl<
               ) : (
                 description
               ))}
-            {hasError && (
+            {!hideErrorMessage && hasError && (
               <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
             )}
 
