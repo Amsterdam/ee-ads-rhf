@@ -19,6 +19,8 @@ export const TimeControl = ({
   description,
   registerOptions,
   wrapperProps,
+  hideFieldError = false,
+  hideErrorMessage = false,
   ...props
 }: TimeControlProps) => {
   const methods = useForm<FieldValues>({
@@ -37,6 +39,8 @@ export const TimeControl = ({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         registerOptions={registerOptions as any}
         wrapperProps={wrapperProps}
+        hideFieldError={hideFieldError}
+        hideErrorMessage={hideErrorMessage}
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         {...(props as any)}
       />

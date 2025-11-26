@@ -20,6 +20,7 @@ export const RadioControl = ({
   description,
   registerOptions,
   wrapperProps,
+  hideErrorMessage = false,
   ...props
 }: RadioControlProps) => {
   const methods = useForm<FieldValues>({
@@ -39,6 +40,7 @@ export const RadioControl = ({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         registerOptions={registerOptions as any}
         wrapperProps={wrapperProps}
+        hideErrorMessage={hideErrorMessage}
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         {...(props as any)}
       />
