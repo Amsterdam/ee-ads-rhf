@@ -6,7 +6,7 @@ import { ZodError } from 'zod';
 const validData: ContactFormData = {
   name: 'Jane',
   email: 'jane@example.com',
-  body: 'Hi there',
+  message: 'Hi there',
 };
 
 describe('contactFormSchema', () => {
@@ -21,7 +21,7 @@ describe('contactFormSchema', () => {
     expect(result.success).toBe(false);
     if (!result.success) {
       expect(result.error.flatten().fieldErrors.name).toContain(
-        'This field is required'
+        'Name is required',
       );
     }
   });
@@ -38,12 +38,10 @@ describe('contactFormSchema', () => {
       const error = result.error as unknown as ZodError;
 
       const emailError = error.issues.find(
-        e => e.path.join('.') === 'email'
+        (e) => e.path.join('.') === 'email',
       )?.message;
 
-      expect(emailError).toEqual(
-        'You have entered an invalid value for this field'
-      );
+      expect(emailError).toEqual('Valid e-mail address is required');
     } else {
       throw new Error('Expected validation to fail');
     }

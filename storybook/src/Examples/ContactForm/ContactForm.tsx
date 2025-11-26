@@ -133,7 +133,7 @@ const ContactForm = () => {
           />
 
           <div>
-            <Button type="submit">Verzenden</Button>
+            <Button type="submit">Submit</Button>
           </div>
         </FormProvider>
       </Grid.Cell>

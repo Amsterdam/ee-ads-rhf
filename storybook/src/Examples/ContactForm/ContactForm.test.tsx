@@ -4,7 +4,7 @@ import ContactForm from './ContactForm';
 import { act } from 'react';
 import userEvent from '@testing-library/user-event';
 
-describe('ContactForm', () => {
+describe('Examples / ContactForm', () => {
   beforeEach(() => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
   });
@@ -18,11 +18,11 @@ describe('ContactForm', () => {
   it('should render the contact form correctly', () => {
     render(<ContactForm />);
     expect(
-      screen.getByRole('heading', { name: /contact form/i })
+      screen.getByRole('heading', { name: /contact form/i }),
     ).toBeInTheDocument();
     expect(screen.getByLabelText(/name/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/email address/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/message/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/e-mail address/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/comments/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
   });
 
@@ -33,69 +33,65 @@ describe('ContactForm', () => {
       fireEvent.change(screen.getByLabelText(/name/i), {
         target: { value: 'John' },
       });
-      fireEvent.change(screen.getByLabelText(/email address/i), {
+      fireEvent.change(screen.getByLabelText(/e-mail address/i), {
         target: { value: 'john@example.com' },
       });
-      fireEvent.change(screen.getByLabelText(/message/i), {
+      fireEvent.change(screen.getByLabelText(/comments/i), {
         target: { value: 'Hello!' },
       });
     });
 
     expect(screen.getByLabelText(/name/i)).toHaveValue('John');
-    expect(screen.getByLabelText(/email address/i)).toHaveValue(
-      'john@example.com'
+    expect(screen.getByLabelText(/e-mail address/i)).toHaveValue(
+      'john@example.com',
     );
-    expect(screen.getByLabelText(/message/i)).toHaveValue('Hello!');
+    expect(screen.getByLabelText(/comments/i)).toHaveValue('Hello!');
   });
 
   it('should show validation errors when the form is submitted with invalid data', async () => {
     render(<ContactForm />);
 
-    act(() => {
-      fireEvent.click(screen.getByRole('button', { name: /submit/i }));
-    });
+    fireEvent.click(screen.getByRole('button', { name: /submit/i }));
 
-    await screen.findByText(/unsuccessful/i);
-    expect(
-      screen.getByText(/there was an error with the following fields:/i)
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getByText(/verbeter de fouten voor u verder gaat/i),
+      ).toBeInTheDocument();
+    });
   });
 
   it('should show individual validation errors', async () => {
     render(<ContactForm />);
 
-    act(() => {
-      fireEvent.click(screen.getByRole('button', { name: /submit/i }));
-    });
+    // act(() => {
+    fireEvent.click(screen.getByRole('button', { name: /submit/i }));
+    // });
 
-    await screen.findByText(/unsuccessful/i);
-    expect(
-      screen.getByText(/first name: this field is required/i)
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(
-        /email address: you have entered an invalid value for this field/i
-      )
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(/message: this field is required/i)
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getAllByText(/name is required/i).length).toBeGreaterThan(
+        0,
+      );
+      expect(
+        screen.getAllByText(/valid e-mail address is required/i).length,
+      ).toBeGreaterThan(0);
+      expect(
+        screen.getAllByText(/comment is required/i).length,
+      ).toBeGreaterThan(0);
+    });
   });
 
   it('should show a loader when form is being submitted', async () => {
     const user = userEvent.setup();
     render(<ContactForm />);
 
-    await act(async () => {
-      await user.type(screen.getByLabelText(/name/i), 'John');
-      await user.type(
-        screen.getByLabelText(/email address/i),
-        'john@example.com'
-      );
-      await user.type(screen.getByLabelText(/message/i), 'Hello!');
-    });
+    await user.type(screen.getByLabelText(/name/i), 'John');
+    await user.type(
+      screen.getByLabelText(/e-mail address/i),
+      'john@example.com',
+    );
+    await user.type(screen.getByLabelText(/comments/i), 'Hello!');
 
-    await user.click(screen.getByRole('button', { name: /submit/i }));
+    user.click(screen.getByRole('button', { name: /submit/i }));
 
     await waitFor(() => {
       expect(screen.getByTestId('loader')).toBeInTheDocument();
@@ -109,10 +105,10 @@ describe('ContactForm', () => {
       fireEvent.change(screen.getByLabelText(/name/i), {
         target: { value: 'John' },
       });
-      fireEvent.change(screen.getByLabelText(/email address/i), {
+      fireEvent.change(screen.getByLabelText(/e-mail address/i), {
         target: { value: 'john@example.com' },
       });
-      fireEvent.change(screen.getByLabelText(/message/i), {
+      fireEvent.change(screen.getByLabelText(/comments/i), {
         target: { value: 'Hello!' },
       });
 
@@ -136,25 +132,24 @@ describe('ContactForm', () => {
   it('should clear errors when form is resubmitted with valid data', async () => {
     render(<ContactForm />);
 
-    // First submit with invalid data
-    act(() => {
-      fireEvent.click(screen.getByRole('button', { name: /submit/i }));
-    });
+    fireEvent.click(screen.getByRole('button', { name: /submit/i }));
 
-    await screen.findByText(/unsuccessful/i);
-    expect(
-      screen.getByText(/first name: This field is required/i)
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      screen.getByText(/verbeter de fouten voor u verder gaat/i);
+      expect(screen.getAllByText(/name is required/i).length).toBeGreaterThan(
+        0,
+      );
+    });
 
     // Submit with valid data
     act(() => {
       fireEvent.change(screen.getByLabelText(/name/i), {
         target: { value: 'Jane' },
       });
-      fireEvent.change(screen.getByLabelText(/email address/i), {
+      fireEvent.change(screen.getByLabelText(/e-mail address/i), {
         target: { value: 'jane@example.com' },
       });
-      fireEvent.change(screen.getByLabelText(/message/i), {
+      fireEvent.change(screen.getByLabelText(/comments/i), {
         target: { value: 'Hi there' },
       });
       fireEvent.click(screen.getByRole('button', { name: /submit/i }));
@@ -168,14 +163,16 @@ describe('ContactForm', () => {
     });
 
     await screen.findByText(/the form has been sent/i);
-    expect(screen.queryByText(/unsuccessful/i)).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/verbeter de fouten voor u verder gaat/i),
+    ).not.toBeInTheDocument();
   });
 
   it('should have proper accessibility attributes', () => {
     render(<ContactForm />);
     const nameInput = screen.getByLabelText(/name/i);
-    const emailInput = screen.getByLabelText(/email address/i);
-    const messageInput = screen.getByLabelText(/message/i);
+    const emailInput = screen.getByLabelText(/e-mail address/i);
+    const messageInput = screen.getByLabelText(/comments/i);
 
     expect(nameInput).toHaveAttribute('aria-describedby');
     expect(emailInput).toHaveAttribute('aria-describedby');
@@ -189,19 +186,19 @@ describe('ContactForm', () => {
       fireEvent.click(screen.getByRole('button', { name: /submit/i }));
     });
 
-    await screen.findByText(/unsuccessful/i);
+    await screen.findByText(/verbeter de fouten voor u verder gaat/i);
 
     expect(screen.getByLabelText(/name/i)).toHaveAttribute(
       'aria-invalid',
-      'true'
+      'true',
     );
-    expect(screen.getByLabelText(/email address/i)).toHaveAttribute(
+    expect(screen.getByLabelText(/e-mail address/i)).toHaveAttribute(
       'aria-invalid',
-      'true'
+      'true',
     );
-    expect(screen.getByLabelText(/message/i)).toHaveAttribute(
+    expect(screen.getByLabelText(/comments/i)).toHaveAttribute(
       'aria-invalid',
-      'true'
+      'true',
     );
   });
 });
