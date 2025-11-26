@@ -43,7 +43,18 @@ const meta = {
     },
     wrapperProps: {
       control: 'object',
-      description: 'Props passed to the wrapping `<Field>` container.',
+      description:
+        'Generic props, for example, className, to apply to the `Field` wrapper component',
+    },
+    hideFieldError: {
+      control: 'boolean',
+      default: 'false',
+      description: 'Hides the invalid prop on the `Field` wrapper component',
+    },
+    hideErrorMessage: {
+      control: 'boolean',
+      default: 'false',
+      description: 'Hides the error message text',
     },
     inputProps: {
       control: 'object',

@@ -20,6 +20,8 @@ export const SelectControl = ({
   description,
   registerOptions,
   wrapperProps,
+  hideFieldError = false,
+  hideErrorMessage = false,
   ...props
 }: SelectControlProps) => {
   const methods = useForm<FieldValues>({
@@ -39,6 +41,8 @@ export const SelectControl = ({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         registerOptions={registerOptions as any}
         wrapperProps={wrapperProps}
+        hideFieldError={hideFieldError}
+        hideErrorMessage={hideErrorMessage}
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         {...(props as any)}
       />
