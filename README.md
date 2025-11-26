@@ -23,8 +23,6 @@ This project is a Node.js monorepo application with two workspaces:
 
 ## Todo
 
-- Docs
-  - Examples
 - Package setup
   - release-please (enables releases, changelog +  NPM publish)
 
