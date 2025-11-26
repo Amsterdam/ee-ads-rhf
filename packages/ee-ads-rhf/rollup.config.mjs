@@ -32,9 +32,19 @@ export default [
         globals: outputGlobals,
       },
     ],
-    external: ['react', 'react-dom'],
+    external: (id) =>
+      [
+        'react',
+        'react-dom',
+        'react-hook-form',
+        '@amsterdam/design-system-assets',
+        '@amsterdam/design-system-css',
+        '@amsterdam/design-system-react',
+        '@amsterdam/design-system-react-icons',
+        '@amsterdam/design-system-tokens',
+      ].some((pkg) => id === pkg || id.startsWith(pkg + '/')),
     plugins: [
-      peerDepsExternal({ includeDependencies: true }),
+      peerDepsExternal(),
       resolve({ browser: true }),
       commonjs(),
       nodePolyfills(),
@@ -61,6 +71,6 @@ export default [
     input: './dist/index.d.ts',
     output: [{ file: 'dist/index.d.ts', format: 'es' }],
     plugins: [dts()],
-    external: ['react', 'react-dom', /\.scss$/, /\.css$/],
+    external: [/\.scss$/, /\.css$/],
   },
 ];
