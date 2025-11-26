@@ -6,7 +6,7 @@ import {
   Paragraph,
   InvalidFormAlert,
 } from '@amsterdam/design-system-react';
-import { useMemo, MouseEvent } from 'react';
+import { MouseEvent } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { ChevronBackwardIcon } from '@amsterdam/design-system-react-icons';
 import {
