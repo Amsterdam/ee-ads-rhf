@@ -28,7 +28,8 @@ export type TextAreaControlProps<TFieldValues extends FieldValues> =
       wrapperProps?: ComponentPropsWithoutRef<'div'>;
     };
 
-// This interface allows us to use a generic type argum/ent in parent components to specify the shape of the form value
+// This interface allows us to use a generic type argum/ent in parent components
+// to specify the shape of the form value
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 interface TextAreaControlComponent extends ForwardRefExoticComponent<any> {
   <TFieldValues extends FieldValues = FieldValues>(

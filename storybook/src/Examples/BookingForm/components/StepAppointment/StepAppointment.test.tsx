@@ -1,6 +1,6 @@
 import { vi } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { ReactElement, ReactNode } from 'react';
 import StepAppointment from './StepAppointment';
 import { BookingFormData } from '../../schema';

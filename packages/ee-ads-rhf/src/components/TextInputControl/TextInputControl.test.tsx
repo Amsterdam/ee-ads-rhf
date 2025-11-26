@@ -23,10 +23,7 @@ describe('TextInputControl', () => {
   it('renders with label and input', () => {
     render(
       <Wrapper>
-        <TextInputControl<FormValues>
-          name="name"
-          label="Your Name"
-        />
+        <TextInputControl<FormValues> name="name" label="Your Name" />
       </Wrapper>,
     );
 
@@ -83,7 +80,7 @@ describe('TextInputControl', () => {
       </Wrapper>,
     );
 
-    const input = screen.getByLabelText(/Your Name/i);;
+    const input = screen.getByLabelText(/Your Name/i);
     expect(input).toHaveAttribute(
       'aria-describedby',
       expect.stringContaining('name-description'),

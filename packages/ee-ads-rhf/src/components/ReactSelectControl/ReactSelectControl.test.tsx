@@ -75,7 +75,7 @@ describe('ReactSelectControl', () => {
     expect(combo).toHaveAttribute(
       'aria-describedby',
       expect.stringContaining('color-description'),
-);
+    );
   });
 
   it('shows error message when validation fails', async () => {
