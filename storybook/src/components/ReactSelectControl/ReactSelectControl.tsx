@@ -23,6 +23,7 @@ export const ReactSelectControl = ({
   wrapperProps,
   hideFieldError = false,
   hideErrorMessage = false,
+  shouldShow = true,
   ...props
 }: ReactSelectControlProps) => {
   const methods = useForm<FieldValues>({
@@ -44,7 +45,7 @@ export const ReactSelectControl = ({
         registerOptions={registerOptions as any}
         wrapperProps={wrapperProps}
         hideFieldError={hideFieldError}
-        hideErrorMessage={hideErrorMessage}
+        shouldShow={shouldShow}
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         {...(props as any)}
       />

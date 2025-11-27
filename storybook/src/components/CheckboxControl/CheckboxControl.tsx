@@ -22,6 +22,7 @@ export const CheckboxControl = ({
   wrapperProps,
   hideFieldError = false,
   hideErrorMessage = false,
+  shouldShow = true,
   ...props
 }: CheckboxControlProps) => {
   const methods = useForm<FieldValues>({
@@ -42,6 +43,7 @@ export const CheckboxControl = ({
         wrapperProps={wrapperProps}
         hideFieldError={hideFieldError}
         hideErrorMessage={hideErrorMessage}
+        shouldShow={shouldShow}
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         {...(props as any)}
       />

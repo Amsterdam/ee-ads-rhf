@@ -21,6 +21,7 @@ export const PasswordInputControl = ({
   wrapperProps,
   hideFieldError = false,
   hideErrorMessage = false,
+  shouldShow = true,
   ...props
 }: PasswordInputControlProps) => {
   const methods = useForm<FieldValues>({
@@ -41,6 +42,7 @@ export const PasswordInputControl = ({
         wrapperProps={wrapperProps}
         hideFieldError={hideFieldError}
         hideErrorMessage={hideErrorMessage}
+        shouldShow={shouldShow}
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         {...(props as any)}
       />

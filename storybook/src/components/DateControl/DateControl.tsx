@@ -18,6 +18,7 @@ export const DateControl = ({
   wrapperProps,
   hideFieldError = false,
   hideErrorMessage = false,
+  shouldShow = true,
   ...props
 }: DateControlProps) => {
   const methods = useForm<FieldValues>({
@@ -37,6 +38,7 @@ export const DateControl = ({
         wrapperProps={wrapperProps}
         hideFieldError={hideFieldError}
         hideErrorMessage={hideErrorMessage}
+        shouldShow={shouldShow}
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         {...(props as any)}
       />

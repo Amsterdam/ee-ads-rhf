@@ -23,10 +23,7 @@ describe('FileInputControl', () => {
   it('renders with label and input', () => {
     render(
       <Wrapper>
-        <FileInputControl<FormValues>
-          name="attachment"
-          label="Your documents"
-        />
+        <FileInputControl name="attachment" label="Your documents" />
       </Wrapper>,
     );
 
@@ -63,7 +60,7 @@ describe('FileInputControl', () => {
 
     render(
       <Wrapper>
-        <FileInputControl<FormValues>
+        <FileInputControl
           name="attachment"
           label="Your documents"
           description={description}
@@ -77,7 +74,7 @@ describe('FileInputControl', () => {
   it('shows description id in aria-describedby', () => {
     render(
       <Wrapper>
-        <FileInputControl<FormValues>
+        <FileInputControl
           name="attachment"
           label="Your documents"
           description="Please select your documents."
@@ -137,5 +134,74 @@ describe('FileInputControl', () => {
         /attachment-error/i,
       );
     });
+  });
+
+  it('does not render when shouldShow returns false', () => {
+    render(
+      <Wrapper>
+        <FileInputControl
+          name="attachment"
+          label="Your documents"
+          shouldShow={() => false}
+        />
+      </Wrapper>,
+    );
+
+    expect(screen.queryByLabelText(/Your Documents/i)).not.toBeInTheDocument();
+  });
+
+  it('renders when shouldShow returns true', () => {
+    render(
+      <Wrapper>
+        <FileInputControl
+          name="attachment"
+          label="Your documents"
+          shouldShow={() => true}
+        />
+      </Wrapper>,
+    );
+
+    expect(screen.getByLabelText(/Your Documents/i)).toBeInTheDocument();
+  });
+
+  it('re-renders when shouldShow depends on watched value', async () => {
+    const user = userEvent.setup();
+
+    const ConditionalForm = () => {
+      const methods = useForm<{ attachment: string; showField: boolean }>({
+        defaultValues: { attachment: '', showField: false },
+      });
+
+      return (
+        <FormProvider {...methods}>
+          <label>
+            <input
+              type="checkbox"
+              {...methods.register('showField')}
+              aria-label="Toggle field"
+            />
+          </label>
+
+          <FileInputControl<{ attachment: string; showField: boolean }>
+            name="attachment"
+            label="Your documents"
+            shouldShow={(watch) => watch('showField')}
+          />
+        </FormProvider>
+      );
+    };
+
+    render(<ConditionalForm />);
+
+    // Initially hidden
+    expect(screen.queryByLabelText(/Your Documents/i)).not.toBeInTheDocument();
+
+    // Toggle checkbox - field should appear
+    await user.click(screen.getByLabelText('Toggle field'));
+    expect(await screen.findByLabelText(/Your Documents/i)).toBeInTheDocument();
+
+    // Toggle checkbox - field should disappear
+    await user.click(screen.getByLabelText('Toggle field'));
+    expect(screen.queryByLabelText(/Your Documents/i)).not.toBeInTheDocument();
   });
 });

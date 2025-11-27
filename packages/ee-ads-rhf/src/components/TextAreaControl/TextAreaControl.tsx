@@ -8,8 +8,10 @@ import {
 import {
   Controller,
   type FieldValues,
+  Path,
   type RegisterOptions,
   useFormContext,
+  UseFormWatch,
 } from 'react-hook-form';
 import {
   ErrorMessage,
@@ -28,10 +30,12 @@ export type TextAreaControlProps<TFieldValues extends FieldValues> =
       wrapperProps?: ComponentPropsWithoutRef<'div'>;
       hideFieldError?: boolean;
       hideErrorMessage?: boolean;
+      shouldShow?: boolean | ((watch: UseFormWatch<TFieldValues>) => boolean);
+      registerOptions?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
     };
 
-// This interface allows us to use a generic type argum/ent in parent components
-// to specify the shape of the form value
+// This interface allows us to use a generic type argum/ent in parent
+// components to specify the shape of the form value
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 interface TextAreaControlComponent extends ForwardRefExoticComponent<any> {
   <TFieldValues extends FieldValues = FieldValues>(
@@ -55,11 +59,18 @@ export const TextAreaControl = forwardRef(function TextAreaControl<
     wrapperProps,
     hideFieldError = false,
     hideErrorMessage = false,
+    shouldShow = true,
     ...attributes
   }: TextAreaControlProps<TFieldValues>,
   ref: Ref<HTMLTextAreaElement>,
 ) {
-  const { control } = useFormContext();
+  const { control, watch } = useFormContext<TFieldValues>();
+  const isVisible =
+    typeof shouldShow === 'function' ? shouldShow(watch) : shouldShow;
+
+  if (!isVisible) {
+    return null;
+  }
 
   const identifier = id || name;
   const descriptionId = `${identifier}-description`;
@@ -72,7 +83,7 @@ export const TextAreaControl = forwardRef(function TextAreaControl<
     <Controller
       name={name}
       control={control}
-      rules={registerOptions as RegisterOptions}
+      rules={registerOptions}
       render={({ field, fieldState }) => {
         const errorMessage = fieldState.error?.message;
         const hasError = !!fieldState.error;
