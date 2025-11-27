@@ -22,6 +22,7 @@ export const SwitchControl = ({
   wrapperProps,
   hideFieldError = false,
   hideErrorMessage = false,
+  shouldShow = true,
   ...props
 }: SwitchControlProps) => {
   const methods = useForm<FieldValues>({
@@ -42,6 +43,7 @@ export const SwitchControl = ({
         wrapperProps={wrapperProps}
         hideFieldError={hideFieldError}
         hideErrorMessage={hideErrorMessage}
+        shouldShow={shouldShow}
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         {...(props as any)}
       />

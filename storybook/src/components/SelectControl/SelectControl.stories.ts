@@ -50,6 +50,12 @@ const meta = {
       default: 'false',
       description: 'Hides the error message text',
     },
+    shouldShow: {
+      control: 'boolean',
+      default: 'true',
+      description:
+        'Whether to render the field, useful for conditional form elements',
+    },
   },
 } satisfies Meta<typeof SelectControl>;
 
