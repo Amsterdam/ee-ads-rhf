@@ -49,11 +49,7 @@ export default [
       commonjs(),
       nodePolyfills(),
       typescript({
-        tsconfig: './tsconfig.json',
-        outputToFilesystem: true,
-        declaration: true,
-        declarationDir: 'dist',
-        exclude: ['**/*.test.ts', '**/*.test.tsx'],
+        tsconfig: './tsconfig.build.json',
       }),
       postcss({
         modules: {

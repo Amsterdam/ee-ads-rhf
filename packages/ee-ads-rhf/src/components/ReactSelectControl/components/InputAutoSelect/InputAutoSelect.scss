@@ -75,8 +75,8 @@
 
   svg {
     fill: var(--ams-color-interactive);
-    height: 1em;
-    width: 1em;
+    height: 1.4em;
+    width: 1.4em;
   }
 }
 
@@ -88,9 +88,9 @@
 
 .react-select__indicator-separator {
   align-self: stretch;
-  background-color: rgb(204, 204, 204);
+  background-color: var(--ams-select-border-color);
   box-sizing: border-box;
-  width: 1px;
+  width: var(--ams-select-border-width);
 }
 
 .react-select__menu {
@@ -112,7 +112,17 @@
   padding-inline: var(--ams-text-input-padding-inline);
 
   &:active {
-    background-color: rgb(178, 212, 255);
+    background-color: #2f68d5;
+    color: #fff;
+  }
+  &:hover {
+    background-color: #2f68d5;
+    color: #fff;
+  }
+  &.react-select__option--is-focused,
+  &.react-select__option--is-selected {
+    background-color: #2f68d5;
+    color: #fff;
   }
 }
 
