@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react-vite'
-import BookingForm from './BookingForm'
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import BookingForm from './BookingForm';
 
 const meta = {
   title: 'Examples/BookingForm',
@@ -91,17 +91,17 @@ const meta = {
               </Page>
             )
           }
-        `
-      }
-    }
+        `,
+      },
+    },
   },
-  tags: ['autodocs']
-} satisfies Meta<typeof BookingForm>
+  tags: ['autodocs'],
+} satisfies Meta<typeof BookingForm>;
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-  args: {}
-}
+  args: {},
+};
