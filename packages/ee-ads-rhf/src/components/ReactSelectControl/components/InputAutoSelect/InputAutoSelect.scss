@@ -75,8 +75,8 @@
 
   svg {
     fill: var(--ams-color-interactive);
-    height: 1em;
-    width: 1em;
+    height: 1.4em;
+    width: 1.4em;
   }
 }
 
@@ -88,9 +88,9 @@
 
 .react-select__indicator-separator {
   align-self: stretch;
-  background-color: rgb(204, 204, 204);
+  background-color: var(--ams-select-border-color);
   box-sizing: border-box;
-  width: 1px;
+  width: var(--ams-select-border-width);
 }
 
 .react-select__menu {
@@ -112,18 +112,28 @@
   padding-inline: var(--ams-text-input-padding-inline);
 
   &:active {
-    background-color: rgb(178, 212, 255);
+    background-color: #2f68d5;
+    color: #fff;
+  }
+  &:hover {
+    background-color: #2f68d5;
+    color: #fff;
+  }
+  &.react-select__option--is-focused,
+  &.react-select__option--is-selected {
+    background-color: #2f68d5;
+    color: #fff;
   }
 }
 
-.react-select__select__value-container {
+.react-select__value-container {
   align-items: center;
   box-sizing: border-box;
   display: grid;
   flex: 1 1 0%;
   flex-wrap: wrap;
+  gap: 12px 6px;
   overflow: hidden;
-  padding: 2px 8px;
   position: relative;
 
   &--has-value {
@@ -133,7 +143,6 @@
     flex: 1 1 0%;
     flex-wrap: wrap;
     overflow: hidden;
-    padding: 2px 8px;
     position: relative;
   }
 
@@ -144,7 +153,6 @@
     flex: 1 1 0%;
     flex-wrap: wrap;
     overflow: hidden;
-    padding: 2px 8px;
     position: relative;
   }
 }
@@ -171,10 +179,6 @@
   box-sizing: border-box;
   display: flex;
   font-family: var(--ams-typography-font-family);
-  /* Uncomment if using design-system compact mode */
-  /* margin: 1px 8px 1px -2px; */
-  /* comment if using design-system compact mode */
-  margin: var(--ams-column-gap-x-small) 8px var(--ams-column-gap-x-small) -2px;
   min-width: 0;
 }
 

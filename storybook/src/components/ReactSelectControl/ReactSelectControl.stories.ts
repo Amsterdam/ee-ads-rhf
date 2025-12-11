@@ -81,6 +81,7 @@ export const Primary: Story = {
     registerOptions: {
       required: 'A province is required',
     },
+    isMulti: true,
     wrapperProps: {},
   },
 };
