@@ -19,7 +19,7 @@ import {
   Paragraph,
   ErrorMessage,
 } from '@amsterdam/design-system-react';
-import InputAutoSelect from './components/InputAutoSelect/InputAutoSelect';
+import SelectInput from './components/SelectInput/SelectInput';
 import { ReactSelectValue } from './types';
 import { FormControlBase, SelectOption } from '../../types';
 import { SelectInstance } from 'react-select';
@@ -37,7 +37,7 @@ export type ReactSelectControlProps<TFieldValues extends FieldValues> =
       hideFieldError?: boolean;
       hideErrorMessage?: boolean;
       inputProps?: Omit<
-        ComponentPropsWithoutRef<typeof InputAutoSelect>,
+        ComponentPropsWithoutRef<typeof SelectInput>,
         'value' | 'onChange' | 'options'
       >;
       shouldShow?: boolean | ((watch: UseFormWatch<TFieldValues>) => boolean);
@@ -122,7 +122,7 @@ export const ReactSelectControl = forwardRef(function ReactSelectControl<
               <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
             )}
 
-            <InputAutoSelect
+            <SelectInput
               id={identifier}
               ref={ref}
               options={options}

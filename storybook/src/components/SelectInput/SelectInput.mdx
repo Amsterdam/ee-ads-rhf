@@ -1,0 +1,27 @@
+import { Canvas, Controls, Meta, Primary } from '@storybook/addon-docs/blocks';
+import * as SelectInput from './SelectInput.stories';
+
+<Meta of={SelectInput} />
+
+# ReactSelectControl - SelectInput
+
+This is a plain variant of [ReactSelectControl](../?path=/docs/components-reactselectcontrol--docs) without the [Amsterdam Design System](https://designsystem.amsterdam/?path=/docs/docs-introduction--docs) description, error and label components.
+
+## References
+
+- [Amsterdam Design System - Select Docs](https://designsystem.amsterdam/?path=/docs/components-forms-select--docs)
+- [React Select](https://react-select.com/)
+
+<Primary />
+
+<Controls />
+
+## Examples
+
+### With Multiple
+
+<Canvas of={SelectInput.WithMultiple} />
+
+### Disabled
+
+<Canvas of={SelectInput.Disabled} />

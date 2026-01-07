@@ -2,7 +2,7 @@ import {
   FormProvider,
   ReactSelectControl,
   SelectControl,
-  InputAutoSelect,
+  SelectInput,
 } from '@amsterdam/ee-ads-rhf-lib';
 import { Column, Row } from '@amsterdam/design-system-react';
 import { useForm } from 'react-hook-form';
@@ -71,12 +71,11 @@ const SelectComparison = () => {
           />
         </Row>
         <Row>
-          <InputAutoSelect
+          <SelectInput
             name="react-select-4"
             options={options}
             isMulti={true}
             onChange={() => {}}
-            onBlur={() => {}}
           />
         </Row>
       </Column>
