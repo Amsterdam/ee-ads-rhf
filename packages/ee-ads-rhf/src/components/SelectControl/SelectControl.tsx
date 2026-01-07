@@ -38,6 +38,7 @@ export type SelectControlProps<TFieldValues extends FieldValues> = SelectProps &
     hideErrorMessage?: boolean;
     shouldShow?: boolean | ((watch: UseFormWatch<TFieldValues>) => boolean);
     registerOptions?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
+    attributes?: ComponentPropsWithoutRef<'select'>;
   };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

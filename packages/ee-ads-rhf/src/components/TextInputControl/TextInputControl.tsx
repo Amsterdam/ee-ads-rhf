@@ -32,6 +32,7 @@ export type TextInputControlProps<TFieldValues extends FieldValues> =
       hideErrorMessage?: boolean;
       shouldShow?: boolean | ((watch: UseFormWatch<TFieldValues>) => boolean);
       registerOptions?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
+      attributes: ComponentPropsWithoutRef<'input'>;
     };
 
 interface TextInputControlComponent

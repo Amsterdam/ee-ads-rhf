@@ -56,6 +56,11 @@ const meta = {
       description:
         'Whether to render the field, useful for conditional form elements',
     },
+    attributes: {
+      control: 'object',
+      description:
+        'Generic select props, for example, className, to apply to the design-system form component',
+    },
   },
 } satisfies Meta<typeof SelectControl>;
 

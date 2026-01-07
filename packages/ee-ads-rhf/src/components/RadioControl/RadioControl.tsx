@@ -30,6 +30,7 @@ export type RadioControlProps<TFieldValues extends FieldValues = FieldValues> =
       hideErrorMessage?: boolean;
       shouldShow?: boolean | ((watch: UseFormWatch<TFieldValues>) => boolean);
       registerOptions?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
+      attributes: ComponentPropsWithoutRef<'input'>;
     };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

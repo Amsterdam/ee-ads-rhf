@@ -48,7 +48,12 @@ const meta = {
       control: 'boolean',
       default: 'true',
       description:
-        'Whether to render the field, useful for conditional form elements',
+        'Whether to render tshe field, useful for conditional form elements',
+    },
+    attributes: {
+      control: 'object',
+      description:
+        'Generic input props, for example, className, to apply to the design-system form component',
     },
   },
 } satisfies Meta<typeof RadioControl>;

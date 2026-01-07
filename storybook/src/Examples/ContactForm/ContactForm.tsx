@@ -11,6 +11,7 @@ import { useForm } from 'react-hook-form';
 import {
   FormProvider,
   mapErrorsToAlert,
+  RadioControl,
   TextAreaControl,
   TextInputControl,
 } from '@amsterdam/ee-ads-rhf-lib';
@@ -130,6 +131,21 @@ const ContactForm = () => {
             registerOptions={{ required: true }}
             className="ams-mb-m"
             disabled={isLoading}
+          />
+
+          <RadioControl
+            label="Radio example"
+            name="radio_example"
+            options={[
+              { label: 'Example 1', value: '1' },
+              { label: 'Example 2', value: '2' },
+              { label: 'Example 3', value: '3' },
+            ]}
+            id="radio-example"
+            wrapperProps={{
+              className: 'ams-mb-l',
+            }}
+            className="ams-mb-l"
           />
 
           <div>
