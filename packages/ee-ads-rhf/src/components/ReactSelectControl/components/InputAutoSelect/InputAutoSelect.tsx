@@ -113,4 +113,5 @@ const InputAutoSelect = <IsMulti extends boolean = false>({
     }}
   />
 );
+
 export default InputAutoSelect;
