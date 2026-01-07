@@ -37,7 +37,7 @@ const meta = {
     wrapperProps: {
       control: 'object',
       description:
-        'Generic props, for example, className, to apply to the `Field` wrapper component',
+        'Generic props, for example, `className`, to apply to the `Field` wrapper component',
     },
     hideFieldError: {
       control: 'boolean',
@@ -58,7 +58,7 @@ const meta = {
     attributes: {
       control: 'object',
       description:
-        'Generic input props, for example, className, to apply to the design-system form component',
+        'Generic input props, for example, `className`, to apply to the design-system form field component',
     },
   },
 } satisfies Meta<typeof CheckboxControl>;

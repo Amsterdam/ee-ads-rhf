@@ -35,6 +35,7 @@ export type DateControlProps<TFieldValues extends FieldValues> =
       hideErrorMessage?: boolean;
       shouldShow?: boolean | ((watch: UseFormWatch<TFieldValues>) => boolean);
       registerOptions?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
+      attributes: ComponentPropsWithoutRef<'input'>;
     };
 
 // This interface allows us to use a generic type argument in parent components
