@@ -71,7 +71,7 @@
 }
 
 .react-select__indicator {
-  padding: 0 var(--ams-text-input-padding-inline);
+  padding: 0 calc(var(--ams-text-input-padding-inline) * 0.85);
 
   svg {
     fill: var(--ams-color-interactive);
