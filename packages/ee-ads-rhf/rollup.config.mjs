@@ -4,7 +4,6 @@ import resolve from '@rollup/plugin-node-resolve';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import nodePolyfills from 'rollup-plugin-node-polyfills';
 import dts from 'rollup-plugin-dts';
-import filesize from 'rollup-plugin-filesize';
 import fs from 'fs';
 import postcss from 'rollup-plugin-postcss';
 
@@ -60,7 +59,6 @@ export default [
         minimize: true,
         sourceMap: true,
       }),
-      filesize(),
     ],
   },
   {
