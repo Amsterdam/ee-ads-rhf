@@ -32,6 +32,7 @@ export type TextAreaControlProps<TFieldValues extends FieldValues> =
       hideErrorMessage?: boolean;
       shouldShow?: boolean | ((watch: UseFormWatch<TFieldValues>) => boolean);
       registerOptions?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
+      attributes: ComponentPropsWithoutRef<'textarea'>;
     };
 
 // This interface allows us to use a generic type argum/ent in parent
