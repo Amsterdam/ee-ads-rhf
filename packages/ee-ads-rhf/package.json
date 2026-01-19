@@ -20,11 +20,11 @@
     "clsx": "^2.1.1"
   },
   "devDependencies": {
-    "@amsterdam/design-system-assets": "^1.1.0",
-    "@amsterdam/design-system-css": "^2.0.1",
-    "@amsterdam/design-system-react": "^2.0.2",
-    "@amsterdam/design-system-react-icons": "^1.1.0",
-    "@amsterdam/design-system-tokens": "^2.0.0",
+    "@amsterdam/design-system-assets": "^2.0.0",
+    "@amsterdam/design-system-css": "^3.0.0",
+    "@amsterdam/design-system-react": "^3.0.0",
+    "@amsterdam/design-system-react-icons": "^2.0.0",
+    "@amsterdam/design-system-tokens": "^3.0.0",
     "@rollup/plugin-commonjs": "^28.0.6",
     "@rollup/plugin-node-resolve": "^16.0.2",
     "@rollup/plugin-typescript": "^12.1.4",
@@ -52,11 +52,11 @@
     "vitest": "^3.2.4"
   },
   "peerDependencies": {
-    "@amsterdam/design-system-assets": "^1.1.0",
-    "@amsterdam/design-system-css": "^2.0.1",
-    "@amsterdam/design-system-react": "^2.0.2",
-    "@amsterdam/design-system-react-icons": "^1.1.0",
-    "@amsterdam/design-system-tokens": "^2.0.0",
+    "@amsterdam/design-system-assets": "^2.0.0",
+    "@amsterdam/design-system-css": "^3.0.0",
+    "@amsterdam/design-system-react": "^3.0.0",
+    "@amsterdam/design-system-react-icons": "^2.0.0",
+    "@amsterdam/design-system-tokens": "^3.0.0",
     "react": "18 - 19",
     "react-dom": "18 - 19",
     "react-hook-form": "^7.62.0"
