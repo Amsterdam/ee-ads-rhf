@@ -10,9 +10,9 @@ import DropdownIndicator from '../DropdownIndicator/DropdownIndicator';
 import Input from '../Input/Input';
 import { ReactSelectValue } from '../../types';
 import { SelectOption } from '../../../../types';
-import './InputAutoSelect.scss';
+import './SelectInput.scss';
 
-export type InputAutoSelectProps<IsMulti extends boolean = false> = Omit<
+export type SelectInputProps<IsMulti extends boolean = false> = Omit<
   SelectProps<SelectOption, IsMulti, GroupBase<SelectOption>>,
   'onChange' | 'value' | 'options'
 > & {
@@ -35,14 +35,13 @@ export type InputAutoSelectProps<IsMulti extends boolean = false> = Omit<
 // WARNING: The following prop types are unstyled and untested:
 // - isLoading
 // - isRtl
-const InputAutoSelect = <IsMulti extends boolean = false>({
+const SelectInput = <IsMulti extends boolean = false>({
   isClearable = true,
   isDisabled = false,
   isMulti,
   options,
   id = undefined,
   name = undefined,
-  required = false,
   value = undefined,
   customAriaDescribedBy = undefined,
   menuPortalTarget = document.body,
@@ -51,7 +50,7 @@ const InputAutoSelect = <IsMulti extends boolean = false>({
   onChange,
   onBlur,
   ...eventHandlers
-}: InputAutoSelectProps<IsMulti>) => (
+}: SelectInputProps<IsMulti>) => (
   <Select
     options={options}
     isClearable={isClearable}
@@ -72,7 +71,6 @@ const InputAutoSelect = <IsMulti extends boolean = false>({
     noOptionsMessage={() => 'Geen opties'}
     inputId={id}
     name={name}
-    required={required}
     value={value}
     menuPortalTarget={menuPortalTarget}
     ref={ref}
@@ -113,4 +111,5 @@ const InputAutoSelect = <IsMulti extends boolean = false>({
     }}
   />
 );
-export default InputAutoSelect;
+
+export default SelectInput;

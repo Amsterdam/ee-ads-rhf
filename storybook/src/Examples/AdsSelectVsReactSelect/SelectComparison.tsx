@@ -2,6 +2,7 @@ import {
   FormProvider,
   ReactSelectControl,
   SelectControl,
+  SelectInput,
 } from '@amsterdam/ee-ads-rhf-lib';
 import { Column, Row } from '@amsterdam/design-system-react';
 import { useForm } from 'react-hook-form';
@@ -67,6 +68,14 @@ const SelectComparison = () => {
             options={options || []}
             registerOptions={{ required: 'Verplicht!' }}
             isMulti={true}
+          />
+        </Row>
+        <Row>
+          <SelectInput
+            name="react-select-4"
+            options={options}
+            isMulti={true}
+            onChange={() => {}}
           />
         </Row>
       </Column>

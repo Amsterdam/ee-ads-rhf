@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import InputAutoSelect from './InputAutoSelect';
+import SelectInput from './SelectInput';
 import userEvent from '@testing-library/user-event';
 import { createRef } from 'react';
 import { SelectInstance } from 'react-select';
@@ -8,11 +8,11 @@ import { SelectOption } from '../../../../types';
 
 const ref = createRef<SelectInstance<SelectOption> | null>();
 
-describe('InputAutoSelect', () => {
+describe('SelectInput', () => {
   it('renders with options and selected value', () => {
     const handleChange = vi.fn();
     render(
-      <InputAutoSelect
+      <SelectInput
         options={[
           { value: 'one', label: 'One' },
           { value: 'two', label: 'Two' },
@@ -29,7 +29,7 @@ describe('InputAutoSelect', () => {
   it('calls onChange when a new option is selected', async () => {
     const handleChange = vi.fn();
     render(
-      <InputAutoSelect
+      <SelectInput
         options={[
           { value: 'one', label: 'One' },
           { value: 'two', label: 'Two' },
@@ -48,7 +48,7 @@ describe('InputAutoSelect', () => {
 
   it('adds aria-invalid and error message when error is passed', () => {
     render(
-      <InputAutoSelect
+      <SelectInput
         options={[]}
         error="This field is required"
         ref={ref}
@@ -66,7 +66,7 @@ describe('InputAutoSelect', () => {
 
   it('adds aria-invalid and error message when error is passed', () => {
     render(
-      <InputAutoSelect
+      <SelectInput
         options={[]}
         error="This field is required"
         ref={ref}
@@ -84,7 +84,7 @@ describe('InputAutoSelect', () => {
 
   it('respects isDisabled and isClearable props', () => {
     render(
-      <InputAutoSelect
+      <SelectInput
         options={[{ value: 'one', label: 'One' }]}
         isDisabled
         isClearable={false}
@@ -102,7 +102,7 @@ describe('InputAutoSelect', () => {
     document.body.appendChild(portalRoot);
 
     render(
-      <InputAutoSelect
+      <SelectInput
         options={[
           { value: 'one', label: 'One' },
           { value: 'two', label: 'Two' },

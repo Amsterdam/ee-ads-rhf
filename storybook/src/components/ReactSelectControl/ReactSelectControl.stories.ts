@@ -65,7 +65,7 @@ const meta = {
     inputProps: {
       control: 'object',
       description:
-        'Optional additional props for the underlying `InputAutoSelect` component.',
+        'Optional additional props for the underlying `SelectInput` component.',
     },
   },
 } satisfies Meta<typeof ReactSelectControl>;
