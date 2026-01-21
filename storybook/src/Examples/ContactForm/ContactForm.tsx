@@ -145,7 +145,6 @@ const ContactForm = () => {
               { label: 'Non-binair', value: 'non_binary' },
               { label: 'Zeg ik liever niet', value: 'prefer_not_to_say' },
             ]}
-            id="gender"
             registerOptions={{ required: true }}
             wrapperProps={{
               className: 'ams-mb-l',
@@ -155,7 +154,6 @@ const ContactForm = () => {
           <CheckboxControlGroup<ContactFormData>
             label="Interesses"
             name="interests"
-            id="interests"
             description="Selecteer minimaal één optie die op jou van toepassing is"
             options={[
               { label: 'Nieuwsbrieven', value: 'newsletters' },

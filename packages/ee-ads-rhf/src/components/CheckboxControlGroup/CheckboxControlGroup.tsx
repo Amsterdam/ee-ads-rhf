@@ -107,6 +107,7 @@ export const CheckboxControlGroup = forwardRef(function CheckboxControlGroup<
             <Checkbox
               key={`${identifier}-${index}`}
               id={`${identifier}-${index}`}
+              name={name}
               checked={checked}
               onChange={(e) => handleChange(e.target.checked)}
               onBlur={field.onBlur}
