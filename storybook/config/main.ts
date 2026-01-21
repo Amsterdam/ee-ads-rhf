@@ -3,6 +3,7 @@ import type { StorybookConfig } from '@storybook/react-vite';
 const config: StorybookConfig = {
   stories: [
     '../src/stories/components/CheckboxControl/CheckboxControl.mdx',
+    '../src/stories/components/CheckboxControlGroup/CheckboxControlGroup.mdx',
     '../src/stories/components/DateControl/DateControl.mdx',
     '../src/stories/components/FileInputControl/FileInputControl.mdx',
     '../src/stories/components/PasswordInputControl/PasswordInputControl.mdx',
