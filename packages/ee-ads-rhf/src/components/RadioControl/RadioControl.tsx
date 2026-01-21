@@ -27,6 +27,7 @@ export type RadioControlProps<TFieldValues extends FieldValues = FieldValues> =
     FormControlBase<TFieldValues> & {
       options: { label: string; value: string }[] | string[];
       wrapperProps?: ComponentPropsWithoutRef<'fieldset'>;
+      hideFieldError?: boolean;
       hideErrorMessage?: boolean;
       shouldShow?: boolean | ((watch: UseFormWatch<TFieldValues>) => boolean);
       registerOptions?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
@@ -53,6 +54,7 @@ export const RadioControl = forwardRef(function RadioControl<
     registerOptions,
     id,
     wrapperProps,
+    hideFieldError = false,
     hideErrorMessage = false,
     shouldShow = true,
     ...attributes
@@ -112,6 +114,7 @@ export const RadioControl = forwardRef(function RadioControl<
             legend={label ?? ''}
             role="radiogroup"
             optional={optional}
+            invalid={!hideFieldError && hasError}
             {...wrapperProps}
           >
             {!!description &&
