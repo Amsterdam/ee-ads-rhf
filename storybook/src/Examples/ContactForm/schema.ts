@@ -1,27 +1,44 @@
 import z from 'zod/v4';
 
+const GENDER_OPTIONS = [
+  'man',
+  'vrouw',
+  'non_binair',
+  'zeg_ik_liever_niet',
+] as const;
+
+const INTEREST_OPTIONS = [
+  'newsletters',
+  'product_updates',
+  'events_webinars',
+] as const;
+
 const contactFormSchema = z.object({
   name: z
     .string({
-      error: () => 'Name is required',
+      error: () => 'Naam is verplicht',
     })
-    .min(1, { error: 'Name is required' }),
+    .min(1, { error: 'Naam is verplicht' }),
   email: z
     .email({
       error: (issue) =>
         issue.input === undefined
-          ? 'E-mail address is required'
-          : 'Valid e-mail address is required',
+          ? 'E-mailadres is verplicht'
+          : 'Voer een geldig e-mailadres in',
     })
-    .min(1, { error: 'E-mail address is required' }),
+    .min(1, { error: 'E-mailadres is verplicht' }),
   message: z
     .string({
-      error: () => 'Comment is required',
+      error: () => 'Bericht is verplicht',
     })
-    .min(1, { error: 'Comment is required' }),
+    .min(1, { error: 'Bericht is verplicht' }),
+  gender: z.enum(GENDER_OPTIONS, { message: 'Geslacht is verplicht' }),
+  interests: z
+    .array(z.enum(INTEREST_OPTIONS))
+    .min(1, { message: 'Selecteer minimaal één interesse' }),
 });
 
-// We can infer the types from the zod object rules
+// We kunnen de types afleiden van het zod object
 export type ContactFormData = z.infer<typeof contactFormSchema>;
 
 export default contactFormSchema;

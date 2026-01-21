@@ -6,13 +6,6 @@ import {
   Ref,
 } from 'react';
 import {
-  ErrorMessage,
-  FieldSet,
-  Paragraph,
-  Radio,
-  RadioProps,
-} from '@amsterdam/design-system-react';
-import {
   Controller,
   FieldValues,
   Path,
@@ -20,29 +13,37 @@ import {
   useFormContext,
   UseFormWatch,
 } from 'react-hook-form';
+import {
+  Checkbox,
+  CheckboxProps,
+  ErrorMessage,
+  FieldSet,
+  Paragraph,
+} from '@amsterdam/design-system-react';
 import { FormControlBase } from '../../types';
 
-export type RadioControlProps<TFieldValues extends FieldValues = FieldValues> =
-  RadioProps &
-    FormControlBase<TFieldValues> & {
-      options: { label: string; value: string }[] | string[];
-      wrapperProps?: ComponentPropsWithoutRef<'fieldset'>;
-      hideErrorMessage?: boolean;
-      shouldShow?: boolean | ((watch: UseFormWatch<TFieldValues>) => boolean);
-      registerOptions?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
-      attributes?: ComponentPropsWithoutRef<'input'>;
-    };
+export type CheckboxControlGroupProps<
+  TFieldValues extends FieldValues = FieldValues,
+> = CheckboxProps &
+  FormControlBase<TFieldValues> & {
+    options: { label: string; value: string }[] | string[];
+    wrapperProps?: ComponentPropsWithoutRef<'fieldset'>;
+    hideErrorMessage?: boolean;
+    shouldShow?: boolean | ((watch: UseFormWatch<TFieldValues>) => boolean);
+    registerOptions?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
+    attributes?: ComponentPropsWithoutRef<'input'>;
+  };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-interface RadioControlComponent extends ForwardRefExoticComponent<any> {
+interface CheckboxControlGroupComponent extends ForwardRefExoticComponent<any> {
   <TFieldValues extends FieldValues = FieldValues>(
-    props: RadioControlProps<TFieldValues> & {
+    props: CheckboxControlGroupProps<TFieldValues> & {
       ref?: Ref<HTMLInputElement>;
     },
   ): ReactElement | null;
 }
 
-export const RadioControl = forwardRef(function RadioControl<
+export const CheckboxControlGroup = forwardRef(function CheckboxControlGroup<
   TFieldValues extends FieldValues = FieldValues,
 >(
   {
@@ -56,7 +57,7 @@ export const RadioControl = forwardRef(function RadioControl<
     hideErrorMessage = false,
     shouldShow = true,
     ...attributes
-  }: RadioControlProps<TFieldValues>,
+  }: CheckboxControlGroupProps<TFieldValues>,
   ref: Ref<HTMLInputElement>,
 ) {
   const { control, watch } = useFormContext<TFieldValues>();
@@ -80,29 +81,38 @@ export const RadioControl = forwardRef(function RadioControl<
       control={control}
       rules={registerOptions}
       render={({ field, fieldState }) => {
+        const value: string[] = field.value ?? [];
         const errorMessage = fieldState.error?.message;
         const hasError = !!fieldState.error;
 
         const children = options.map((option, index) => {
-          const { label, value } =
+          const { label, value: optionValue } =
             typeof option === 'string'
               ? { label: option, value: option }
               : option;
 
+          const checked = value.includes(optionValue);
+
+          const handleChange = (checked: boolean) => {
+            if (checked) {
+              field.onChange([...value, optionValue]);
+            } else {
+              field.onChange(value.filter((v) => v !== optionValue));
+            }
+          };
+
           return (
-            <Radio
+            <Checkbox
               key={`${identifier}-${index}`}
               id={`${identifier}-${index}`}
-              name={field.name}
-              value={value}
-              checked={field.value === value}
-              onChange={() => field.onChange(value)}
+              checked={checked}
+              onChange={(e) => handleChange(e.target.checked)}
               onBlur={field.onBlur}
               ref={ref}
               {...attributes}
             >
               {label}
-            </Radio>
+            </Checkbox>
           );
         });
 
@@ -110,7 +120,6 @@ export const RadioControl = forwardRef(function RadioControl<
           <FieldSet
             aria-describedby={description ? descriptionId : undefined}
             legend={label ?? ''}
-            role="radiogroup"
             optional={optional}
             {...wrapperProps}
           >
@@ -122,6 +131,7 @@ export const RadioControl = forwardRef(function RadioControl<
               ) : (
                 description
               ))}
+
             {!hideErrorMessage && hasError && (
               <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
             )}
@@ -132,6 +142,6 @@ export const RadioControl = forwardRef(function RadioControl<
       }}
     />
   );
-}) as RadioControlComponent;
+}) as CheckboxControlGroupComponent;
 
-RadioControl.displayName = 'RadioControl';
+CheckboxControlGroup.displayName = 'CheckboxControlGroup';

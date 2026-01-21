@@ -71,9 +71,14 @@ describe('PasswordInput', () => {
       </Wrapper>,
     );
 
-    const description = screen.getByText('Use at least 8 characters.');
-    expect(description).toBeInTheDocument();
-    expect(description).toHaveAttribute('id', 'password-description');
+    const descriptionText = 'Use at least 8 characters.';
+
+    expect(screen.getByText(descriptionText)).toBeInTheDocument();
+
+    const descriptionElement = document.getElementById('password-description');
+
+    expect(descriptionElement).toBeInTheDocument();
+    expect(descriptionElement).toHaveTextContent(descriptionText);
   });
 
   it('shows description id in aria-describedby', () => {

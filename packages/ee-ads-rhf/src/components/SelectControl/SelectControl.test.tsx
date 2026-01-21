@@ -223,10 +223,10 @@ describe('SelectControl', () => {
     const select = screen.getByLabelText(/Test Label/i);
 
     expect(select).toHaveAttribute('aria-describedby', 'country-description');
-    expect(screen.getByText(description)).toHaveAttribute(
-      'id',
-      'country-description',
-    );
+
+    const descriptionElement = document.getElementById('country-description');
+    expect(descriptionElement).toBeInTheDocument();
+    expect(descriptionElement).toHaveTextContent(description);
   });
 
   it('shows error message', async () => {

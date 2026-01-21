@@ -112,10 +112,10 @@ describe('TextAreaControl', () => {
     const textarea = screen.getByLabelText(/Comments/i);
     const describedBy = textarea.getAttribute('aria-describedby');
     expect(describedBy).toMatch(/message-description/);
-    expect(screen.getByText(description)).toHaveAttribute(
-      'id',
-      'message-description',
-    );
+
+    const descriptionElement = document.getElementById('message-description');
+    expect(descriptionElement).toBeInTheDocument();
+    expect(descriptionElement).toHaveTextContent(description);
   });
 
   it('shows error message when invalid', async () => {
