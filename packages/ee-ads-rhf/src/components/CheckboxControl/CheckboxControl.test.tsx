@@ -110,10 +110,10 @@ describe('CheckboxControl', () => {
     const checkbox = screen.getByLabelText(/is the meeting remote/i);
     const describedBy = checkbox.getAttribute('aria-describedby');
     expect(describedBy).toMatch(/remote-description/);
-    expect(screen.getByText(description)).toHaveAttribute(
-      'id',
-      'remote-description',
-    );
+
+    const descriptionElement = document.getElementById('remote-description');
+    expect(descriptionElement).toBeInTheDocument();
+    expect(descriptionElement).toHaveTextContent(description);
   });
 
   it('shows error message when invalid', async () => {

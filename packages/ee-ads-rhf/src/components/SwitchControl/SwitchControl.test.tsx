@@ -112,10 +112,10 @@ describe('SwitchControl', () => {
 
     const label = screen.getByLabelText('Test Label');
     expect(label).toHaveAttribute('aria-describedby', 'notify-description');
-    expect(screen.getByText(description)).toHaveAttribute(
-      'id',
-      'notify-description',
-    );
+
+    const descriptionElement = document.getElementById('notify-description');
+    expect(descriptionElement).toBeInTheDocument();
+    expect(descriptionElement).toHaveTextContent(description);
   });
 
   it('shows error message when invalid', async () => {

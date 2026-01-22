@@ -9,6 +9,7 @@ import {
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import {
+  CheckboxControlGroup,
   FormProvider,
   mapErrorsToAlert,
   RadioControl,
@@ -28,6 +29,7 @@ const ContactForm = () => {
       name: '',
       email: '',
       message: '',
+      interests: [],
     },
   });
 
@@ -62,12 +64,12 @@ const ContactForm = () => {
           className="ams-mb-xl"
         >
           <Heading level={1} size="level-3" className="ams-mb-m">
-            Contact form
+            Contactformulier
           </Heading>
 
-          <Alert heading="Success!" headingLevel={2} severity="success">
+          <Alert heading="Succes!" headingLevel={2} severity="success">
             <Paragraph>
-              The form has been sent. We have received your details.
+              Het formulier is verzonden. We hebben je gegevens ontvangen.
             </Paragraph>
           </Alert>
         </Grid.Cell>
@@ -79,19 +81,20 @@ const ContactForm = () => {
     <Grid paddingBottom="x-large" paddingTop="large">
       <Grid.Cell span={{ narrow: 4, medium: 8, wide: 8 }} className="ams-mb-xl">
         <Heading level={1} size="level-3" className="ams-mb-m">
-          Contact form
+          Contactformulier
         </Heading>
 
         <Paragraph className="ams-mb-m">
-          This form is a simple contact form with three required fields. It
-          validates on submit.
+          Dit formulier is een eenvoudig contactformulier met vijf verplichte
+          velden. Validatie vindt plaats bij het verzenden.
         </Paragraph>
 
         <Paragraph className="ams-mb-m">
-          The goal of this demo is to illustrate the most basic form validation
-          scenario. Each field is required and the email must follow a valid
-          format. Unlike more complex forms, no cross-field rules are needed —
-          making it a clean example of straightforward validation.
+          Het doel van deze demo is om de meest eenvoudige formulier-validatie
+          te laten zien. Elk veld is verplicht en het e-mailadres moet een
+          geldig formaat hebben. In tegenstelling tot complexere formulieren
+          zijn er geen regels tussen velden nodig — waardoor dit een helder
+          voorbeeld is van eenvoudige validatie.
         </Paragraph>
 
         <FormProvider form={form} onSubmit={onSubmit}>
@@ -107,7 +110,7 @@ const ContactForm = () => {
           )}
 
           <TextInputControl<ContactFormData>
-            label="Name"
+            label="Naam"
             name="name"
             registerOptions={{ required: true }}
             className="ams-mb-m"
@@ -115,7 +118,7 @@ const ContactForm = () => {
           />
 
           <TextInputControl<ContactFormData>
-            label="E-mail address"
+            label="E-mailadres"
             type="email"
             name="email"
             registerOptions={{
@@ -126,30 +129,45 @@ const ContactForm = () => {
           />
 
           <TextAreaControl<ContactFormData>
-            label="Comments"
+            label="Opmerkingen"
             name="message"
             registerOptions={{ required: true }}
             className="ams-mb-m"
             disabled={isLoading}
           />
 
-          <RadioControl
-            label="Radio example"
-            name="radio_example"
+          <RadioControl<ContactFormData>
+            label="Geslacht"
+            name="gender"
             options={[
-              { label: 'Example 1', value: '1' },
-              { label: 'Example 2', value: '2' },
-              { label: 'Example 3', value: '3' },
+              { label: 'Man', value: 'man' },
+              { label: 'Vrouw', value: 'vrouw' },
+              { label: 'Non-binair', value: 'non_binary' },
+              { label: 'Zeg ik liever niet', value: 'prefer_not_to_say' },
             ]}
-            id="radio-example"
+            registerOptions={{ required: true }}
             wrapperProps={{
               className: 'ams-mb-l',
             }}
-            className="ams-mb-l"
+          />
+
+          <CheckboxControlGroup<ContactFormData>
+            label="Interesses"
+            name="interests"
+            description="Selecteer minimaal één optie die op jou van toepassing is"
+            options={[
+              { label: 'Nieuwsbrieven', value: 'newsletters' },
+              { label: 'Productupdates', value: 'product_updates' },
+              { label: 'Evenementen en webinars', value: 'events_webinars' },
+            ]}
+            registerOptions={{ required: true }}
+            wrapperProps={{
+              className: 'ams-mb-l',
+            }}
           />
 
           <div>
-            <Button type="submit">Submit</Button>
+            <Button type="submit">Verzenden</Button>
           </div>
         </FormProvider>
       </Grid.Cell>

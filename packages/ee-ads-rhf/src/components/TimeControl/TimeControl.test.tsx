@@ -89,10 +89,10 @@ describe('TimeControl', () => {
     const input = screen.getByLabelText(/start time/i);
     const describedBy = input.getAttribute('aria-describedby');
     expect(describedBy).toMatch(/startTime-description/);
-    expect(screen.getByText(description)).toHaveAttribute(
-      'id',
-      'startTime-description',
-    );
+
+    const descriptionElement = document.getElementById('startTime-description');
+    expect(descriptionElement).toBeInTheDocument();
+    expect(descriptionElement).toHaveTextContent(description);
   });
 
   it('shows error message when invalid', async () => {

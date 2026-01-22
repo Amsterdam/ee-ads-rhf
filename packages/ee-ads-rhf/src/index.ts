@@ -1,5 +1,6 @@
 export * from './components/FormProvider';
 export * from './components/CheckboxControl';
+export * from './components/CheckboxControlGroup';
 export * from './components/DateControl';
 export * from './components/PasswordInputControl';
 export * from './components/FileInputControl';

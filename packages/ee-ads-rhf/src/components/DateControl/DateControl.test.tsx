@@ -92,10 +92,10 @@ describe('DateControl', () => {
     const input = screen.getByLabelText(/date of birth/i);
     const describedBy = input.getAttribute('aria-describedby');
     expect(describedBy).toMatch(/birthDate-description/);
-    expect(screen.getByText(description)).toHaveAttribute(
-      'id',
-      'birthDate-description',
-    );
+
+    const descriptionElement = document.getElementById('birthDate-description');
+    expect(descriptionElement).toBeInTheDocument();
+    expect(descriptionElement).toHaveTextContent(description);
   });
 
   it('shows error message when invalid', async () => {
