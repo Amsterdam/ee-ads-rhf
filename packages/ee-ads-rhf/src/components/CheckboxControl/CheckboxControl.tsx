@@ -102,12 +102,12 @@ export const CheckboxControl = forwardRef(function CheckboxControl<
 
             <Checkbox
               id={identifier}
-              invalid={hasError}
+              invalid={!hideFieldError && hasError}
               disabled={disabled}
               indeterminate={indeterminate}
               icon={icon}
               aria-describedby={clsx(
-                { [descriptionId]: !!descriptionId },
+                { [descriptionId]: !!description && !!descriptionId },
                 { [errorId]: !hideErrorMessage && hasError },
               )}
               checked={!!field.value}

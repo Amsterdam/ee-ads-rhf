@@ -106,7 +106,7 @@ export const SwitchControl = forwardRef(function SwitchControl<
                 id={identifier}
                 disabled={disabled}
                 aria-describedby={clsx(
-                  { [descriptionId]: !!descriptionId },
+                  { [descriptionId]: !!description && !!descriptionId },
                   { [errorId]: !hideErrorMessage && hasError },
                 )}
                 checked={!!field.value}

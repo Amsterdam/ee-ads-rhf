@@ -20,6 +20,7 @@ import {
   useFormContext,
   UseFormWatch,
 } from 'react-hook-form';
+import clsx from 'clsx';
 import { FormControlBase } from '../../types';
 
 export type RadioControlProps<TFieldValues extends FieldValues = FieldValues> =
@@ -98,6 +99,7 @@ export const RadioControl = forwardRef(function RadioControl<
               name={field.name}
               value={value}
               checked={field.value === value}
+              invalid={!hideFieldError && hasError}
               onChange={() => field.onChange(value)}
               onBlur={field.onBlur}
               ref={ref}
@@ -110,7 +112,10 @@ export const RadioControl = forwardRef(function RadioControl<
 
         return (
           <FieldSet
-            aria-describedby={description ? descriptionId : undefined}
+            aria-describedby={clsx(
+              { [descriptionId]: !!description && !!descriptionId },
+              { [errorId]: !hideErrorMessage && hasError },
+            )}
             legend={label ?? ''}
             role="radiogroup"
             optional={optional}

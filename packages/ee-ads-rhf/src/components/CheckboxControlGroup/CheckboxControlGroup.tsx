@@ -20,6 +20,7 @@ import {
   FieldSet,
   Paragraph,
 } from '@amsterdam/design-system-react';
+import clsx from 'clsx';
 import { FormControlBase } from '../../types';
 
 export type CheckboxControlGroupProps<
@@ -109,6 +110,7 @@ export const CheckboxControlGroup = forwardRef(function CheckboxControlGroup<
               id={`${identifier}-${index}`}
               name={name}
               checked={checked}
+              invalid={!hideFieldError && hasError}
               onChange={(e) => handleChange(e.target.checked)}
               onBlur={field.onBlur}
               ref={ref}
@@ -121,7 +123,10 @@ export const CheckboxControlGroup = forwardRef(function CheckboxControlGroup<
 
         return (
           <FieldSet
-            aria-describedby={description ? descriptionId : undefined}
+            aria-describedby={clsx(
+              { [descriptionId]: !!description && !!descriptionId },
+              { [errorId]: !hideErrorMessage && hasError },
+            )}
             legend={label ?? ''}
             optional={optional}
             invalid={!hideFieldError && hasError}

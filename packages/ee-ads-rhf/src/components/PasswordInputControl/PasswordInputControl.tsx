@@ -106,7 +106,7 @@ export const PasswordInputControl = forwardRef(function PasswordInputControl<
               id={identifier}
               invalid={hasError}
               aria-describedby={clsx(
-                { [descriptionId]: !!descriptionId },
+                { [descriptionId]: description && !!descriptionId },
                 { [errorId]: !hideErrorMessage && hasError },
               )}
               // Controlled props from RHF
