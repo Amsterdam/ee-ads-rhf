@@ -7,6 +7,8 @@ const validData: ContactFormData = {
   name: 'Jane',
   email: 'jane@example.com',
   message: 'Hi there',
+  gender: 'man',
+  interests: ['newsletters'],
 };
 
 describe('contactFormSchema', () => {
@@ -21,7 +23,7 @@ describe('contactFormSchema', () => {
     expect(result.success).toBe(false);
     if (!result.success) {
       expect(result.error.flatten().fieldErrors.name).toContain(
-        'Name is required',
+        'Naam is verplicht',
       );
     }
   });
@@ -41,7 +43,7 @@ describe('contactFormSchema', () => {
         (e) => e.path.join('.') === 'email',
       )?.message;
 
-      expect(emailError).toEqual('Valid e-mail address is required');
+      expect(emailError).toEqual('Voer een geldig e-mailadres in');
     } else {
       throw new Error('Expected validation to fail');
     }
