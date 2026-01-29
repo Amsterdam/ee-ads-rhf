@@ -10,7 +10,6 @@ describe('Examples / ContactForm', () => {
   });
 
   afterEach(() => {
-    // vi.clearAllTimers();
     vi.runOnlyPendingTimers();
     vi.useRealTimers();
   });
@@ -18,40 +17,48 @@ describe('Examples / ContactForm', () => {
   it('should render the contact form correctly', () => {
     render(<ContactForm />);
     expect(
-      screen.getByRole('heading', { name: /contact form/i }),
+      screen.getByRole('heading', { name: /contactformulier/i }),
     ).toBeInTheDocument();
-    expect(screen.getByLabelText(/name/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/e-mail address/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/comments/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
+    expect(screen.getByLabelText(/naam/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/e-mailadres/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/opmerkingen/i)).toBeInTheDocument();
+    expect(screen.getByText(/geslacht/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/man/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/vrouw/i)).toBeInTheDocument();
+
+    expect(screen.getByText(/interesses/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/nieuwsbrieven/i)).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /verzenden/i }),
+    ).toBeInTheDocument();
   });
 
   it('should update form data when user types', async () => {
     render(<ContactForm />);
 
     act(() => {
-      fireEvent.change(screen.getByLabelText(/name/i), {
+      fireEvent.change(screen.getByLabelText(/naam/i), {
         target: { value: 'John' },
       });
-      fireEvent.change(screen.getByLabelText(/e-mail address/i), {
+      fireEvent.change(screen.getByLabelText(/e-mailadres/i), {
         target: { value: 'john@example.com' },
       });
-      fireEvent.change(screen.getByLabelText(/comments/i), {
+      fireEvent.change(screen.getByLabelText(/opmerkingen/i), {
         target: { value: 'Hello!' },
       });
     });
 
-    expect(screen.getByLabelText(/name/i)).toHaveValue('John');
-    expect(screen.getByLabelText(/e-mail address/i)).toHaveValue(
+    expect(screen.getByLabelText(/naam/i)).toHaveValue('John');
+    expect(screen.getByLabelText(/e-mailadres/i)).toHaveValue(
       'john@example.com',
     );
-    expect(screen.getByLabelText(/comments/i)).toHaveValue('Hello!');
+    expect(screen.getByLabelText(/opmerkingen/i)).toHaveValue('Hello!');
   });
 
   it('should show validation errors when the form is submitted with invalid data', async () => {
     render(<ContactForm />);
 
-    fireEvent.click(screen.getByRole('button', { name: /submit/i }));
+    fireEvent.click(screen.getByRole('button', { name: /verzenden/i }));
 
     await waitFor(() => {
       expect(
@@ -63,19 +70,23 @@ describe('Examples / ContactForm', () => {
   it('should show individual validation errors', async () => {
     render(<ContactForm />);
 
-    // act(() => {
-    fireEvent.click(screen.getByRole('button', { name: /submit/i }));
-    // });
+    fireEvent.click(screen.getByRole('button', { name: /verzenden/i }));
 
     await waitFor(() => {
-      expect(screen.getAllByText(/name is required/i).length).toBeGreaterThan(
+      expect(screen.getAllByText(/naam is verplicht/i).length).toBeGreaterThan(
         0,
       );
       expect(
-        screen.getAllByText(/valid e-mail address is required/i).length,
+        screen.getAllByText(/voer een geldig e-mailadres in/i).length,
       ).toBeGreaterThan(0);
       expect(
-        screen.getAllByText(/comment is required/i).length,
+        screen.getAllByText(/bericht is verplicht/i).length,
+      ).toBeGreaterThan(0);
+      expect(
+        screen.getAllByText(/geslacht is verplicht/i).length,
+      ).toBeGreaterThan(0);
+      expect(
+        screen.getAllByText(/selecteer minimaal één interesse/i).length,
       ).toBeGreaterThan(0);
     });
   });
@@ -84,14 +95,13 @@ describe('Examples / ContactForm', () => {
     const user = userEvent.setup();
     render(<ContactForm />);
 
-    await user.type(screen.getByLabelText(/name/i), 'John');
-    await user.type(
-      screen.getByLabelText(/e-mail address/i),
-      'john@example.com',
-    );
-    await user.type(screen.getByLabelText(/comments/i), 'Hello!');
+    await user.type(screen.getByLabelText(/naam/i), 'John');
+    await user.type(screen.getByLabelText(/e-mailadres/i), 'john@example.com');
+    await user.type(screen.getByLabelText(/opmerkingen/i), 'Hello!');
+    await user.click(screen.getByLabelText(/man/i));
+    await user.click(screen.getByLabelText(/nieuwsbrieven/i));
 
-    user.click(screen.getByRole('button', { name: /submit/i }));
+    user.click(screen.getByRole('button', { name: /verzenden/i }));
 
     await waitFor(() => {
       expect(screen.getByTestId('loader')).toBeInTheDocument();
@@ -102,17 +112,19 @@ describe('Examples / ContactForm', () => {
     render(<ContactForm />);
 
     act(() => {
-      fireEvent.change(screen.getByLabelText(/name/i), {
+      fireEvent.change(screen.getByLabelText(/naam/i), {
         target: { value: 'John' },
       });
-      fireEvent.change(screen.getByLabelText(/e-mail address/i), {
+      fireEvent.change(screen.getByLabelText(/e-mailadres/i), {
         target: { value: 'john@example.com' },
       });
-      fireEvent.change(screen.getByLabelText(/comments/i), {
+      fireEvent.change(screen.getByLabelText(/opmerkingen/i), {
         target: { value: 'Hello!' },
       });
+      fireEvent.click(screen.getByLabelText(/man/i));
+      fireEvent.click(screen.getByLabelText(/nieuwsbrieven/i));
 
-      fireEvent.click(screen.getByRole('button', { name: /submit/i }));
+      fireEvent.click(screen.getByRole('button', { name: /verzenden/i }));
     });
 
     // Capture first `setIsLoading(true)` render change
@@ -125,34 +137,36 @@ describe('Examples / ContactForm', () => {
       vi.runAllTimers();
     });
 
-    await screen.findByText(/the form has been sent/i);
-    expect(screen.getByText(/success/i)).toBeInTheDocument();
+    await screen.findByText(/het formulier is verzonden/i);
+    expect(screen.getByText(/succes/i)).toBeInTheDocument();
   });
 
   it('should clear errors when form is resubmitted with valid data', async () => {
     render(<ContactForm />);
 
-    fireEvent.click(screen.getByRole('button', { name: /submit/i }));
+    fireEvent.click(screen.getByRole('button', { name: /verzenden/i }));
 
     await waitFor(() => {
       screen.getByText(/verbeter de fouten voor u verder gaat/i);
-      expect(screen.getAllByText(/name is required/i).length).toBeGreaterThan(
+      expect(screen.getAllByText(/naam is verplicht/i).length).toBeGreaterThan(
         0,
       );
     });
 
     // Submit with valid data
     act(() => {
-      fireEvent.change(screen.getByLabelText(/name/i), {
+      fireEvent.change(screen.getByLabelText(/naam/i), {
         target: { value: 'Jane' },
       });
-      fireEvent.change(screen.getByLabelText(/e-mail address/i), {
+      fireEvent.change(screen.getByLabelText(/e-mailadres/i), {
         target: { value: 'jane@example.com' },
       });
-      fireEvent.change(screen.getByLabelText(/comments/i), {
+      fireEvent.change(screen.getByLabelText(/opmerkingen/i), {
         target: { value: 'Hi there' },
       });
-      fireEvent.click(screen.getByRole('button', { name: /submit/i }));
+      fireEvent.click(screen.getByLabelText(/man/i));
+      fireEvent.click(screen.getByLabelText(/nieuwsbrieven/i));
+      fireEvent.click(screen.getByRole('button', { name: /verzenden/i }));
     });
 
     await act(async () => {
@@ -162,7 +176,7 @@ describe('Examples / ContactForm', () => {
       vi.runAllTimers();
     });
 
-    await screen.findByText(/the form has been sent/i);
+    await screen.findByText(/het formulier is verzonden/i);
     expect(
       screen.queryByText(/verbeter de fouten voor u verder gaat/i),
     ).not.toBeInTheDocument();
@@ -170,33 +184,44 @@ describe('Examples / ContactForm', () => {
 
   it('should have proper accessibility attributes', () => {
     render(<ContactForm />);
-    const nameInput = screen.getByLabelText(/name/i);
-    const emailInput = screen.getByLabelText(/e-mail address/i);
-    const messageInput = screen.getByLabelText(/comments/i);
+    const nameInput = screen.getByLabelText(/naam/i);
+    const emailInput = screen.getByLabelText(/e-mailadres/i);
+    const messageInput = screen.getByLabelText(/opmerkingen/i);
+    const genderLegend = screen.getByText(/geslacht/i);
+    const interestsLegend = screen.getByText(/interesses/i);
 
     expect(nameInput).toHaveAttribute('aria-describedby');
     expect(emailInput).toHaveAttribute('aria-describedby');
     expect(messageInput).toHaveAttribute('aria-describedby');
+    expect(genderLegend.parentElement).toHaveAttribute('aria-describedby');
+    expect(interestsLegend.parentElement).toHaveAttribute('aria-describedby');
   });
 
   it('should have aria-invalid attributes when form is submitted with invalid data', async () => {
     render(<ContactForm />);
-
     act(() => {
-      fireEvent.click(screen.getByRole('button', { name: /submit/i }));
+      fireEvent.click(screen.getByRole('button', { name: /verzenden/i }));
     });
 
     await screen.findByText(/verbeter de fouten voor u verder gaat/i);
 
-    expect(screen.getByLabelText(/name/i)).toHaveAttribute(
+    expect(screen.getByLabelText(/naam/i)).toHaveAttribute(
       'aria-invalid',
       'true',
     );
-    expect(screen.getByLabelText(/e-mail address/i)).toHaveAttribute(
+    expect(screen.getByLabelText(/e-mailadres/i)).toHaveAttribute(
       'aria-invalid',
       'true',
     );
-    expect(screen.getByLabelText(/comments/i)).toHaveAttribute(
+    expect(screen.getByLabelText(/opmerkingen/i)).toHaveAttribute(
+      'aria-invalid',
+      'true',
+    );
+    expect(screen.getByLabelText(/man/i)).toHaveAttribute(
+      'aria-invalid',
+      'true',
+    );
+    expect(screen.getByLabelText(/nieuwsbrieven/i)).toHaveAttribute(
       'aria-invalid',
       'true',
     );
