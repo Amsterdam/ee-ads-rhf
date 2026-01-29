@@ -105,7 +105,7 @@ export const FileInputControl = forwardRef(function FileInputControl<
             <FileInput
               id={identifier}
               aria-describedby={clsx(
-                { [descriptionId]: !!descriptionId },
+                { [descriptionId]: description && !!descriptionId },
                 { [errorId]: !hideErrorMessage && hasError },
               )}
               // Limited controlled props from RHF

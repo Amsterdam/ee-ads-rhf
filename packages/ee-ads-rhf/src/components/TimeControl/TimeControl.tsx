@@ -109,7 +109,7 @@ export const TimeControl = forwardRef(function TimeControl<
               id={identifier}
               invalid={hasError}
               aria-describedby={clsx(
-                { [descriptionId]: !!descriptionId },
+                { [descriptionId]: !!description && !!descriptionId },
                 { [errorId]: !hideErrorMessage && hasError },
               )}
               // Controlled props from RHF
