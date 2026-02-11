@@ -15,7 +15,7 @@ import {
   RadioControl,
   TextAreaControl,
   TextInputControl,
-} from '@amsterdam/ee-ads-rhf-lib';
+} from '@amsterdam/ee-ads-rhf';
 import { zodResolver } from '@hookform/resolvers/zod';
 import contactFormSchema, { ContactFormData } from './schema';
 import Loader from './components/Loader/Loader';

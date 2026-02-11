@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { FormProvider } from '@amsterdam/ee-ads-rhf-lib';
+import { FormProvider } from '@amsterdam/ee-ads-rhf';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Page, PageHeader } from '@amsterdam/design-system-react';
 import Loader from './components/Loader/Loader';

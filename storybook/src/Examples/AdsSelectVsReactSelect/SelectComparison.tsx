@@ -3,7 +3,7 @@ import {
   ReactSelectControl,
   SelectControl,
   SelectInput,
-} from '@amsterdam/ee-ads-rhf-lib';
+} from '@amsterdam/ee-ads-rhf';
 import { Column, Row } from '@amsterdam/design-system-react';
 import { useForm } from 'react-hook-form';
 import options from '../../utils/provinces';

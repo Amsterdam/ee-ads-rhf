@@ -7,7 +7,7 @@ import {
   Table,
 } from '@amsterdam/design-system-react';
 import { ChevronBackwardIcon } from '@amsterdam/design-system-react-icons';
-import { TextAreaControl } from '@amsterdam/ee-ads-rhf-lib';
+import { TextAreaControl } from '@amsterdam/ee-ads-rhf';
 import { useFormContext } from 'react-hook-form';
 import { BookingFormData } from '../../schema';
 

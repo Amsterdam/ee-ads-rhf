@@ -1,7 +1,7 @@
 import {
   DateControl as Component,
   DateControlProps as OriginalDateControlProps,
-} from '@amsterdam/ee-ads-rhf-lib';
+} from '@amsterdam/ee-ads-rhf';
 import { FieldValues, FormProvider, useForm } from 'react-hook-form';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

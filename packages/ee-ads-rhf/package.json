@@ -1,9 +1,24 @@
 {
-  "name": "@amsterdam/ee-ads-rhf-lib",
+  "name": "@amsterdam/ee-ads-rhf",
   "version": "0.0.0",
+  "description": "",
+  "homepage": "https://github.com/Amsterdam/ee-ads-rhf#readme",
+  "bugs": {
+    "url": "https://github.com/Amsterdam/ee-ads-rhf/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Amsterdam/ee-ads-rhf.git",
+    "directory": "packages/ee-ads-rhf"
+  },
+  "license": "EUPL-1.2",
+  "author": "",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.js",
   "types": "./dist/index.d.ts",
+  "directories": {
+    "test": "test"
+  },
   "files": [
     "dist/"
   ],

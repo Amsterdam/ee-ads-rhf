@@ -15,7 +15,7 @@
     "@amsterdam/design-system-react": "^3.0.0",
     "@amsterdam/design-system-react-icons": "^2.0.0",
     "@amsterdam/design-system-tokens": "^3.0.0",
-    "@amsterdam/ee-ads-rhf-lib": "*",
+    "@amsterdam/ee-ads-rhf": "*",
     "@hookform/resolvers": "^5.2.2",
     "clsx": "^2.1.1",
     "react": "^19.2.0",

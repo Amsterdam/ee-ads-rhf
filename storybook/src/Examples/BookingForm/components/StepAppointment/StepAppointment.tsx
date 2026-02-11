@@ -13,7 +13,7 @@ import {
   DateControl,
   TimeControl,
   mapErrorsToAlert,
-} from '@amsterdam/ee-ads-rhf-lib';
+} from '@amsterdam/ee-ads-rhf';
 import DateTimeFieldset from '../DateTimeFieldset/DateTimeFieldset';
 import { BookingFormData } from '../../schema';
 

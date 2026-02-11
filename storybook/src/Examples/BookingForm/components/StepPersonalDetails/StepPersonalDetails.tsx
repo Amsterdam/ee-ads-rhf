@@ -8,7 +8,7 @@ import {
 } from '@amsterdam/design-system-react';
 import { MouseEvent } from 'react';
 import { ChevronBackwardIcon } from '@amsterdam/design-system-react-icons';
-import { TextInputControl, mapErrorsToAlert } from '@amsterdam/ee-ads-rhf-lib';
+import { TextInputControl, mapErrorsToAlert } from '@amsterdam/ee-ads-rhf';
 import { useFormContext } from 'react-hook-form';
 import { BookingFormData } from '../../schema';
 

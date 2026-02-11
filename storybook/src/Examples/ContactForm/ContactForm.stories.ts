@@ -25,7 +25,7 @@ const meta = {
             mapErrorsToAlert,
             TextAreaControl,
             TextInputControl
-          } from '@amsterdam/ee-ads-rhf-lib'
+          } from '@amsterdam/ee-ads-rhf'
           import contactFormSchema from './schema'
           import Loader from './components/Loader/Loader'
 

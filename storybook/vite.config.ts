@@ -11,7 +11,7 @@ export default defineConfig({
   resolve: {
     alias: {
       // point the package name to the package source during tests
-      '@amsterdam/ee-ads-rhf-lib': path.resolve(
+      '@amsterdam/ee-ads-rhf': path.resolve(
         __dirname,
         '../packages/ee-ads-rhf/src',
       ),

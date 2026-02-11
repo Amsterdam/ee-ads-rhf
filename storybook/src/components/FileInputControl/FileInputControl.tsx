@@ -1,7 +1,7 @@
 import {
   FileInputControl as Component,
   FileInputControlProps as OriginalFileInputControlProps,
-} from '@amsterdam/ee-ads-rhf-lib';
+} from '@amsterdam/ee-ads-rhf';
 import { FieldValues, FormProvider, useForm } from 'react-hook-form';
 
 export type FileInputControlProps = Partial<

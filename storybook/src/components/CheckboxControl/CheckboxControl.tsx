@@ -2,7 +2,7 @@ import React from 'react';
 import {
   CheckboxControl as Component,
   CheckboxControlProps as OriginalCheckboxControlProps,
-} from '@amsterdam/ee-ads-rhf-lib';
+} from '@amsterdam/ee-ads-rhf';
 import { FieldValues, FormProvider, useForm } from 'react-hook-form';
 
 // Re-export the props type but make form-specific props optional for Storybook
