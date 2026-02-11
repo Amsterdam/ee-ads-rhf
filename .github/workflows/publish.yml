@@ -1,0 +1,60 @@
+name: Publish
+
+on:
+  workflow_run:
+    workflows: [Lint and test]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: write
+  id-token: write # Required for trusted publishing to npm
+  pull-requests: write
+
+jobs:
+  create-release-and-publish:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+      - name: Create release
+        uses: googleapis/release-please-action@16a9c90856f42705d54a6fda1823352bdc62cf38 # v4.4.0
+        id: release
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          target-branch: main
+
+      # The logic below handles the Storybook deploy:
+      - name: Check out branch
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          # This is necessary because on.workflow_run always runs on the
+          # default branch, which is 'develop' in our case
+          ref: 'main'
+
+      - name: Set up Node.js version
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Storybook
+        run: npm run storybook:build
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@d92aa235d04922e8f08b40ce78cc5442fcfbfa2f # v4.8.0
+        with:
+          branch: gh-pages
+          folder: storybook/dist
+          clean-exclude: demo-*
+
+      # The logic below handles the npm publication:
+      - name: Publish
+        run: npm publish -w @amsterdam/ee-ads-rhf
+        # this if statement ensures that a publication only occurs when
+        # a new release is created:
+        if: ${{ steps.release.outputs.releases_created == 'true' }}
