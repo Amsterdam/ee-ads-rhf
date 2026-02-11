@@ -3,7 +3,7 @@
   "private": true,
   "license": "EUPL-1.2",
   "engines": {
-    "node": "^22"
+    "node": ">=22 <25"
   },
   "workspaces": [
     "./packages/*",
