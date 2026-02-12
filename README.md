@@ -20,7 +20,7 @@ This project is a Node.js monorepo application with two workspaces:
 
 ## How to publish
 
-This project uses [Release Please](https://github.com/googleapis/release-please) and [Semantic Versioning](https://semver.org/), which will automatically run on successful merges to `main`. This action is followed by an NPM publish step.
+This project uses [Release Please](https://github.com/googleapis/release-please) and [Semantic Versioning](https://semver.org/), which will automatically run on successful merges to `main`. This action is followed by an NPM publish step. Please read the [How to create a release](./docs/how-to-create-a-release.md) for more information.
 
 ## How to contribute to this repo?
 
