@@ -123,6 +123,7 @@ const StepAppointment = ({
               label="Starttijd"
               name="startTime"
               registerOptions={{ required: true }}
+              hideErrorMessage
             />
           </DateTimeFieldset>
           <DateTimeFieldset
