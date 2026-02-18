@@ -5,7 +5,7 @@ const meta = {
   title: 'Examples/BookingForm',
   component: BookingForm,
   parameters: {
-    layout: 'centered',
+    layout: 'fullscreen',
     docs: {
       source: {
         code: `
