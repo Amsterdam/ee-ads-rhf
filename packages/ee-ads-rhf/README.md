@@ -95,7 +95,7 @@ const Home = () => {
 };
 ```
 
-For more examples check out the [project storybook](https://amsterdam.github.io/ee-ads-rhf/demo-develop/).
+For more examples check out the [project storybook](https://amsterdam.github.io/ee-ads-rhf/).
 
 ## How to use this repo?
 

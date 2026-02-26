@@ -1,7 +1,7 @@
 {
   "name": "@amsterdam/ee-ads-rhf",
   "version": "0.0.2",
-  "description": "",
+  "description": "Combining Amsterdam Design System form components and React Hook Form",
   "homepage": "https://github.com/Amsterdam/ee-ads-rhf#readme",
   "bugs": {
     "url": "https://github.com/Amsterdam/ee-ads-rhf/issues"
