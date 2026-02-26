@@ -51,7 +51,7 @@
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "rimraf": "^6.1.2",
-    "rollup": "4.52.4",
+    "rollup": "4.59.0",
     "rollup-plugin-dts": "^6.2.3",
     "rollup-plugin-node-externals": "8.1.1",
     "rollup-plugin-node-polyfills": "^0.2.1",
