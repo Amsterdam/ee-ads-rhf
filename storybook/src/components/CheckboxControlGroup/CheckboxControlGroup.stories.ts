@@ -18,6 +18,11 @@ const meta = {
       control: 'text',
       description: 'Field label displayed above the select.',
     },
+    columns: {
+      control: 'number',
+      default: 1,
+      description: 'Number of columns to display the checkboxes in.',
+    },
     description: {
       control: 'text',
       description: 'Optional helper text displayed below the label.',
@@ -77,10 +82,32 @@ export const Primary: Story = {
   },
 };
 
+export const WithColumns: Story = {
+  args: {
+    label: 'Which districts do you prefer?',
+    name: 'terms1',
+    registerOptions: {
+      required: 'At least one option is required',
+    },
+    columns: 3,
+    options: [
+      { label: 'Centrum', value: 'a' },
+      { label: 'Nieuw-West', value: 'b' },
+      { label: 'Noord', value: 'c' },
+      { label: 'Oost', value: 'd' },
+      { label: 'Weesp', value: 'e' },
+      { label: 'West', value: 'f' },
+      { label: 'Westpoort', value: 'g' },
+      { label: 'Zuid', value: 'h' },
+      { label: 'Zuidoost', value: 'i' },
+    ],
+  },
+};
+
 export const WithDescription: Story = {
   args: {
     label: 'Which options do you prefer?',
-    name: 'terms1',
+    name: 'terms2',
     description: 'Multiple options can be selected.',
     registerOptions: {
       required: 'At least one option is required',
@@ -96,7 +123,7 @@ export const WithDescription: Story = {
 export const Disabled: Story = {
   args: {
     label: 'Which options do you prefer?',
-    name: 'terms2',
+    name: 'terms3',
     options: [
       { label: 'Option A', value: 'a' },
       { label: 'Option B', value: 'b' },
