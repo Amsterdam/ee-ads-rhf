@@ -18,6 +18,7 @@ export const CheckboxControlGroup = ({
   label = 'Which options do you prefer?',
   name = 'example',
   options = [],
+  columns,
   description,
   registerOptions,
   wrapperProps,
@@ -39,6 +40,7 @@ export const CheckboxControlGroup = ({
         name={name as any}
         description={description}
         options={options}
+        columns={columns}
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         registerOptions={registerOptions as any}
         wrapperProps={wrapperProps}
