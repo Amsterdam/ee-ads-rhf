@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.3](https://github.com/Amsterdam/ee-ads-rhf/compare/ee-ads-rhf-v0.0.2...ee-ads-rhf-v0.0.3) (2026-02-26)
+
+
+### Bug Fixes
+
+* **CheckboxControlGroup:** columns comment ([#38](https://github.com/Amsterdam/ee-ads-rhf/issues/38)) ([6e98c09](https://github.com/Amsterdam/ee-ads-rhf/commit/6e98c093bf848e940cc40b575e25bfc8f9200fcb))
+
 ## [0.0.2](https://github.com/Amsterdam/ee-ads-rhf/compare/ee-ads-rhf-v0.0.1...ee-ads-rhf-v0.0.2) (2026-02-26)
 
 
