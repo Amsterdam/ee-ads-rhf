@@ -34,6 +34,7 @@ export type CheckboxControlGroupProps<
     shouldShow?: boolean | ((watch: UseFormWatch<TFieldValues>) => boolean);
     registerOptions?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
     attributes?: ComponentPropsWithoutRef<'input'>;
+    // By default this component uses a grid system with 1 column
     columns?: number;
   };
 
