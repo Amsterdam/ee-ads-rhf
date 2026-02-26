@@ -21,7 +21,8 @@
     "storybook:start": "npm run start -w @amsterdam/ee-ads-rhf-storybook",
     "storybook:build": "npm run build -w @amsterdam/ee-ads-rhf-storybook",
     "storybook:test": "npm run test -w @amsterdam/ee-ads-rhf-storybook",
-    "storybook:lint": "npm run lint -w @amsterdam/ee-ads-rhf-storybook"
+    "storybook:lint": "npm run lint -w @amsterdam/ee-ads-rhf-storybook",
+    "postinstall": "npm run lib:build"
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
