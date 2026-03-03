@@ -17,6 +17,7 @@ export const RadioControl = ({
   label = 'Type',
   name = 'example',
   options = [],
+  columns,
   description,
   registerOptions,
   wrapperProps,
@@ -37,6 +38,7 @@ export const RadioControl = ({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         name={name as any}
         options={options}
+        columns={columns}
         description={description}
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         registerOptions={registerOptions as any}

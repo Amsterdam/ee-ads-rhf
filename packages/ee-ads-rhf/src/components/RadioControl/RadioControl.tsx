@@ -33,6 +33,7 @@ export type RadioControlProps<TFieldValues extends FieldValues = FieldValues> =
       shouldShow?: boolean | ((watch: UseFormWatch<TFieldValues>) => boolean);
       registerOptions?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
       attributes?: ComponentPropsWithoutRef<'input'>;
+      columns?: number;
     };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -58,6 +59,7 @@ export const RadioControl = forwardRef(function RadioControl<
     hideFieldError = false,
     hideErrorMessage = false,
     shouldShow = true,
+    columns = 1,
     ...attributes
   }: RadioControlProps<TFieldValues>,
   ref: Ref<HTMLInputElement>,
@@ -134,7 +136,15 @@ export const RadioControl = forwardRef(function RadioControl<
               <ErrorMessage id={errorId}>{errorMessage}</ErrorMessage>
             )}
 
-            {children}
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
+                columnGap: 'var(--ams-column-gap-medium)',
+              }}
+            >
+              {children}
+            </div>
           </FieldSet>
         );
       }}

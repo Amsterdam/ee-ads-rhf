@@ -22,6 +22,11 @@ const meta = {
       control: 'text',
       description: 'Optional helper text displayed below the label.',
     },
+    columns: {
+      control: 'number',
+      default: 1,
+      description: 'Number of columns to display the radio buttons in.',
+    },
     required: {
       control: 'boolean',
       description: 'Marks the field as required.',
@@ -78,6 +83,28 @@ export const Primary: Story = {
       required: 'A type is required',
     },
     wrapperProps: {},
+  },
+};
+
+export const WithColumns: Story = {
+  args: {
+    label: 'Which district do you prefer?',
+    name: 'district',
+    registerOptions: {
+      required: 'A district is required',
+    },
+    columns: 3,
+    options: [
+      { label: 'Centrum', value: 'a' },
+      { label: 'Nieuw-West', value: 'b' },
+      { label: 'Noord', value: 'c' },
+      { label: 'Oost', value: 'd' },
+      { label: 'Weesp', value: 'e' },
+      { label: 'West', value: 'f' },
+      { label: 'Westpoort', value: 'g' },
+      { label: 'Zuid', value: 'h' },
+      { label: 'Zuidoost', value: 'i' },
+    ],
   },
 };
 
