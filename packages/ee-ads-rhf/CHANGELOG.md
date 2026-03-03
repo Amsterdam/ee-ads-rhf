@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.4](https://github.com/Amsterdam/ee-ads-rhf/compare/ee-ads-rhf-v0.0.3...ee-ads-rhf-v0.0.4) (2026-03-03)
+
+
+### Features
+
+* **RadioControl:** add columns prop for customizable layout ([c8e0630](https://github.com/Amsterdam/ee-ads-rhf/commit/c8e0630086f2c3a5909ba556fc0c99ef8b3b2c39))
+* **RadioControl:** add columns prop for customizable layout ([b731bfa](https://github.com/Amsterdam/ee-ads-rhf/commit/b731bfa2909ea7f2ee93d5deb1cad0f9eac1dae9))
+
 ## [0.0.3](https://github.com/Amsterdam/ee-ads-rhf/compare/ee-ads-rhf-v0.0.2...ee-ads-rhf-v0.0.3) (2026-02-26)
 
 
