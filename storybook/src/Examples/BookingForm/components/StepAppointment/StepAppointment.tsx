@@ -1,3 +1,5 @@
+import { MouseEvent } from 'react';
+import { useFormContext } from 'react-hook-form';
 import {
   StandaloneLink,
   Button,
@@ -6,8 +8,6 @@ import {
   Paragraph,
   InvalidFormAlert,
 } from '@amsterdam/design-system-react';
-import { MouseEvent } from 'react';
-import { useFormContext } from 'react-hook-form';
 import { ChevronBackwardIcon } from '@amsterdam/design-system-react-icons';
 import {
   DateControl,
@@ -106,54 +106,57 @@ const StepAppointment = ({
             <Paragraph>Stap 2 van 3: Afspraak</Paragraph>
           </header>
 
-          <DateTimeFieldset
-            legend="Startdatum en -tijd"
-            fields={['startDate', 'startTime']}
-          >
-            <DateControl<BookingFormData>
-              label="Startdatum"
-              name="startDate"
-              registerOptions={{
-                required: true,
-              }}
-              min={minDateValue}
-            />
+          {/* Enable noValidate to prevent browser validation blocking JS */}
+          <form noValidate>
+            <DateTimeFieldset
+              legend="Startdatum en -tijd"
+              fields={['startDate', 'startTime']}
+            >
+              <DateControl<BookingFormData>
+                label="Startdatum"
+                name="startDate"
+                registerOptions={{
+                  required: true,
+                }}
+                min={minDateValue}
+              />
 
-            <TimeControl<BookingFormData>
-              label="Starttijd"
-              name="startTime"
-              registerOptions={{ required: true }}
-              hideErrorMessage
-            />
-          </DateTimeFieldset>
-          <DateTimeFieldset
-            legend="Einddatum-tijd"
-            fields={['endDate', 'endTime']}
-          >
-            <DateControl<BookingFormData>
-              label="Einddatum"
-              name="endDate"
-              registerOptions={{
-                required: true,
-              }}
-              min={startDate}
-              hideErrorMessage
-              hideFieldError
-            />
+              <TimeControl<BookingFormData>
+                label="Starttijd"
+                name="startTime"
+                registerOptions={{ required: true }}
+                hideErrorMessage
+              />
+            </DateTimeFieldset>
+            <DateTimeFieldset
+              legend="Einddatum-tijd"
+              fields={['endDate', 'endTime']}
+            >
+              <DateControl<BookingFormData>
+                label="Einddatum"
+                name="endDate"
+                registerOptions={{
+                  required: true,
+                }}
+                min={startDate}
+                hideErrorMessage
+                hideFieldError
+              />
 
-            <TimeControl<BookingFormData>
-              label="Eindtijd"
-              name="endTime"
-              registerOptions={{
-                required: true,
-              }}
-              hideErrorMessage
-            />
-          </DateTimeFieldset>
+              <TimeControl<BookingFormData>
+                label="Eindtijd"
+                name="endTime"
+                registerOptions={{
+                  required: true,
+                }}
+                hideErrorMessage
+              />
+            </DateTimeFieldset>
 
-          <Button type="button" onClick={handleNextButtonClick}>
-            Volgende vraag
-          </Button>
+            <Button type="button" onClick={handleNextButtonClick}>
+              Volgende vraag
+            </Button>
+          </form>
         </Grid.Cell>
       </Grid>
     </>
