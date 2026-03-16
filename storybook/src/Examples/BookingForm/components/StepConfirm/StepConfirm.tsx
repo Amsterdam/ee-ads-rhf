@@ -13,14 +13,14 @@ import { BookingFormData } from '../../schema';
 
 interface StepConfirmProps {
   disabled?: boolean;
-  onSubmit: SubmitHandler<FieldValues>;
   onPrevButtonClick: () => void;
+  onSubmit: SubmitHandler<FieldValues>;
 }
 
 const StepConfirm = ({
-  onSubmit,
   disabled = false,
   onPrevButtonClick,
+  onSubmit,
 }: StepConfirmProps) => {
   const { getValues, handleSubmit } = useFormContext();
   const formData = getValues();

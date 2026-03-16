@@ -36,7 +36,7 @@ const BookingForm = () => {
     },
   });
 
-  const onValidSubmit: SubmitHandler<FieldValues> = useCallback(async () => {
+  const handleSubmit: SubmitHandler<FieldValues> = useCallback(async () => {
     try {
       /**
        * Use setTimeout to Simulate API call
@@ -75,8 +75,8 @@ const BookingForm = () => {
     />,
     <StepConfirm
       disabled={isLoading}
-      onSubmit={onValidSubmit}
       onPrevButtonClick={() => setCurrentStep(2)}
+      onSubmit={handleSubmit}
       key="step-3"
     />,
   ];
