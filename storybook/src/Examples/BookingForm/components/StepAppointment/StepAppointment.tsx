@@ -129,6 +129,7 @@ const StepAppointment = ({
               />
             </DateTimeFieldset>
             <DateTimeFieldset
+              className="ams-mb-xl"
               legend="Einddatum-tijd"
               fields={['endDate', 'endTime']}
             >

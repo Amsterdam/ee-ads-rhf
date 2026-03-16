@@ -113,7 +113,7 @@ const StepPersonalDetails = ({
               registerOptions={{
                 required: true,
               }}
-              className="ams-mb-m"
+              className="ams-mb-xl"
             />
 
             <Button type="button" onClick={handleNextButtonClick}>
