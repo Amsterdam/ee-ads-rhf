@@ -9,28 +9,32 @@ const meta = {
     docs: {
       source: {
         code: `
-          import { useCallback, useState } from 'react'
-          import { SubmitHandler, useForm } from 'react-hook-form'
-          import { FormProvider } from '@amsterdam/ee-ads-rhf'
-          import { zodResolver } from '@hookform/resolvers/zod'
-          import { Page, PageHeader } from '@amsterdam/design-system-react'
-          import Loader from './components/Loader/Loader'
-          import StepIntro from './components/StepIntro/StepIntro'
-          import SuccessContent from './components/SuccessContent/SuccessContent'
-          import StepPersonalDetails from './components/StepPersonalDetails/StepPersonalDetails'
-          import StepAppointment from './components/StepAppointment/StepAppointment'
-          import StepConfirm from './components/StepConfirm/StepConfirm'
-          import bookingFormSchema from './schema'
+          import { useCallback, useState } from 'react';
+          import {
+            SubmitHandler,
+            useForm,
+            FormProvider,
+            FieldValues,
+          } from 'react-hook-form';
+          import { zodResolver } from '@hookform/resolvers/zod';
+          import { Page, PageHeader } from '@amsterdam/design-system-react';
+          import Loader from './components/Loader/Loader';
+          import StepIntro from './components/StepIntro/StepIntro';
+          import SuccessContent from './components/SuccessContent/SuccessContent';
+          import StepPersonalDetails from './components/StepPersonalDetails/StepPersonalDetails';
+          import StepAppointment from './components/StepAppointment/StepAppointment';
+          import StepConfirm from './components/StepConfirm/StepConfirm';
+          import bookingFormSchema, { BookingFormData } from './schema';
 
-          export default function BookingForm() {
-            const [currentStep, setCurrentStep] = useState(0)
-            const [isLoading, setIsLoading] = useState(false)
-            const [isSubmitted, setIsSubmitted] = useState(false)
+          const BookingForm = () => {
+            const [currentStep, setCurrentStep] = useState(0);
+            const [isLoading, setIsLoading] = useState(false);
+            const [isSubmitted, setIsSubmitted] = useState(false);
 
-            const nowDateTime = new Date()
-            const nowDate = new Date().toISOString().split('T')[0]
+            const nowDateTime = new Date();
+            const nowDate = new Date().toISOString().split('T')[0];
 
-            const form = useForm({
+            const form = useForm<BookingFormData>({
               resolver: zodResolver(bookingFormSchema),
               defaultValues: {
                 name: '',
@@ -39,30 +43,36 @@ const meta = {
                 startTime: '',
                 endDate: '',
                 endTime: '',
-                comments: ''
-              }
-            })
+                comments: '',
+              },
+            });
 
-            const onValidSubmit = useCallback(async () => {
+            const handleSubmit: SubmitHandler<FieldValues> = useCallback(async () => {
               try {
-                setIsLoading(true)
+                /**
+                 * Use setTimeout to Simulate API call
+                 * - Here's where validation can happen
+                 * - Here's where you can show a post-submission success component
+                 * or redirect the user to a new page
+                 */
+                setIsLoading(true);
+
                 setTimeout(() => {
-                  setIsLoading(false)
-                  setIsSubmitted(true)
-                }, 1500)
+                  setIsLoading(false);
+                  setIsSubmitted(true);
+                }, 1500);
               } catch (error) {
-                console.log('form error', error)
+                console.log('form error!', error);
               }
-            }, [])
+            }, []);
 
             const handleNextStep = () => {
-              setCurrentStep(currentStep + 1)
-            }
+              setCurrentStep(currentStep + 1);
+            };
 
             const steps = [
               <StepIntro onButtonClick={() => setCurrentStep(1)} key="step-0" />,
               <StepPersonalDetails
-                disabled={isLoading}
                 onPrevButtonClick={() => setCurrentStep(0)}
                 onNextButtonClick={handleNextStep}
                 key="step-1"
@@ -77,20 +87,21 @@ const meta = {
               <StepConfirm
                 disabled={isLoading}
                 onPrevButtonClick={() => setCurrentStep(2)}
+                onSubmit={handleSubmit}
                 key="step-3"
-              />
-            ]
+              />,
+            ];
 
             return (
               <Page>
                 <PageHeader className="ams-mb-xl" />
                 {isLoading && !isSubmitted && <Loader />}
-                <FormProvider form={form} onSubmit={onValidSubmit}>
+                <FormProvider {...form}>
                   {!isSubmitted ? steps[currentStep] : <SuccessContent />}
                 </FormProvider>
               </Page>
-            )
-          }
+            );
+          };
         `,
       },
     },

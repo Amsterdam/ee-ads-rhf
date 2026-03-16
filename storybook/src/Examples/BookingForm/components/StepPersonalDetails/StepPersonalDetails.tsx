@@ -1,3 +1,5 @@
+import { MouseEvent } from 'react';
+import { useFormContext } from 'react-hook-form';
 import {
   StandaloneLink,
   Button,
@@ -6,14 +8,11 @@ import {
   Paragraph,
   InvalidFormAlert,
 } from '@amsterdam/design-system-react';
-import { MouseEvent } from 'react';
 import { ChevronBackwardIcon } from '@amsterdam/design-system-react-icons';
 import { TextInputControl, mapErrorsToAlert } from '@amsterdam/ee-ads-rhf';
-import { useFormContext } from 'react-hook-form';
 import { BookingFormData } from '../../schema';
 
 interface StepPersonalDetailsProps {
-  disabled: boolean;
   onPrevButtonClick: () => void;
   onNextButtonClick: () => void;
 }
@@ -93,31 +92,34 @@ const StepPersonalDetails = ({
             <Paragraph>Stap 1 van 3: Uw gegevens</Paragraph>
           </header>
 
-          <TextInputControl<BookingFormData>
-            label="Voornaam"
-            name="name"
-            registerOptions={{ required: true }}
-            className="ams-mb-m"
-          />
+          {/* Enable noValidate to prevent browser validation blocking JS */}
+          <form noValidate>
+            <TextInputControl<BookingFormData>
+              label="Voornaam"
+              name="name"
+              registerOptions={{ required: true }}
+              className="ams-mb-m"
+            />
 
-          <TextInputControl<BookingFormData>
-            label="E-mailadres"
-            type="text"
-            // If we use type=email, in some browsers this triggers `:invalid`
-            // and error styling is applied despite the form noValidate on
-            // input change
-            inputMode="email"
-            autoComplete="email"
-            name="email"
-            registerOptions={{
-              required: true,
-            }}
-            className="ams-mb-m"
-          />
+            <TextInputControl<BookingFormData>
+              label="E-mailadres"
+              type="text"
+              // If we use type=email, in some browsers this triggers `:invalid`
+              // and error styling is applied despite the form noValidate on
+              // input change
+              inputMode="email"
+              autoComplete="email"
+              name="email"
+              registerOptions={{
+                required: true,
+              }}
+              className="ams-mb-xl"
+            />
 
-          <Button type="button" onClick={handleNextButtonClick}>
-            Volgende vraag
-          </Button>
+            <Button type="button" onClick={handleNextButtonClick}>
+              Volgende vraag
+            </Button>
+          </form>
         </Grid.Cell>
       </Grid>
     </>

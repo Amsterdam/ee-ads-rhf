@@ -147,7 +147,7 @@ const ContactForm = () => {
             ]}
             registerOptions={{ required: true }}
             wrapperProps={{
-              className: 'ams-mb-l',
+              className: 'ams-mb-m',
             }}
           />
 
@@ -162,7 +162,7 @@ const ContactForm = () => {
             ]}
             registerOptions={{ required: true }}
             wrapperProps={{
-              className: 'ams-mb-l',
+              className: 'ams-mb-xl',
             }}
           />
 
