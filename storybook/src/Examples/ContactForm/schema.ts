@@ -20,13 +20,14 @@ const contactFormSchema = z.object({
     })
     .min(1, { error: 'Vul uw naam in' }),
   email: z
-    .email({
-      error: (issue) =>
-        issue.input === undefined
-          ? 'Vul uw e-mailadres in'
-          : 'Vul een geldig e-mailadres in, bijvoorbeeld naam@voorbeeld.nl',
+    .string({
+      error: () => 'Vul uw e-mailadres in',
     })
-    .min(1, { error: 'Vul uw e-mailadres in' }),
+    .min(1, { error: 'Vul uw e-mailadres in' })
+    .email({
+      error: () =>
+        'Vul een geldig e-mailadres in, bijvoorbeeld naam@voorbeeld.nl',
+    }),
   message: z
     .string({
       error: () => 'Vul uw bericht in',
