@@ -23,7 +23,7 @@ describe('contactFormSchema', () => {
     expect(result.success).toBe(false);
     if (!result.success) {
       expect(result.error.flatten().fieldErrors.name).toContain(
-        'Naam is verplicht',
+        'Vul uw naam in',
       );
     }
   });
@@ -43,7 +43,9 @@ describe('contactFormSchema', () => {
         (e) => e.path.join('.') === 'email',
       )?.message;
 
-      expect(emailError).toEqual('Voer een geldig e-mailadres in');
+      expect(emailError).toEqual(
+        'Vul een geldig e-mailadres in, bijvoorbeeld naam@voorbeeld.nl',
+      );
     } else {
       throw new Error('Expected validation to fail');
     }
