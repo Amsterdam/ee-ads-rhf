@@ -16,23 +16,24 @@ const INTEREST_OPTIONS = [
 const contactFormSchema = z.object({
   name: z
     .string({
-      error: () => 'Naam is verplicht',
+      error: () => 'Vul uw naam in',
     })
-    .min(1, { error: 'Naam is verplicht' }),
+    .min(1, { error: 'Vul uw naam in' }),
   email: z
-    .email({
-      error: (issue) =>
-        issue.input === undefined
-          ? 'E-mailadres is verplicht'
-          : 'Voer een geldig e-mailadres in',
+    .string({
+      error: () => 'Vul uw e-mailadres in',
     })
-    .min(1, { error: 'E-mailadres is verplicht' }),
+    .min(1, { error: 'Vul uw e-mailadres in' })
+    .email({
+      error: () =>
+        'Vul een geldig e-mailadres in, bijvoorbeeld naam@voorbeeld.nl',
+    }),
   message: z
     .string({
-      error: () => 'Bericht is verplicht',
+      error: () => 'Vul uw bericht in',
     })
-    .min(1, { error: 'Bericht is verplicht' }),
-  gender: z.enum(GENDER_OPTIONS, { message: 'Geslacht is verplicht' }),
+    .min(1, { error: 'Vul uw bericht in' }),
+  gender: z.enum(GENDER_OPTIONS, { message: 'Vul uw geslacht in' }),
   interests: z
     .array(z.enum(INTEREST_OPTIONS))
     .min(1, { message: 'Selecteer minimaal één interesse' }),

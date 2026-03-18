@@ -73,18 +73,16 @@ describe('Examples / ContactForm', () => {
     fireEvent.click(screen.getByRole('button', { name: /verzenden/i }));
 
     await waitFor(() => {
-      expect(screen.getAllByText(/naam is verplicht/i).length).toBeGreaterThan(
+      expect(screen.getAllByText(/vul uw naam in/i).length).toBeGreaterThan(0);
+      expect(
+        screen.getAllByText(/vul uw e-mailadres in/i).length,
+      ).toBeGreaterThan(0);
+      expect(screen.getAllByText(/vul uw bericht in/i).length).toBeGreaterThan(
         0,
       );
-      expect(
-        screen.getAllByText(/voer een geldig e-mailadres in/i).length,
-      ).toBeGreaterThan(0);
-      expect(
-        screen.getAllByText(/bericht is verplicht/i).length,
-      ).toBeGreaterThan(0);
-      expect(
-        screen.getAllByText(/geslacht is verplicht/i).length,
-      ).toBeGreaterThan(0);
+      expect(screen.getAllByText(/vul uw geslacht in/i).length).toBeGreaterThan(
+        0,
+      );
       expect(
         screen.getAllByText(/selecteer minimaal één interesse/i).length,
       ).toBeGreaterThan(0);
@@ -148,9 +146,7 @@ describe('Examples / ContactForm', () => {
 
     await waitFor(() => {
       screen.getByText(/verbeter de fouten voor u verder gaat/i);
-      expect(screen.getAllByText(/naam is verplicht/i).length).toBeGreaterThan(
-        0,
-      );
+      expect(screen.getAllByText(/vul uw naam in/i).length).toBeGreaterThan(0);
     });
 
     // Submit with valid data
