@@ -75,7 +75,7 @@ describe('Examples / ContactForm', () => {
     await waitFor(() => {
       expect(screen.getAllByText(/vul uw naam in/i).length).toBeGreaterThan(0);
       expect(
-        screen.getAllByText(/vul een geldig e-mailadres in/i).length,
+        screen.getAllByText(/vul uw e-mailadres in/i).length,
       ).toBeGreaterThan(0);
       expect(screen.getAllByText(/vul uw bericht in/i).length).toBeGreaterThan(
         0,
