@@ -9,7 +9,7 @@ const meta = {
     docs: {
       source: {
         code: `
-          import { useCallback, useState } from 'react';
+          import { useCallback, useRef, useState } from 'react';
           import {
             SubmitHandler,
             useForm,
@@ -28,8 +28,8 @@ const meta = {
 
           const BookingForm = () => {
             const [currentStep, setCurrentStep] = useState(0);
-            const [isLoading, setIsLoading] = useState(false);
             const [isSubmitted, setIsSubmitted] = useState(false);
+            const isSubmittingRef = useRef(false);
 
             const nowDateTime = new Date();
             const nowDate = new Date().toISOString().split('T')[0];
@@ -49,22 +49,24 @@ const meta = {
 
             const handleSubmit: SubmitHandler<FieldValues> = useCallback(async () => {
               try {
+                // Prevent duplicate submissions
+                if (isSubmittingRef.current) return;
+                isSubmittingRef.current = true;
+
                 /**
                  * Use setTimeout to Simulate API call
                  * - Here's where validation can happen
                  * - Here's where you can show a post-submission success component
                  * or redirect the user to a new page
                  */
-                setIsLoading(true);
-
                 setTimeout(() => {
-                  setIsLoading(false);
                   setIsSubmitted(true);
+                  isSubmittingRef.current = false;
                 }, 1500);
               } catch (error) {
                 console.log('form error!', error);
               }
-            }, []);
+            }, [form.formState.isSubmitting]);
 
             const handleNextStep = () => {
               setCurrentStep(currentStep + 1);
@@ -79,13 +81,11 @@ const meta = {
               />,
               <StepAppointment
                 minDateValue={nowDate}
-                disabled={isLoading}
                 onPrevButtonClick={() => setCurrentStep(1)}
                 onNextButtonClick={handleNextStep}
                 key="step-2"
               />,
               <StepConfirm
-                disabled={isLoading}
                 onPrevButtonClick={() => setCurrentStep(2)}
                 onSubmit={handleSubmit}
                 key="step-3"
@@ -95,7 +95,7 @@ const meta = {
             return (
               <Page>
                 <PageHeader className="ams-mb-xl" />
-                {isLoading && !isSubmitted && <Loader />}
+                {form.formState.isSubmitting && !isSubmitted && <Loader />}
                 <FormProvider {...form}>
                   {!isSubmitted ? steps[currentStep] : <SuccessContent />}
                 </FormProvider>

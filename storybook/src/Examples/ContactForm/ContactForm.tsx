@@ -6,7 +6,7 @@ import {
   InvalidFormAlert,
   Paragraph,
 } from '@amsterdam/design-system-react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import {
   CheckboxControlGroup,
@@ -21,7 +21,6 @@ import contactFormSchema, { ContactFormData } from './schema';
 import Loader from './components/Loader/Loader';
 
 // This is a simple React Hook Form example that validates using a Zod schema
-// on change
 const ContactForm = () => {
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),
@@ -33,23 +32,26 @@ const ContactForm = () => {
     },
   });
 
-  const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const isSubmittingRef = useRef(false);
 
   // onSubmit will only fire if the form is valid
   const onSubmit = async (data: ContactFormData) => {
+    // Prevent duplicate submissions
+    if (isSubmittingRef.current) return;
+    isSubmittingRef.current = true;
+
     console.log('Form data:', data);
 
     /**
-     * If form is valid use setTimeout to Simulate API call
+     * Use setTimeout to Simulate API call
      * - Here's where validation can happen
      * - Here's where you can show a post-submission success component
      * or redirect the user to a new page
      */
-    setIsLoading(true);
-
     setTimeout(() => {
       setIsSubmitted(true);
+      isSubmittingRef.current = false;
     }, 1500);
   };
 
@@ -99,7 +101,7 @@ const ContactForm = () => {
 
         <FormProvider form={form} onSubmit={onSubmit}>
           {/* Fake loader to simulate API request */}
-          {isLoading && <Loader />}
+          {form.formState.isSubmitting && <Loader />}
           {showErrors && (
             <InvalidFormAlert
               errors={alertErrors}
@@ -114,18 +116,21 @@ const ContactForm = () => {
             name="name"
             registerOptions={{ required: true }}
             className="ams-mb-m"
-            disabled={isLoading}
           />
 
           <TextInputControl<ContactFormData>
             label="E-mailadres"
-            type="email"
+            type="text"
+            // If we use type=email, in some browsers this triggers `:invalid`
+            // and error styling is applied despite the form noValidate on
+            // input change
+            inputMode="email"
+            autoComplete="email"
             name="email"
             registerOptions={{
               required: true,
             }}
             className="ams-mb-m"
-            disabled={isLoading}
           />
 
           <TextAreaControl<ContactFormData>
@@ -133,7 +138,6 @@ const ContactForm = () => {
             name="message"
             registerOptions={{ required: true }}
             className="ams-mb-m"
-            disabled={isLoading}
           />
 
           <RadioControl<ContactFormData>
@@ -142,8 +146,8 @@ const ContactForm = () => {
             options={[
               { label: 'Man', value: 'man' },
               { label: 'Vrouw', value: 'vrouw' },
-              { label: 'Non-binair', value: 'non_binary' },
-              { label: 'Zeg ik liever niet', value: 'prefer_not_to_say' },
+              { label: 'Non-binair', value: 'non_binair' },
+              { label: 'Zeg ik liever niet', value: 'zeg_ik_liever_niet' },
             ]}
             registerOptions={{ required: true }}
             wrapperProps={{

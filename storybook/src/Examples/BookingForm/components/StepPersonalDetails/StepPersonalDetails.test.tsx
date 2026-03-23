@@ -34,7 +34,6 @@ describe('Examples / BookingForm - StepPersonalDetails', () => {
   const mockOnNextButtonClick = vi.fn();
 
   const defaultProps = {
-    disabled: false,
     onPrevButtonClick: mockOnPrevButtonClick,
     onNextButtonClick: mockOnNextButtonClick,
   };
