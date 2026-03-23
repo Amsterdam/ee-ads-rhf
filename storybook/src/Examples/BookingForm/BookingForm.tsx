@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import {
   SubmitHandler,
   useForm,
@@ -17,8 +17,8 @@ import bookingFormSchema, { BookingFormData } from './schema';
 
 const BookingForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const isSubmittingRef = useRef(false);
 
   const nowDateTime = new Date();
   const nowDate = new Date().toISOString().split('T')[0];
@@ -39,7 +39,8 @@ const BookingForm = () => {
   const handleSubmit: SubmitHandler<FieldValues> = useCallback(async () => {
     try {
       // Prevent duplicate submissions
-      if (isLoading) return;
+      if (isSubmittingRef.current) return;
+      isSubmittingRef.current = true;
 
       /**
        * Use setTimeout to Simulate API call
@@ -47,16 +48,14 @@ const BookingForm = () => {
        * - Here's where you can show a post-submission success component
        * or redirect the user to a new page
        */
-      setIsLoading(true);
-
       setTimeout(() => {
-        setIsLoading(false);
         setIsSubmitted(true);
+        isSubmittingRef.current = false;
       }, 1500);
     } catch (error) {
       console.log('form error!', error);
     }
-  }, [isLoading]);
+  }, [form.formState.isSubmitting]);
 
   const handleNextStep = () => {
     setCurrentStep(currentStep + 1);
@@ -85,7 +84,7 @@ const BookingForm = () => {
   return (
     <Page>
       <PageHeader className="ams-mb-xl" />
-      {isLoading && !isSubmitted && <Loader />}
+      {form.formState.isSubmitting && !isSubmitted && <Loader />}
       <FormProvider {...form}>
         {!isSubmitted ? steps[currentStep] : <SuccessContent />}
       </FormProvider>
