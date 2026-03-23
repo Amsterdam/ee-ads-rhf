@@ -54,8 +54,9 @@ const BookingForm = () => {
       }, 1500);
     } catch (error) {
       console.log('form error!', error);
+      isSubmittingRef.current = false;
     }
-  }, [form.formState.isSubmitting]);
+  }, []);
 
   const handleNextStep = () => {
     setCurrentStep(currentStep + 1);
