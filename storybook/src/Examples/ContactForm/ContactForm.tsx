@@ -21,7 +21,6 @@ import contactFormSchema, { ContactFormData } from './schema';
 import Loader from './components/Loader/Loader';
 
 // This is a simple React Hook Form example that validates using a Zod schema
-// on change
 const ContactForm = () => {
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),
