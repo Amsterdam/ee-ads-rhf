@@ -38,6 +38,9 @@ const BookingForm = () => {
 
   const handleSubmit: SubmitHandler<FieldValues> = useCallback(async () => {
     try {
+      // Prevent duplicate submissions
+      if (isLoading) return;
+
       /**
        * Use setTimeout to Simulate API call
        * - Here's where validation can happen
@@ -53,7 +56,7 @@ const BookingForm = () => {
     } catch (error) {
       console.log('form error!', error);
     }
-  }, []);
+  }, [isLoading]);
 
   const handleNextStep = () => {
     setCurrentStep(currentStep + 1);
@@ -68,13 +71,11 @@ const BookingForm = () => {
     />,
     <StepAppointment
       minDateValue={nowDate}
-      disabled={isLoading}
       onPrevButtonClick={() => setCurrentStep(1)}
       onNextButtonClick={handleNextStep}
       key="step-2"
     />,
     <StepConfirm
-      disabled={isLoading}
       onPrevButtonClick={() => setCurrentStep(2)}
       onSubmit={handleSubmit}
       key="step-3"

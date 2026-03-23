@@ -19,7 +19,6 @@ import { BookingFormData } from '../../schema';
 
 interface StepAppointmentProps {
   minDateValue: string;
-  disabled?: boolean;
   onPrevButtonClick: () => void;
   onNextButtonClick: () => void;
 }

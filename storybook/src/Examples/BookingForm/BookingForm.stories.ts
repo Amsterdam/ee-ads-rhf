@@ -79,13 +79,11 @@ const meta = {
               />,
               <StepAppointment
                 minDateValue={nowDate}
-                disabled={isLoading}
                 onPrevButtonClick={() => setCurrentStep(1)}
                 onNextButtonClick={handleNextStep}
                 key="step-2"
               />,
               <StepConfirm
-                disabled={isLoading}
                 onPrevButtonClick={() => setCurrentStep(2)}
                 onSubmit={handleSubmit}
                 key="step-3"

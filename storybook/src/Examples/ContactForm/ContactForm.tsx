@@ -39,6 +39,8 @@ const ContactForm = () => {
   // onSubmit will only fire if the form is valid
   const onSubmit = async (data: ContactFormData) => {
     console.log('Form data:', data);
+    // Prevent duplicate submissions
+    if (isLoading) return;
 
     /**
      * If form is valid use setTimeout to Simulate API call
@@ -114,7 +116,6 @@ const ContactForm = () => {
             name="name"
             registerOptions={{ required: true }}
             className="ams-mb-m"
-            disabled={isLoading}
           />
 
           <TextInputControl<ContactFormData>
@@ -125,7 +126,6 @@ const ContactForm = () => {
               required: true,
             }}
             className="ams-mb-m"
-            disabled={isLoading}
           />
 
           <TextAreaControl<ContactFormData>
@@ -133,7 +133,6 @@ const ContactForm = () => {
             name="message"
             registerOptions={{ required: true }}
             className="ams-mb-m"
-            disabled={isLoading}
           />
 
           <RadioControl<ContactFormData>
