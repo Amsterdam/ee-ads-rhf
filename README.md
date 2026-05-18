@@ -25,3 +25,16 @@ This project uses [Release Please](https://github.com/googleapis/release-please)
 ## How to contribute to this repo?
 
 Simply create and submit an issue or pull request. You can also contact us via Teams (DV - Enablement) or Slack (#dv-enablement).
+
+## How to update ADS packages?
+
+```bash
+npm install \
+  @amsterdam/design-system-assets@latest \
+  @amsterdam/design-system-css@latest \
+  @amsterdam/design-system-react@latest \
+  @amsterdam/design-system-react-icons@latest \
+  @amsterdam/design-system-tokens@latest \
+  --workspace=packages/ee-ads-rhf \
+  --workspace=storybook
+```
