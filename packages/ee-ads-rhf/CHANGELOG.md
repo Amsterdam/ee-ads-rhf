@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.5](https://github.com/Amsterdam/ee-ads-rhf/compare/ee-ads-rhf-v0.0.4...ee-ads-rhf-v0.0.5) (2026-06-01)
+
+
+### Bug Fixes
+
+* **examples:** move non-form elements out of form in bookingform ([#44](https://github.com/Amsterdam/ee-ads-rhf/issues/44)) ([f09dbca](https://github.com/Amsterdam/ee-ads-rhf/commit/f09dbcaf81e83c4f21ff6ebc9c5ee4eb337b20c5))
+* update peer dependency version for @amsterdam/design-system-assets ([8e33300](https://github.com/Amsterdam/ee-ads-rhf/commit/8e33300f79d8fdde98e025ddf4325cf65574ac6f))
+
 ## [0.0.4](https://github.com/Amsterdam/ee-ads-rhf/compare/ee-ads-rhf-v0.0.3...ee-ads-rhf-v0.0.4) (2026-03-03)
 
 
