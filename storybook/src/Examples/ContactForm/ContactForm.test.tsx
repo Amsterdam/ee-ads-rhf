@@ -2,7 +2,6 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import ContactForm from './ContactForm';
 import { act } from 'react';
-import userEvent from '@testing-library/user-event';
 
 describe('Examples / ContactForm', () => {
   beforeEach(() => {
@@ -90,40 +89,47 @@ describe('Examples / ContactForm', () => {
   });
 
   it('should show a loader when form is being submitted', async () => {
-    const user = userEvent.setup();
     render(<ContactForm />);
 
-    await user.type(screen.getByLabelText(/naam/i), 'John');
-    await user.type(screen.getByLabelText(/e-mailadres/i), 'john@example.com');
-    await user.type(screen.getByLabelText(/opmerkingen/i), 'Hello!');
-    await user.click(screen.getByLabelText(/man/i));
-    await user.click(screen.getByLabelText(/nieuwsbrieven/i));
+    fireEvent.change(screen.getByLabelText(/naam/i), {
+      target: { value: 'John' },
+    });
+    fireEvent.change(screen.getByLabelText(/e-mailadres/i), {
+      target: { value: 'john@example.com' },
+    });
+    fireEvent.change(screen.getByLabelText(/opmerkingen/i), {
+      target: { value: 'Hello!' },
+    });
+    fireEvent.click(screen.getByLabelText(/man/i));
+    fireEvent.click(screen.getByLabelText(/nieuwsbrieven/i));
+    fireEvent.click(screen.getByRole('button', { name: /verzenden/i }));
 
-    user.click(screen.getByRole('button', { name: /verzenden/i }));
+    expect(
+      screen.getByRole('status', { name: /bezig met verzenden/i }),
+    ).toBeInTheDocument();
 
-    await waitFor(() => {
-      expect(screen.getByTestId('loader')).toBeInTheDocument();
+    // Let the fake API call finish *inside* act
+    await act(async () => {
+      await vi.runOnlyPendingTimersAsync();
     });
   });
 
   it('should show success message after successful submission', async () => {
     render(<ContactForm />);
 
-    act(() => {
-      fireEvent.change(screen.getByLabelText(/naam/i), {
-        target: { value: 'John' },
-      });
-      fireEvent.change(screen.getByLabelText(/e-mailadres/i), {
-        target: { value: 'john@example.com' },
-      });
-      fireEvent.change(screen.getByLabelText(/opmerkingen/i), {
-        target: { value: 'Hello!' },
-      });
-      fireEvent.click(screen.getByLabelText(/man/i));
-      fireEvent.click(screen.getByLabelText(/nieuwsbrieven/i));
-
-      fireEvent.click(screen.getByRole('button', { name: /verzenden/i }));
+    fireEvent.change(screen.getByLabelText(/naam/i), {
+      target: { value: 'John' },
     });
+    fireEvent.change(screen.getByLabelText(/e-mailadres/i), {
+      target: { value: 'john@example.com' },
+    });
+    fireEvent.change(screen.getByLabelText(/opmerkingen/i), {
+      target: { value: 'Hello!' },
+    });
+    fireEvent.click(screen.getByLabelText(/man/i));
+    fireEvent.click(screen.getByLabelText(/nieuwsbrieven/i));
+
+    fireEvent.click(screen.getByRole('button', { name: /verzenden/i }));
 
     // Capture first `setIsLoading(true)` render change
     await act(async () => {

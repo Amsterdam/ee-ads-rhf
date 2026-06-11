@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { act } from 'react';
 import userEvent from '@testing-library/user-event';
+import { act } from 'react';
 import BookingForm from './BookingForm';
 
 describe('Examples / BookingForm', () => {
@@ -90,6 +90,44 @@ describe('Examples / BookingForm', () => {
 
     await waitFor(() => {
       expect(screen.getByText(/dank u voor uw inzending/i)).toBeInTheDocument();
+    });
+  });
+
+  it('should show a loader when form is being submitted', async () => {
+    render(<BookingForm />);
+
+    const user = userEvent.setup();
+
+    await user.click(
+      screen.getByRole('link', { name: /start het formulier/i }),
+    );
+
+    await user.type(screen.getByLabelText(/voornaam/i), 'John Doe');
+    await user.type(screen.getByLabelText(/e-mailadres/i), 'john@example.com');
+    await user.click(screen.getByRole('button', { name: /volgende/i }));
+
+    fireEvent.change(screen.getByLabelText(/startdatum/i), {
+      target: { value: '2025-11-13' },
+    });
+    fireEvent.change(screen.getByLabelText(/einddatum/i), {
+      target: { value: '2025-11-13' },
+    });
+    fireEvent.change(screen.getByLabelText(/starttijd/i), {
+      target: { value: '09:00' },
+    });
+    fireEvent.change(screen.getByLabelText(/eindtijd/i), {
+      target: { value: '10:00' },
+    });
+
+    await user.click(screen.getByRole('button', { name: /volgende/i }));
+    await user.click(screen.getByRole('button', { name: /verzenden/i }));
+
+    expect(
+      screen.getByRole('status', { name: /bezig met verzenden/i }),
+    ).toBeInTheDocument();
+
+    await act(async () => {
+      await vi.runOnlyPendingTimersAsync();
     });
   });
 

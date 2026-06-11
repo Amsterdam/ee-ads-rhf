@@ -5,6 +5,7 @@
     "start": "storybook dev --config-dir config/ --port 6006",
     "build": "storybook build --output-dir dist/ --config-dir config/ --quiet && touch dist/.nojekyll",
     "lint": "eslint . --ext .js,.ts,.jsx,.tsx",
+    "lint:styles": "stylelint ./**/*.{css,scss}",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest --coverage"
@@ -39,6 +40,10 @@
     "jsdom": "^29.1.1",
     "playwright": "^1.60.0",
     "storybook": "^10.4.2",
+    "stylelint": "^17.12.0",
+    "stylelint-config-recommended": "^18.0.0",
+    "stylelint-order": "^8.1.1",
+    "stylelint-prettier": "^5.0.3",
     "vite": "^7.3.2",
     "vitest": "^4.1.8"
   }
