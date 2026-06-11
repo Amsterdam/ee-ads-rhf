@@ -1,5 +1,5 @@
 import { Paragraph } from '@amsterdam/design-system-react';
-import React, { useId } from 'react';
+import { useId } from 'react';
 
 /**
  * Props for the AmsterdamTicTacToeLoader component.
