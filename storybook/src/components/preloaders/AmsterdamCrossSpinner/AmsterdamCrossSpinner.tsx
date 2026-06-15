@@ -1,13 +1,14 @@
 import styles from './AmsterdamCrossSpinner.module.css';
 
 const AmsterdamCrossSpinner = () => (
-  <div>
+  <div aria-hidden="true">
     <div className={styles.svgContainer}>
       {[0, 1, 2].map((index) => (
         <svg
           key={index}
           className={styles.cross}
           style={{ animationDelay: `${index * 0.75}s` }}
+          focusable="false"
           width="187"
           height="187"
           viewBox="0 0 187 187"
