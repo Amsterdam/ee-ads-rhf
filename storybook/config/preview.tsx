@@ -13,15 +13,15 @@ import { viewports } from './viewports';
 import '../src/styles/overrides.css';
 
 export const decorators = [
-  (Story: StoryFn, { args }: StoryContext) => (
+  (Story: StoryFn, context: StoryContext) => (
     <Page
       className={clsx({
-        'ams-docs-dark-background': args['color'] === 'inverse',
-        'ams-docs-light-background': args['color'] === 'contrast',
+        'ams-docs-dark-background': context.args['color'] === 'inverse',
+        'ams-docs-light-background': context.args['color'] === 'contrast',
       })}
       lang="nl"
     >
-      <Story />
+      {Story(context.args, context)}
     </Page>
   ),
   withThemeByClassName({
