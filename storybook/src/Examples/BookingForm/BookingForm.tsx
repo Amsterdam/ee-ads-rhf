@@ -7,12 +7,13 @@ import {
 } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Page, PageHeader } from '@amsterdam/design-system-react';
-import Loader from './components/Loader/Loader';
 import StepIntro from './components/StepIntro/StepIntro';
 import SuccessContent from './components/SuccessContent/SuccessContent';
 import StepPersonalDetails from './components/StepPersonalDetails/StepPersonalDetails';
 import StepAppointment from './components/StepAppointment/StepAppointment';
 import StepConfirm from './components/StepConfirm/StepConfirm';
+import AmsterdamCrossSpinner from '../../components/preloaders/AmsterdamCrossSpinner/AmsterdamCrossSpinner';
+import LoadingOverlay from '../../components/preloaders/LoadingOverlay/LoadingOverlay';
 import bookingFormSchema, { BookingFormData } from './schema';
 
 const BookingForm = () => {
@@ -37,23 +38,26 @@ const BookingForm = () => {
   });
 
   const handleSubmit: SubmitHandler<FieldValues> = useCallback(async () => {
-    try {
-      // Prevent duplicate submissions
-      if (isSubmittingRef.current) return;
-      isSubmittingRef.current = true;
+    // Prevent duplicate submissions
+    if (isSubmittingRef.current) return;
+    isSubmittingRef.current = true;
 
-      /**
-       * Use setTimeout to Simulate API call
-       * - Here's where validation can happen
-       * - Here's where you can show a post-submission success component
-       * or redirect the user to a new page
-       */
-      setTimeout(() => {
-        setIsSubmitted(true);
-        isSubmittingRef.current = false;
-      }, 1500);
+    /**
+     * Use setTimeout to Simulate API call
+     * - Here's where validation can happen
+     * - Here's where you can show a post-submission success component
+     * or redirect the user to a new page
+     */
+    try {
+      await new Promise<void>((resolve) => {
+        setTimeout(() => {
+          setIsSubmitted(true);
+          resolve();
+        }, 1500);
+      });
     } catch (error) {
       console.log('form error!', error);
+    } finally {
       isSubmittingRef.current = false;
     }
   }, []);
@@ -85,7 +89,11 @@ const BookingForm = () => {
   return (
     <Page>
       <PageHeader className="ams-mb-xl" />
-      {form.formState.isSubmitting && !isSubmitted && <Loader />}
+      {form.formState.isSubmitting && !isSubmitted && (
+        <LoadingOverlay>
+          <AmsterdamCrossSpinner />
+        </LoadingOverlay>
+      )}
       <FormProvider {...form}>
         {!isSubmitted ? steps[currentStep] : <SuccessContent />}
       </FormProvider>

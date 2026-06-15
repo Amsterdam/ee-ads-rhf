@@ -6,7 +6,7 @@ import {
   InvalidFormAlert,
   Paragraph,
 } from '@amsterdam/design-system-react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import {
   CheckboxControlGroup,
@@ -17,8 +17,9 @@ import {
   TextInputControl,
 } from '@amsterdam/ee-ads-rhf';
 import { zodResolver } from '@hookform/resolvers/zod';
+import LoadingOverlay from '../../components/preloaders/LoadingOverlay/LoadingOverlay';
+import AmsterdamTicTacToeLoader from '../../components/preloaders/AmsterdamTicTacToeLoader/AmsterdamTicTacToeLoader';
 import contactFormSchema, { ContactFormData } from './schema';
-import Loader from './components/Loader/Loader';
 
 // This is a simple React Hook Form example that validates using a Zod schema
 const ContactForm = () => {
@@ -49,14 +50,32 @@ const ContactForm = () => {
      * - Here's where you can show a post-submission success component
      * or redirect the user to a new page
      */
-    setTimeout(() => {
-      setIsSubmitted(true);
+    try {
+      await new Promise<void>((resolve) => {
+        setTimeout(() => {
+          setIsSubmitted(true);
+          resolve();
+        }, 1500);
+      });
+    } finally {
       isSubmittingRef.current = false;
-    }, 1500);
+    }
   };
 
   const showErrors = Object.keys(form.formState.errors).length > 0;
   const alertErrors = mapErrorsToAlert(form.formState.errors);
+
+  // Disable scroll when preloader shows
+  useEffect(() => {
+    if (!form.formState.isSubmitting) return;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [form.formState.isSubmitting]);
 
   if (isSubmitted) {
     return (
@@ -101,7 +120,12 @@ const ContactForm = () => {
 
         <FormProvider form={form} onSubmit={onSubmit}>
           {/* Fake loader to simulate API request */}
-          {form.formState.isSubmitting && <Loader />}
+          {form.formState.isSubmitting && (
+            <LoadingOverlay>
+              <AmsterdamTicTacToeLoader />
+            </LoadingOverlay>
+          )}
+
           {showErrors && (
             <InvalidFormAlert
               errors={alertErrors}

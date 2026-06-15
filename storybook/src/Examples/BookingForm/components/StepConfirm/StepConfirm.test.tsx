@@ -1,5 +1,4 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { vi } from 'vitest';
 import { FormProvider, useForm } from 'react-hook-form';
 import { ReactElement } from 'react';
 import { BookingFormData } from '../../schema';

@@ -1,4 +1,3 @@
-import { vi } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { ReactElement, ReactNode } from 'react';
