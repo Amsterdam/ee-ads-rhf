@@ -6,8 +6,9 @@ import {
   useForm,
 } from 'react-hook-form';
 
-export interface FormProviderProps<TFieldValues extends FieldValues>
-  extends PropsWithChildren {
+export interface FormProviderProps<
+  TFieldValues extends FieldValues,
+> extends PropsWithChildren {
   form: ReturnType<typeof useForm<TFieldValues>>;
   onSubmit: SubmitHandler<TFieldValues>;
   noValidate?: boolean;
