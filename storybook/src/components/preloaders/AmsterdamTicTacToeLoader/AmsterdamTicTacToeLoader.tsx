@@ -9,8 +9,7 @@ interface AmsterdamTicTacToeLoaderProps {
   duration?: string;
   /** Whether to show the Tic-Tac-Toe grid lines. Default is false. */
   showGrid?: boolean;
-  /** Theme of the spinner. 'auto' follows system preferences. Default is
-   * 'auto'. */
+  /** Theme of the spinner. 'auto' follows system preferences. Default is 'light'. */
   theme?: 'light' | 'dark' | 'auto';
   /** Optional class name for the wrapper. */
   className?: string;
