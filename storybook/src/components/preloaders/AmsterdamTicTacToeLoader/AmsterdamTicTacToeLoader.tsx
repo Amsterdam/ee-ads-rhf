@@ -7,7 +7,7 @@ import { useId } from 'react';
 interface AmsterdamTicTacToeLoaderProps {
   /** CSS duration string (e.g., '8s', '5000ms'). Default is '8s'. */
   duration?: string;
-  /** Whether to show the Tic-Tac-Toe grid lines. Default is false. */
+  /** Whether to show the Tic-Tac-Toe grid lines. Default is true. */
   showGrid?: boolean;
   /** Theme of the spinner. 'auto' follows system preferences. Default is 'light'. */
   theme?: 'light' | 'dark' | 'auto';
