@@ -8,8 +8,7 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "resolveJsonModule": true,
-    "jsx": "react-jsx",
-    "baseUrl": "."
+    "jsx": "react-jsx"
   },
   "include": ["packages/*/src/**/*", "packages/*/test/**/*"],
   "exclude": ["**/node_modules", "*/dist"]
