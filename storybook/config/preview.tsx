@@ -4,6 +4,7 @@ import '@amsterdam/design-system-assets/font/index.css';
 import '@amsterdam/design-system-css/dist/index.css';
 
 import type { Preview, StoryContext, StoryFn } from '@storybook/react-vite';
+import type { CSSProperties } from 'react';
 
 import { Page } from '@amsterdam/design-system-react';
 import { withThemeByClassName } from '@storybook/addon-themes';
@@ -11,6 +12,10 @@ import { clsx } from 'clsx';
 
 import { viewports } from './viewports';
 import '../src/styles/overrides.css';
+
+const storybookPageStyle = {
+  '--ams-page-container-type': 'normal',
+} as CSSProperties;
 
 export const decorators = [
   (Story: StoryFn, context: StoryContext) => (
@@ -20,6 +25,7 @@ export const decorators = [
         'ams-docs-light-background': context.args['color'] === 'contrast',
       })}
       lang="nl"
+      style={storybookPageStyle}
     >
       {Story(context.args, context)}
     </Page>
