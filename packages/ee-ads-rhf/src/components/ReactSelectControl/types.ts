@@ -6,5 +6,4 @@ export type SelectValue<IsMulti extends boolean> = IsMulti extends true
   : SingleValue<SelectOption>;
 
 export type ReactSelectValue =
-  | SingleValue<SelectOption>
-  | MultiValue<SelectOption>;
+  SingleValue<SelectOption> | MultiValue<SelectOption>;
