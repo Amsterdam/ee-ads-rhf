@@ -50,7 +50,7 @@ jobs:
         with:
           branch: gh-pages
           folder: storybook/dist
-          clean-exclude: demo-*
+          single-commit: true
 
       # The logic below handles the npm publication:
       - name: Publish
