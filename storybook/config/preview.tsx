@@ -27,7 +27,7 @@ export const decorators = [
       lang="nl"
       style={storybookPageStyle}
     >
-      {Story(context.args, context)}
+      <Story />
     </Page>
   ),
   withThemeByClassName({
