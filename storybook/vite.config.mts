@@ -12,12 +12,12 @@ export default defineConfig({
     alias: {
       // point the package name to the package source during tests
       '@amsterdam/ee-ads-rhf': path.resolve(
-        __dirname,
+        import.meta.dirname,
         '../packages/ee-ads-rhf/src',
       ),
       // ensure single react-hook-form instance
       'react-hook-form': path.resolve(
-        __dirname,
+        import.meta.dirname,
         '../node_modules/react-hook-form',
       ),
     },

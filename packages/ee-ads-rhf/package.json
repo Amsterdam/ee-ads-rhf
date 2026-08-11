@@ -24,7 +24,7 @@
   ],
   "scripts": {
     "dev": "rollup -c --watch",
-    "build": "tsc --project ./tsconfig.build.json && rollup -c",
+    "build": "tsc --project ./tsconfig.dts.json && rollup -c",
     "clean": "rimraf dist/",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -35,11 +35,11 @@
     "clsx": "^2.1.1"
   },
   "devDependencies": {
-    "@amsterdam/design-system-assets": "^2.3.0",
-    "@amsterdam/design-system-css": "^4.1.0",
-    "@amsterdam/design-system-react": "^4.1.0",
-    "@amsterdam/design-system-react-icons": "^2.0.0",
-    "@amsterdam/design-system-tokens": "^4.0.1",
+    "@amsterdam/design-system-assets": "^2.6.0",
+    "@amsterdam/design-system-css": "^4.4.0",
+    "@amsterdam/design-system-react": "^4.4.0",
+    "@amsterdam/design-system-react-icons": "^2.2.0",
+    "@amsterdam/design-system-tokens": "^4.3.0",
     "@rollup/plugin-commonjs": "^29.0.3",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-typescript": "^12.3.0",
