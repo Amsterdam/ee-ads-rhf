@@ -13,6 +13,12 @@ npm i react react-dom react-hook-form
 npm i @amsterdam/design-system-assets @amsterdam/design-system-css @amsterdam/design-system-react @amsterdam/design-system-react-icons @amsterdam/design-system-tokens
 ```
 
+### Updating Amsterdam Design System packages
+
+Always update all five `@amsterdam/design-system-*` packages together, never just one. ADS's own packages peer-depend on each other with exact version pins (e.g. `@amsterdam/design-system-css` may require an exact `@amsterdam/design-system-assets` version), so bumping only one of them will make `npm install` fail with an `ERESOLVE` error — that failure comes from ADS's internal pins, not from `@amsterdam/ee-ads-rhf`.
+
+`@amsterdam/ee-ads-rhf`'s own peer dependency ranges only restrict the ADS **major** version, so installing a newer ADS minor/patch release (as a full, matching set) will not require updating `@amsterdam/ee-ads-rhf` itself. Only an ADS major version bump does.
+
 ## Usage
 
 ```tsx

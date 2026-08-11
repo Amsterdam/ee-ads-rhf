@@ -1,3 +1,13 @@
-.sb-story .ams-page {
+#storybook-root .ams-page,
+#storybook-docs .ams-page {
   min-block-size: initial;
+  /* ADS 4.2+ made .ams-page a container-query container (container-type:
+     inline-size). That containment stops it from sizing itself from its
+     content, collapsing it to 0 width inside Storybook's centered,
+     flex-based story layout (and cascading into "Type" rendering as
+     "T\ny\np\ne"). We don't use container queries in stories, so disable
+     containment here to restore normal content-based sizing.
+     #storybook-root covers the canvas/story view, #storybook-docs covers
+     the autodocs page, which renders each story example separately. */
+  container-type: normal;
 }

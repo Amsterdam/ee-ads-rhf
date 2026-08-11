@@ -14,6 +14,8 @@ const outputGlobals = {
   'react-dom': 'ReactDOM',
 };
 
+const isWatch = process.env.ROLLUP_WATCH === 'true';
+
 export default [
   {
     input: 'src/index.ts',
@@ -61,10 +63,18 @@ export default [
       }),
     ],
   },
-  {
-    input: './dist/index.d.ts',
-    output: [{ file: 'dist/index.d.ts', format: 'es' }],
-    plugins: [dts()],
-    external: [/\.scss$/, /\.css$/],
-  },
+  // Bundles the .d.ts files tsc already emitted to dist/index.d.ts into
+  // itself (input === output). Skipped in watch mode: rollup would watch
+  // that file as an input and immediately re-trigger on its own output,
+  // failing with "Cannot import the generated bundle".
+  ...(isWatch
+    ? []
+    : [
+        {
+          input: './dist/index.d.ts',
+          output: [{ file: 'dist/index.d.ts', format: 'es' }],
+          plugins: [dts()],
+          external: [/\.scss$/, /\.css$/],
+        },
+      ]),
 ];
