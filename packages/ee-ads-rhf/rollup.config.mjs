@@ -49,6 +49,10 @@ export default [
       nodePolyfills(),
       typescript({
         tsconfig: './tsconfig.build.json',
+        compilerOptions: {
+          declaration: false,
+          declarationMap: false,
+        },
       }),
       postcss({
         modules: {
@@ -62,7 +66,7 @@ export default [
     ],
   },
   {
-    input: './dist/index.d.ts',
+    input: './dist/types/index.d.ts',
     output: [{ file: 'dist/index.d.ts', format: 'es' }],
     plugins: [dts()],
     external: [/\.scss$/, /\.css$/],
