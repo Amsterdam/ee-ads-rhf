@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.0.6](https://github.com/Amsterdam/ee-ads-rhf/compare/ee-ads-rhf-v0.0.5...ee-ads-rhf-v0.0.6) (2026-08-11)
+
+
+### Features
+
+* ams preloaders added to demos ([#55](https://github.com/Amsterdam/ee-ads-rhf/issues/55)) ([fa9eb90](https://github.com/Amsterdam/ee-ads-rhf/commit/fa9eb90936fb9c385d1ed38f0ec588741ace01ec))
+
+
+### Bug Fixes
+
+* update typescript plugin configuration in rollup config because of co-pilot review ([5521bcb](https://github.com/Amsterdam/ee-ads-rhf/commit/5521bcb503bea030277f756f4e275fac9ec3f3bd))
+
 ## [0.0.5](https://github.com/Amsterdam/ee-ads-rhf/compare/ee-ads-rhf-v0.0.4...ee-ads-rhf-v0.0.5) (2026-06-01)
 
 
