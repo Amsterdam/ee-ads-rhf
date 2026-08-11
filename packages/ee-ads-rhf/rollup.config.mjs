@@ -49,6 +49,10 @@ export default [
       nodePolyfills(),
       typescript({
         tsconfig: './tsconfig.build.json',
+        compilerOptions: {
+          declaration: false,
+          declarationMap: false,
+        },
       }),
       postcss({
         modules: {
