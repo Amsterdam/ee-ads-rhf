@@ -62,6 +62,7 @@ export const DateControl = forwardRef(function DateControl<
     hideFieldError = false,
     hideErrorMessage = false,
     shouldShow = true,
+    inFieldSet,
     ...attributes
   }: DateControlProps<TFieldValues>,
   ref: Ref<HTMLInputElement>,
@@ -93,7 +94,11 @@ export const DateControl = forwardRef(function DateControl<
         return (
           <Field invalid={!hideFieldError && hasError} {...wrapperProps}>
             {label && (
-              <Label htmlFor={identifier} optional={optional}>
+              <Label
+                htmlFor={identifier}
+                optional={optional}
+                inFieldSet={inFieldSet}
+              >
                 {label}
               </Label>
             )}

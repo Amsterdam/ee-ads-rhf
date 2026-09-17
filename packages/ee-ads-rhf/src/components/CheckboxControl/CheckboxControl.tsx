@@ -60,6 +60,10 @@ export const CheckboxControl = forwardRef(function CheckboxControl<
     hideFieldError = false,
     hideErrorMessage = false,
     shouldShow = true,
+    // Not applied: CheckboxControl has neither a FieldSet nor an ADS Label
+    // to forward this to (its label is Checkbox's own native <label>).
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    inFieldSet,
     ...attributes
   }: CheckboxControlProps<TFieldValues>,
   ref: Ref<HTMLInputElement>,

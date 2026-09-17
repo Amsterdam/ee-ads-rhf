@@ -213,6 +213,18 @@ describe('TextAreaControl', () => {
     expect(screen.getByLabelText(/Comments/i)).toBeInTheDocument();
   });
 
+  it('applies the in-fieldset label style when inFieldSet is true', () => {
+    const { container } = render(
+      <Wrapper>
+        <TextAreaControl name="message" label="Comments" inFieldSet />
+      </Wrapper>,
+    );
+
+    expect(container.querySelector('label')).toHaveClass(
+      'ams-label--in-fieldset',
+    );
+  });
+
   it('re-renders when shouldShow depends on watched value', async () => {
     const user = userEvent.setup();
 

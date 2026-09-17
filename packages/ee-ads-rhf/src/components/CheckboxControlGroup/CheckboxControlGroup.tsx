@@ -62,6 +62,7 @@ export const CheckboxControlGroup = forwardRef(function CheckboxControlGroup<
     hideErrorMessage = false,
     shouldShow = true,
     columns = 1,
+    inFieldSet,
     ...attributes
   }: CheckboxControlGroupProps<TFieldValues>,
   ref: Ref<HTMLInputElement>,
@@ -133,6 +134,7 @@ export const CheckboxControlGroup = forwardRef(function CheckboxControlGroup<
             legend={label ?? ''}
             optional={optional}
             invalid={!hideFieldError && hasError}
+            inFieldSet={inFieldSet}
             {...wrapperProps}
           >
             {!!description &&

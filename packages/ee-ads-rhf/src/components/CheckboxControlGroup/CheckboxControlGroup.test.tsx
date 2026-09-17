@@ -254,6 +254,23 @@ describe('CheckboxControlGroup', () => {
     ).toBeInTheDocument();
   });
 
+  it('applies the in-fieldset legend style when inFieldSet is true', () => {
+    const { container } = render(
+      <Wrapper>
+        <CheckboxControlGroup<FormValues>
+          label="Test Label"
+          name="colors"
+          options={['Green', 'Yellow']}
+          inFieldSet
+        />
+      </Wrapper>,
+    );
+
+    expect(container.querySelector('legend')).toHaveClass(
+      'ams-field-set__legend--in-fieldset',
+    );
+  });
+
   it('re-renders when shouldShow depends on watched value', async () => {
     const user = userEvent.setup();
 

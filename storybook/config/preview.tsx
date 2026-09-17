@@ -3,7 +3,7 @@ import '@amsterdam/design-system-tokens/dist/compact.theme.css';
 import '@amsterdam/design-system-assets/font/index.css';
 import '@amsterdam/design-system-css/dist/index.css';
 
-import type { Preview, StoryContext, StoryFn } from '@storybook/react-vite';
+import type { Decorator, Preview } from '@storybook/react-vite';
 import type { CSSProperties } from 'react';
 
 import { Page } from '@amsterdam/design-system-react';
@@ -17,8 +17,8 @@ const storybookPageStyle = {
   '--ams-page-container-type': 'normal',
 } as CSSProperties;
 
-export const decorators = [
-  (Story: StoryFn, context: StoryContext) => (
+export const decorators: Decorator[] = [
+  (Story, context) => (
     <Page
       className={clsx({
         'ams-docs-dark-background': context.args['color'] === 'inverse',

@@ -20,7 +20,7 @@ const meta = {
     },
     columns: {
       control: 'number',
-      default: 1,
+      table: { defaultValue: { summary: '1' } },
       description: 'Number of columns to display the checkboxes in.',
     },
     description: {
@@ -46,14 +46,19 @@ const meta = {
     },
     hideErrorMessage: {
       control: 'boolean',
-      default: 'false',
+      table: { defaultValue: { summary: 'false' } },
       description: 'Hides the error message text',
     },
     shouldShow: {
       control: 'boolean',
-      default: 'true',
+      table: { defaultValue: { summary: 'true' } },
       description:
         'Whether to render the field, useful for conditional form elements',
+    },
+    inFieldSet: {
+      control: 'boolean',
+      description:
+        'Whether this control is nested inside another FieldSet. Shows the legend in a lighter style.',
     },
     attributes: {
       control: 'object',

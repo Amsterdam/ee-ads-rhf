@@ -64,6 +64,7 @@ export const SelectControl = forwardRef(function SelectControl<
     hideFieldError = false,
     hideErrorMessage = false,
     shouldShow = true,
+    inFieldSet,
     ...attributes
   }: SelectControlProps<TFieldValues>,
   ref: Ref<HTMLSelectElement>,
@@ -145,7 +146,11 @@ export const SelectControl = forwardRef(function SelectControl<
 
         return (
           <Field invalid={!hideFieldError && hasError} {...wrapperProps}>
-            <Label htmlFor={identifier} optional={optional}>
+            <Label
+              htmlFor={identifier}
+              optional={optional}
+              inFieldSet={inFieldSet}
+            >
               {label}
             </Label>
             {!!description &&

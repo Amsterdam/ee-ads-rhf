@@ -60,6 +60,7 @@ export const SwitchControl = forwardRef(function SwitchControl<
     hideFieldError = false,
     hideErrorMessage = false,
     shouldShow = true,
+    inFieldSet,
     ...attributes
   }: SwitchControlProps<TFieldValues>,
   ref: Ref<HTMLInputElement>,
@@ -101,7 +102,9 @@ export const SwitchControl = forwardRef(function SwitchControl<
             )}
 
             <Row>
-              <Label htmlFor={identifier}>{label}</Label>
+              <Label htmlFor={identifier} inFieldSet={inFieldSet}>
+                {label}
+              </Label>
               <Switch
                 id={identifier}
                 disabled={disabled}

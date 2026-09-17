@@ -186,6 +186,18 @@ describe('TextInputControl', () => {
     expect(screen.getByLabelText(/Your Name/i)).toBeInTheDocument();
   });
 
+  it('applies the in-fieldset label style when inFieldSet is true', () => {
+    const { container } = render(
+      <Wrapper>
+        <TextInputControl name="name" label="Your Name" inFieldSet />
+      </Wrapper>,
+    );
+
+    expect(container.querySelector('label')).toHaveClass(
+      'ams-label--in-fieldset',
+    );
+  });
+
   it('re-renders when shouldShow depends on watched value', async () => {
     const user = userEvent.setup();
 

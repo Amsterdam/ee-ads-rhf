@@ -41,17 +41,17 @@ const meta = {
     },
     hideFieldError: {
       control: 'boolean',
-      default: 'false',
+      table: { defaultValue: { summary: 'false' } },
       description: 'Hides the invalid prop on the `Field` wrapper component',
     },
     hideErrorMessage: {
       control: 'boolean',
-      default: 'false',
+      table: { defaultValue: { summary: 'false' } },
       description: 'Hides the error message text',
     },
     shouldShow: {
       control: 'boolean',
-      default: 'true',
+      table: { defaultValue: { summary: 'true' } },
       description:
         'Whether to render the field, useful for conditional form elements',
     },

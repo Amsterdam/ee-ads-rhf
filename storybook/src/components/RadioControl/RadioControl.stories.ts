@@ -24,7 +24,7 @@ const meta = {
     },
     columns: {
       control: 'number',
-      default: 1,
+      table: { defaultValue: { summary: '1' } },
       description: 'Number of columns to display the radio buttons in.',
     },
     required: {
@@ -46,12 +46,12 @@ const meta = {
     },
     hideErrorMessage: {
       control: 'boolean',
-      default: 'false',
+      table: { defaultValue: { summary: 'false' } },
       description: 'Hides the error message text',
     },
     shouldShow: {
       control: 'boolean',
-      default: 'true',
+      table: { defaultValue: { summary: 'true' } },
       description:
         'Whether to render tshe field, useful for conditional form elements',
     },

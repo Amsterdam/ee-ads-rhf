@@ -11,6 +11,7 @@ export type FormControlBase<TFieldValues extends FieldValues = FieldValues> = {
     RegisterOptions<TFieldValues, FieldPath<TFieldValues>>,
     'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
   >;
+  inFieldSet?: boolean;
 };
 
 export type SelectOption = { label: string; value: string };

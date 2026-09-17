@@ -42,19 +42,24 @@ const meta = {
     },
     hideFieldError: {
       control: 'boolean',
-      default: 'false',
+      table: { defaultValue: { summary: 'false' } },
       description: 'Hides the invalid prop on the `Field` wrapper component',
     },
     hideErrorMessage: {
       control: 'boolean',
-      default: 'false',
+      table: { defaultValue: { summary: 'false' } },
       description: 'Hides the error message text',
     },
     shouldShow: {
       control: 'boolean',
-      default: 'true',
+      table: { defaultValue: { summary: 'true' } },
       description:
         'Whether to render the field, useful for conditional form elements',
+    },
+    inFieldSet: {
+      control: 'boolean',
+      description:
+        'Whether this control is nested inside a FieldSet. Shows the label in a lighter style.',
     },
     attributes: {
       control: 'object',

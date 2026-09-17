@@ -208,6 +208,18 @@ describe('DateControl', () => {
     expect(screen.getByLabelText(/Date of Birth/i)).toBeInTheDocument();
   });
 
+  it('applies the in-fieldset label style when inFieldSet is true', () => {
+    const { container } = render(
+      <Wrapper>
+        <DateControl name="birthDate" label="Date of Birth" inFieldSet />
+      </Wrapper>,
+    );
+
+    expect(container.querySelector('label')).toHaveClass(
+      'ams-label--in-fieldset',
+    );
+  });
+
   it('re-renders when shouldShow depends on watched value', async () => {
     const user = userEvent.setup();
 

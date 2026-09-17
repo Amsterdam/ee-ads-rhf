@@ -247,6 +247,23 @@ describe('ReactSelectControl', () => {
     expect(screen.getByLabelText(/Favorite color/i)).toBeInTheDocument();
   });
 
+  it('applies the in-fieldset label style when inFieldSet is true', () => {
+    const { container } = render(
+      <Wrapper>
+        <ReactSelectControl<FormValues>
+          name="color"
+          label="Favorite Color"
+          options={options}
+          inFieldSet
+        />
+      </Wrapper>,
+    );
+
+    expect(container.querySelector('label')).toHaveClass(
+      'ams-label--in-fieldset',
+    );
+  });
+
   it('re-renders when shouldShow depends on watched value', async () => {
     const user = userEvent.setup();
 
