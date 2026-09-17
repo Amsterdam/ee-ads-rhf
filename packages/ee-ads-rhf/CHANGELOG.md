@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.7](https://github.com/Amsterdam/ee-ads-rhf/compare/ee-ads-rhf-v0.0.6...ee-ads-rhf-v0.0.7) (2026-09-17)
+
+
+### Features
+
+* add inFieldSet prop for nested FieldSet/Label styling ([ce1e824](https://github.com/Amsterdam/ee-ads-rhf/commit/ce1e824aabeee7f2a8587018b5c5d25438bbf795))
+* add inFieldSet prop to various controls for styling in nested FieldSets ([b15a924](https://github.com/Amsterdam/ee-ads-rhf/commit/b15a924b0176bc6f121a67744c14be891d27e03e))
+
 ## [0.0.6](https://github.com/Amsterdam/ee-ads-rhf/compare/ee-ads-rhf-v0.0.5...ee-ads-rhf-v0.0.6) (2026-08-11)
 
 
