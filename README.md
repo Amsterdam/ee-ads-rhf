@@ -26,6 +26,39 @@ This project uses [Release Please](https://github.com/googleapis/release-please)
 
 Simply create and submit an issue or pull request. You can also contact us via Teams (DV - Enablement) or Slack (#dv-enablement).
 
+## How to update packages?
+
+This is an npm workspaces monorepo, so dependencies live in multiple `package.json` files (root, `packages/ee-ads-rhf`, `storybook`) but share one `package-lock.json`.
+
+**1. See what's outdated:**
+```bash
+npm outdated --workspaces --include-workspace-root
+```
+`Wanted` is the highest version allowed by the current `^`/`~` range in `package.json`; `Latest` is the newest version on npm (often a major bump).
+
+**2. Update within the existing semver ranges (safe, no `package.json` changes):**
+```bash
+npm update --workspaces
+```
+Or target a single package/workspace:
+```bash
+npm update <package> -w <workspace>
+```
+
+**3. Update to a new major version (changes `package.json`):**
+```bash
+npm install <package>@latest -w <workspace>
+```
+Do this per package (or small logical group), not all at once, so it's clear which bump caused which breakage.
+
+**4. Verify:**
+```bash
+npm run build
+npm run test
+```
+
+> The ADS packages (`@amsterdam/design-system-*`) follow a different flow — see the next section.
+
 ## How to update ADS packages?
 
 In `packages/ee-ads-rhf` the ADS packages are `devDependencies` (exposed as `peerDependencies`), so they must be updated separately from `storybook`.
