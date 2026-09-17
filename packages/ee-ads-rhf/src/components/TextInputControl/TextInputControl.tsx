@@ -58,6 +58,7 @@ export const TextInputControl = forwardRef(function TextInputControl<
     hideFieldError = false,
     hideErrorMessage = false,
     shouldShow = true,
+    inFieldSet,
     ...attributes
   }: TextInputControlProps<TFieldValues>,
   ref: Ref<HTMLInputElement>,
@@ -89,7 +90,11 @@ export const TextInputControl = forwardRef(function TextInputControl<
         return (
           <Field invalid={!hideFieldError && hasError} {...wrapperProps}>
             {label && (
-              <Label htmlFor={identifier} optional={optional}>
+              <Label
+                htmlFor={identifier}
+                optional={optional}
+                inFieldSet={inFieldSet}
+              >
                 {label}
               </Label>
             )}

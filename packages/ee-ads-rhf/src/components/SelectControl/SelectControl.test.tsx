@@ -325,6 +325,23 @@ describe('SelectControl', () => {
     expect(screen.getByLabelText(/Test Label/i)).toBeInTheDocument();
   });
 
+  it('applies the in-fieldset label style when inFieldSet is true', () => {
+    const { container } = render(
+      <Wrapper>
+        <SelectControl<FormValues>
+          label="Test Label"
+          name="country"
+          options={['A', 'B', 'C']}
+          inFieldSet
+        />
+      </Wrapper>,
+    );
+
+    expect(container.querySelector('label')).toHaveClass(
+      'ams-label--in-fieldset',
+    );
+  });
+
   it('re-renders when shouldShow depends on watched value', async () => {
     const user = userEvent.setup();
 

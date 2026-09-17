@@ -222,6 +222,22 @@ describe('SwitchControl', () => {
     expect(screen.getByLabelText(/Test label/i)).toBeInTheDocument();
   });
 
+  it('applies the in-fieldset label style when inFieldSet is true', () => {
+    const { container } = render(
+      <Wrapper>
+        <SwitchControl<FormValues>
+          label="Test Label"
+          name="notify"
+          inFieldSet
+        />
+      </Wrapper>,
+    );
+
+    expect(container.querySelector('label.ams-label')).toHaveClass(
+      'ams-label--in-fieldset',
+    );
+  });
+
   it('re-renders when shouldShow depends on watched value', async () => {
     const user = userEvent.setup();
 

@@ -61,6 +61,7 @@ export const TextAreaControl = forwardRef(function TextAreaControl<
     hideFieldError = false,
     hideErrorMessage = false,
     shouldShow = true,
+    inFieldSet,
     ...attributes
   }: TextAreaControlProps<TFieldValues>,
   ref: Ref<HTMLTextAreaElement>,
@@ -92,7 +93,11 @@ export const TextAreaControl = forwardRef(function TextAreaControl<
         return (
           <Field invalid={!hideFieldError && hasError} {...wrapperProps}>
             {label && (
-              <Label htmlFor={identifier} optional={optional}>
+              <Label
+                htmlFor={identifier}
+                optional={optional}
+                inFieldSet={inFieldSet}
+              >
                 {label}
               </Label>
             )}

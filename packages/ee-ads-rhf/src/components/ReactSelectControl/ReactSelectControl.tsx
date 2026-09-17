@@ -72,6 +72,7 @@ export const ReactSelectControl = forwardRef(function ReactSelectControl<
     hideErrorMessage = false,
     inputProps,
     shouldShow = true,
+    inFieldSet,
   }: ReactSelectControlProps<TFieldValues>,
   ref: Ref<SelectInstance<SelectOption> | null>,
 ) {
@@ -105,7 +106,11 @@ export const ReactSelectControl = forwardRef(function ReactSelectControl<
 
         return (
           <Field invalid={!hideFieldError && hasError} {...wrapperProps}>
-            <Label htmlFor={identifier} optional={optional}>
+            <Label
+              htmlFor={identifier}
+              optional={optional}
+              inFieldSet={inFieldSet}
+            >
               {label}
             </Label>
 

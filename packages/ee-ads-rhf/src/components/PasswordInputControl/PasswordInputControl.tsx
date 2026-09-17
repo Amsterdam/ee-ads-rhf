@@ -58,6 +58,7 @@ export const PasswordInputControl = forwardRef(function PasswordInputControl<
     hideFieldError = false,
     hideErrorMessage = false,
     shouldShow = true,
+    inFieldSet,
     ...attributes
   }: PasswordInputControlProps<TFieldValues>,
   ref: Ref<HTMLInputElement>,
@@ -89,7 +90,11 @@ export const PasswordInputControl = forwardRef(function PasswordInputControl<
         return (
           <Field invalid={!hideFieldError && hasError} {...wrapperProps}>
             {label && (
-              <Label htmlFor={identifier} optional={optional}>
+              <Label
+                htmlFor={identifier}
+                optional={optional}
+                inFieldSet={inFieldSet}
+              >
                 {label}
               </Label>
             )}
