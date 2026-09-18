@@ -60,6 +60,7 @@ export const RadioControl = forwardRef(function RadioControl<
     hideErrorMessage = false,
     shouldShow = true,
     columns = 1,
+    inFieldSet,
     ...attributes
   }: RadioControlProps<TFieldValues>,
   ref: Ref<HTMLInputElement>,
@@ -122,6 +123,7 @@ export const RadioControl = forwardRef(function RadioControl<
             role="radiogroup"
             optional={optional}
             invalid={!hideFieldError && hasError}
+            inFieldSet={inFieldSet}
             {...wrapperProps}
           >
             {!!description &&
