@@ -237,6 +237,23 @@ describe('RadioControl', () => {
     ).toBeInTheDocument();
   });
 
+  it('applies the in-fieldset legend style when inFieldSet is true', () => {
+    render(
+      <Wrapper>
+        <RadioControl<FormValues>
+          label="Test Label"
+          name="color"
+          options={['Green', 'Yellow']}
+          inFieldSet
+        />
+      </Wrapper>,
+    );
+
+    expect(screen.getByText('Test Label').closest('legend')).toHaveClass(
+      'ams-field-set__legend--in-fieldset',
+    );
+  });
+
   it('re-renders when shouldShow depends on watched value', async () => {
     const user = userEvent.setup();
 

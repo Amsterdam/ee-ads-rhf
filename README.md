@@ -22,6 +22,16 @@ This project is a Node.js monorepo application with two workspaces:
 
 This project uses [Release Please](https://github.com/googleapis/release-please) and [Semantic Versioning](https://semver.org/), which will automatically run on successful merges to `main`. This action is followed by an NPM publish step. Please read the [How to create a release](./docs/how-to-create-a-release.md) for more information.
 
+### Branch naming
+
+Release Please determines the version bump from the [Conventional Commits](https://www.conventionalcommits.org/) type of the commits/PR titles it finds on `main` (also enforced by the PR title check). Name your branch with the matching type prefix so it's clear up front what kind of release it will trigger:
+
+- `feat/...` — a new feature (bumps the minor version)
+- `fix/...` — a bug fix (bumps the patch version)
+- `chore/...` — maintenance work that doesn't need its own release (e.g. dependency updates, docs, refactors)
+
+Branch off of `develop` and open your PR against `develop`, not `main`. `main` is only updated by fast-forward merging `develop` into it to trigger a release, as described in [How to create a release](./docs/how-to-create-a-release.md).
+
 ## How to contribute to this repo?
 
 Simply create and submit an issue or pull request. You can also contact us via Teams (DV - Enablement) or Slack (#dv-enablement).
