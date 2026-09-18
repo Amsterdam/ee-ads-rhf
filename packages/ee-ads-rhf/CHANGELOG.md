@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.8](https://github.com/Amsterdam/ee-ads-rhf/compare/ee-ads-rhf-v0.0.7...ee-ads-rhf-v0.0.8) (2026-09-18)
+
+
+### Features
+
+* add inFieldSet support to CheckboxControl and RadioControl comp… ([f689bea](https://github.com/Amsterdam/ee-ads-rhf/commit/f689beabe967d78bbe1f48c6aad7c4dedabaea4d))
+* add inFieldSet support to CheckboxControl and RadioControl components ([2306f0f](https://github.com/Amsterdam/ee-ads-rhf/commit/2306f0f1ec3cdfc4e79d3859ce6d3f53af059195))
+
 ## [0.0.7](https://github.com/Amsterdam/ee-ads-rhf/compare/ee-ads-rhf-v0.0.6...ee-ads-rhf-v0.0.7) (2026-09-17)
 
 
