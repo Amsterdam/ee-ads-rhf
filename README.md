@@ -15,6 +15,13 @@ This project is a Node.js monorepo application with two workspaces:
 
 ## How to use this repo?
 
+Use Node.js 22.22.2 or newer within Node.js 22, or Node.js 24.15 or newer within
+Node.js 24. Stylelint 18 requires this runtime range.
+
+Both workspaces use Vitest 5. Each workspace includes `vitest.d.ts` to adapt
+jest-dom matchers to Vitest's `Matchers` interface. Test configurations explicitly
+disable `clearMocks` to preserve the Vitest 4 behavior.
+
 - `npm run dev` for dev watch mode; load storybook at `http://localhost:6006`
 - `npm run build` to build the package
 
