@@ -1,6 +1,6 @@
 import styles from './AmsterdamCrossSpinner.module.css';
 
-const AmsterdamCrossSpinner = () => (
+export const AmsterdamCrossSpinner = () => (
   <div aria-hidden="true">
     <div className={styles.svgContainer}>
       {[0, 1, 2].map((index) => (
@@ -20,5 +20,3 @@ const AmsterdamCrossSpinner = () => (
     </div>
   </div>
 );
-
-export default AmsterdamCrossSpinner;

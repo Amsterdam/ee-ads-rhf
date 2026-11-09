@@ -97,6 +97,20 @@ const Home = () => {
 
 For more examples check out the [project storybook](https://amsterdam.github.io/ee-ads-rhf/).
 
+### AmsterdamCrossSpinner
+
+Use the decorative spinner to indicate loading:
+
+```tsx
+import { AmsterdamCrossSpinner } from '@amsterdam/ee-ads-rhf';
+
+<AmsterdamCrossSpinner />;
+```
+
+The styling is bundled with the component; no separate CSS import is needed.
+The spinner is hidden from assistive technology, so provide an accessible loading
+message separately.
+
 ## How to use this repo?
 
 - `npm run dev` to watch for file changes and automatically rebuild the package
