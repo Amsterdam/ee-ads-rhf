@@ -25,6 +25,7 @@ export default defineConfig({
     dedupe: ['react', 'react-dom', 'react-hook-form'],
   },
   test: {
+    clearMocks: false,
     environment: 'jsdom',
     globals: true,
     setupFiles: ['./test/vitest-setup.ts'], // your setup file

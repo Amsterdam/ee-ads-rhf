@@ -12,7 +12,7 @@ import SuccessContent from './components/SuccessContent/SuccessContent';
 import StepPersonalDetails from './components/StepPersonalDetails/StepPersonalDetails';
 import StepAppointment from './components/StepAppointment/StepAppointment';
 import StepConfirm from './components/StepConfirm/StepConfirm';
-import AmsterdamCrossSpinner from '../../components/preloaders/AmsterdamCrossSpinner/AmsterdamCrossSpinner';
+import { AmsterdamCrossSpinner } from '@amsterdam/ee-ads-rhf';
 import LoadingOverlay from '../../components/preloaders/LoadingOverlay/LoadingOverlay';
 import bookingFormSchema, { BookingFormData } from './schema';
 

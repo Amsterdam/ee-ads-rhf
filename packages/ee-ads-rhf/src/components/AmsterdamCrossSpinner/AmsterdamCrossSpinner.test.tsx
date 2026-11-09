@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import AmsterdamCrossSpinner from './AmsterdamCrossSpinner';
+import { AmsterdamCrossSpinner } from '../../index';
 
 describe('AmsterdamCrossSpinner', () => {
   it('renders three spinner icons', () => {
@@ -15,6 +15,14 @@ describe('AmsterdamCrossSpinner', () => {
 
     container.querySelectorAll('svg').forEach((svg) => {
       expect(svg).toHaveAttribute('focusable', 'false');
+    });
+  });
+
+  it('staggers the spinner animations', () => {
+    const { container } = render(<AmsterdamCrossSpinner />);
+
+    container.querySelectorAll('svg').forEach((svg, index) => {
+      expect(svg.style.animationDelay).toBe(`${index * 0.75}s`);
     });
   });
 });

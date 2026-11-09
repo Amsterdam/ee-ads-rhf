@@ -7,6 +7,6 @@
     "isolatedModules": false,
     "noEmit": false
   },
-  "include": ["src"],
+  "include": ["src", "global.d.ts"],
   "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx"]
 }
